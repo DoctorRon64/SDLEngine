@@ -1,10 +1,9 @@
 #pragma once
-#include "GameObject.h"
 #include <SDL3/SDL.h>
 #include <vector>
+#include <Objects/Object.h>
 
-class Engine
-{
+class Engine {
 public:
 	Engine() = default;
 	void Init();
@@ -19,10 +18,11 @@ private:
 	void InitSDL();
 	void CreateWindowAndRenderer();
 
+	const double windowSizeX = 800;
+	const double windowSizeY = 800;
+
 	bool isRunning;
-	const std::size_t windowX = 16 * 100;
-	const std::size_t windowY = 9 * 100;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	std::vector<GameObject> gameObjects;
+	std::vector<Object*> gameObjects;
 };
