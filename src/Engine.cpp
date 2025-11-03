@@ -1,20 +1,22 @@
 #include "Engine.h"
-#include <Objects/ImageObject.h>
+#include "Objects/ImageObject.h"
+#include "Objects/TestObject.h"
 
 void Engine::Init() {
-	InitSDL();
-	CreateWindowAndRenderer();
+	RmInstance->Init();
+	RmInstance->LoadTexture("res/ship.jpg");
 
-	SDL_SetRenderDrawColor(renderer, 100, 250, 230, 0xff);
 	isRunning = true;
 
-	gameObjects.push_back(new ImageObject("res/ship.jpg", renderer));
+	TestObject* test1 = new TestObject();
+	gameObjects.push_back(test1);
+	TestObject* test2 = new TestObject();
+	gameObjects.push_back(test2);
 }
 
 void Engine::HandleEvents() {
 	SDL_Event event;
 
-	//Handle winow events
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
 		case  SDL_EVENT_QUIT:
@@ -30,28 +32,12 @@ void Engine::Update() {
 	}
 }
 
-void Engine::InitSDL() {
-	if(!SDL_Init(SDL_INIT_VIDEO)) {
-		throw SDL_GetError();
-	}
-}
-
-void Engine::CreateWindowAndRenderer() {
-	if(!SDL_CreateWindowAndRenderer("Main Window", windowSizeX, windowSizeY, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
-		throw SDL_GetError();
-	}
-}
-
 void Engine::Render() {
-	SDL_RenderClear(renderer);
-	for(Object* obj : gameObjects) {
-		obj->Render(renderer);
-	}
-	SDL_RenderPresent(renderer);
-}
+	RmInstance->ClearScreen();
 
-void Engine::Terminate() {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+	for(Object* obj : gameObjects) {
+		obj->Render();
+	}
+
+	RmInstance->RenderScreen();
 }

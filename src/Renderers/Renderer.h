@@ -1,18 +1,27 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include "Components/Transform.h"
 #include <string>
+#include <cassert>
 
 class Renderer {
 protected:
-	SDL_Texture* texture;
-	SDL_FRect sourceRect;
-	SDL_FRect destinationRect;
+	Transform* transform = nullptr;
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_FRect sourceRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	SDL_FRect destinationRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	std::string texturePath = "";
 
 public:
-	virtual void LoadTexture(const std::string texturePath, SDL_Renderer* renderer) = 0;
-	virtual void Update() = 0;
-	virtual void Render(SDL_Renderer* renderer) = 0;
-	virtual void SetDestinationRect(const SDL_FRect destRect) {
-		destinationRect = destRect;
-	}
+	Renderer() = default;
+	Renderer(Transform* _transform, std::string _texturePath) : transform(_transform), texturePath(_texturePath) {}
+
+	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) = 0;
+	virtual void Update(float delta) = 0;
+	virtual void Render() = 0;
+
+	virtual void SetDestinationRect(const SDL_FRect _destRect) { destinationRect = _destRect; }
+	virtual void SetColor(SDL_Color _color) { color = _color; }
+	SDL_Color GetColor() { return color; }
 };

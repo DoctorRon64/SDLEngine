@@ -1,30 +1,34 @@
 #pragma once
-#include <SDL3/SDL_render.h>
-#include <string>
-#include "Math/Vector2.h"
-#include <Renderers/Renderer.h>
+#include "Components/Transform.h"
+#include "Renderers/Renderer.h"
 
 class Object {
+private: bool isPendingDestroy = false;
 protected:
-	Vector2 position;
-	Renderer* renderer;
-	Vector2 textureSize = Vector2(100.0f, 100.0f);
+	Renderer* renderer = nullptr;
+	Transform* transform;
+	Vector2 textureSize = Vector2(300.0f, 380.0f);
 public:
 	Object() {
-		position = Vector2();
+		transform = new Transform();
+		//renderer->SetDestinationRect({ transform->position.x, transform->position.y, textureSize.x, textureSize.y });
+	}
+	~Object() {
+		delete transform;
+		transform = nullptr;
+		delete renderer;
 		renderer = nullptr;
 	}
-	void SetPosition(Vector2 pos) {
-		position = pos;
-		renderer->SetDestinationRect({ position.x, position.y, textureSize.x, textureSize.y });
+	virtual void Update() {
+		renderer->Update(0.02f);
 	}
-	Vector2 GetPosition() const {
-		return position;
+	virtual void Render() {
+		renderer->Render();
 	}
-	void Update() {
-		renderer->Update();
-	}
-	void Render(SDL_Renderer* _renderer) {
-		renderer->Render(_renderer);
+	Transform* GetTransform() { return transform; }
+	bool IsPendingDestroy() const {
+		return isPendingDestroy;
+	} virtual void Destroy() {
+		isPendingDestroy = true;
 	}
 };

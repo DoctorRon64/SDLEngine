@@ -92,8 +92,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,8 +117,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,8 +140,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,8 +165,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>Default</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -183,17 +183,20 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderers\ImageRenderer.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Managers\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Managers\RenderManager.h" />
+    <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Objects\ImageObject.h" />
     <ClInclude Include="src\Renderers\ImageRenderer.h" />
     <ClInclude Include="src\Renderers\Renderer.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Objects\Object.h" />
     <ClInclude Include="src\Math\Vector2.h" />
+    <ClInclude Include="src\Objects\TestObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

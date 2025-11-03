@@ -2,24 +2,26 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include <Objects/Object.h>
+#include <string>
 
 class Engine {
 public:
-	Engine() = default;
+	Engine() {
+		isRunning = false;
+		window = nullptr;
+		renderer = nullptr;
+	}
 	void Init();
 	void HandleEvents();
 	void Update();
 	void Render();
-	void Terminate();
 
 	bool IsRunning() const { return isRunning; }
 
 private:
-	void InitSDL();
-	void CreateWindowAndRenderer();
-
-	const double windowSizeX = 800;
-	const double windowSizeY = 800;
+	const int windowSizeX = 800;
+	const int windowSizeY = 800;
+	std::string windowTitle = "SDL Engine";
 
 	bool isRunning;
 	SDL_Window* window;
