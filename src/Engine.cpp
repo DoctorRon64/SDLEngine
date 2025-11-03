@@ -3,8 +3,8 @@
 #include "Objects/TestObject.h"
 
 void Engine::Init() {
-	RmInstance->Init();
-	RmInstance->LoadTexture("res/ship.jpg");
+	renderManager->Init();
+	renderManager->LoadTexture("res/ship.jpg");
 
 	isRunning = true;
 
@@ -33,11 +33,11 @@ void Engine::Update() {
 }
 
 void Engine::Render() {
-	RmInstance->ClearScreen();
+	renderManager->ClearScreen();
 
 	for(Object* obj : gameObjects) {
 		obj->Render();
 	}
 
-	RmInstance->RenderScreen();
+	renderManager->RenderScreen();
 }

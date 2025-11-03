@@ -8,7 +8,8 @@
 
 class ImageRenderer : public Renderer {
 public:
-	ImageRenderer(Transform* _transform, std::string _resourcePath, Vector2 _sourceOffset, Vector2 _sourceSize) : Renderer(_transform, _resourcePath),
+	ImageRenderer(Transform* _transform, std::string _resourcePath, Vector2 _sourceOffset, Vector2 _sourceSize)
+		: Renderer(_transform, _resourcePath),
 		resourcePath(_resourcePath),
 		sourceOffset(_sourceOffset),
 		sourceSize(_sourceSize) {
@@ -25,10 +26,10 @@ public:
 	}
 
 	virtual void Render() override {
-		RmInstance->GetTexture(resourcePath);
+		renderManager->GetTexture(resourcePath);
 		sourceRect = SDL_FRect{ sourceOffset.x, sourceOffset.y, sourceSize.x, sourceSize.y };
 		destinationRect = SDL_FRect{ transform->position.x, transform->position.y, destinationRect.w, destinationRect.h };
-		SDL_RenderTextureRotated(RmInstance->GetRenderer(), RmInstance->GetTexture(resourcePath),
+		SDL_RenderTextureRotated(renderManager->GetRenderer(), renderManager->GetTexture(resourcePath),
 			&sourceRect, &destinationRect, transform->rotation, NULL, SDL_FLIP_NONE);
 	}
 

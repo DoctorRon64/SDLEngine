@@ -6,8 +6,8 @@ class TestObject : public ImageObject {
 public:
 	TestObject() : ImageObject("res/ship.jpg", Vector2(0.f, 0.f), Vector2(306.f, 562.f)) {
 		Vector2 randomPosition = Vector2(
-			static_cast<float>(rand() % RmInstance->WINDOW_WIDTH),
-			static_cast<float>(rand() % RmInstance->WINDOW_HEIGHT)
+			static_cast<float>(rand() % renderManager->WINDOW_WIDTH),
+			static_cast<float>(rand() % renderManager->WINDOW_HEIGHT)
 		);
 		transform->position = randomPosition;
 		transform->scales = Vector2(0.5f, 0.5f);

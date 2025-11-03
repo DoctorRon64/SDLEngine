@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	}
 	catch(std::exception& result) {
 		std::cout << "There is a error: " << result.what() << std::endl;
-		RM->Terminate();
+		renderManager->Terminate();
 		return -1;
 	}
 

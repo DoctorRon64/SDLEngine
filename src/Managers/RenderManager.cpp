@@ -50,7 +50,7 @@ void RenderManager::Init() {
 	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 0xff);
 }
 
-void RenderManager::LoadTexture(const std::string path) {
+void RenderManager::LoadTexture(const std::string& path) {
 	if(textures.find(path) != textures.end()) return;
 
 	SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str());

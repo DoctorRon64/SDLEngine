@@ -5,7 +5,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 
-#define RM RenderManager::GetInstance()
+#define renderManager RenderManager::GetInstance()
 
 class RenderManager {
 public:
@@ -24,7 +24,7 @@ public:
 	void RenderScreen();
 
 	SDL_Renderer* GetRenderer() const { return renderer; }
-	void LoadTexture(const std::string _texturePath);
+	void LoadTexture(const std::string& _texturePath);
 	SDL_Texture* GetTexture(const std::string& textureName);
 
 private:
