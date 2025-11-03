@@ -1,9 +1,8 @@
-#include <SDL3/SDL.h>
-#include <iostream>
-#include <exception>
 #include "Engine.h"
-
 #include "Managers/RenderManager.h"
+#include <exception>
+#include <iostream>
+#include <SDL3/SDL.h>
 
 int main(int argc, char* argv[]) {
 	Engine* engine = new Engine();

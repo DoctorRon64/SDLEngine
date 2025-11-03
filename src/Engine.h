@@ -1,8 +1,8 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include <vector>
 #include <Objects/Object.h>
+#include <SDL3/SDL.h>
 #include <string>
+#include <vector>
 
 class Engine {
 public:

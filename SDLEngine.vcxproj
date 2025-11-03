@@ -183,11 +183,13 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Managers\InputManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Managers\RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Managers\InputManager.h" />
     <ClInclude Include="src\Managers\RenderManager.h" />
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Objects\ImageObject.h" />

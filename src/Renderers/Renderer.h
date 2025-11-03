@@ -1,9 +1,9 @@
 #pragma once
+#include "Components/Transform.h"
+#include <cassert>
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
-#include "Components/Transform.h"
 #include <string>
-#include <cassert>
 
 class Renderer {
 protected:

@@ -19,9 +19,7 @@ public:
 		delete renderer;
 		renderer = nullptr;
 	}
-	virtual void Update() {
-		renderer->Update(0.02f);
-	}
+	virtual void Update() { renderer->Update(0.02f); }
 	virtual void Render() {
 		renderer->Render();
 	}
