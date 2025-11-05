@@ -1,9 +1,5 @@
+#include "pch.h"
 #include "InputManager.h"
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3/SDL_mouse.h>
-#include <SDL3/SDL_stdinc.h>
-#include <unordered_map>
 
 bool InputManager::Listen() {
 	for(std::unordered_map<Sint32, KeyState>::iterator it = keyReference.begin(); it != keyReference.end(); it++) {

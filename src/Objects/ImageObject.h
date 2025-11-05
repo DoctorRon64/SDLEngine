@@ -1,9 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "Renderers/ImageRenderer.h"
-#include <Managers/RenderManager.h>
-#include <Math/Vector2.h>
-#include <string>
 
 class ImageObject : public Object {
 public:

@@ -1,6 +1,5 @@
 #pragma once
 #include "ImageObject.h"
-#include "Managers/RenderManager.h"
 
 class TestObject : public ImageObject {
 public:

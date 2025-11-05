@@ -1,6 +1,5 @@
 #pragma once
-#include <SDL3/SDL_stdinc.h>
-#include <unordered_map>
+
 #define inputManager InputManager::GetInstance()
 
 enum KeyState { EMPTY, DOWN, UP, HOLD, RELEASED };

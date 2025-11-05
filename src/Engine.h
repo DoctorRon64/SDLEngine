@@ -1,10 +1,5 @@
 #pragma once
-#include <Objects/Object.h>
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_video.h>
-#include <string>
-#include <vector>
+#include "Objects/Object.h"
 
 class Engine {
 public:

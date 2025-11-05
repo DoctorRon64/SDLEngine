@@ -1,10 +1,7 @@
+#include "pch.h"
 #include "Engine.h"
-#include "Managers/InputManager.h"
-#include "Managers/RenderManager.h"
 #include "Objects/Object.h"
 #include "Objects/TestObject.h"
-#include <iostream>
-#include <SDL3/SDL_keycode.h>
 
 void Engine::Init() {
 	renderManager->LoadTexture("res/ship.jpg");

@@ -1,9 +1,4 @@
 #pragma once
-#include <map>
-#include <SDL3/SDL_render.h>
-#include <SDL3/SDL_video.h>
-#include <string>
-
 #define renderManager RenderManager::GetInstance()
 
 class RenderManager {

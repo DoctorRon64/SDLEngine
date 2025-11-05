@@ -1,6 +1,5 @@
 #pragma once
 #include "Components/Transform.h"
-#include "Renderers/Renderer.h"
 
 class Object {
 private: bool isPendingDestroy = false;

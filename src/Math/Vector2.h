@@ -1,6 +1,4 @@
 #pragma once
-#include <cassert>
-#include <cmath>
 
 struct Vector2 {
 public:

@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "Engine.h"
-#include "Managers/RenderManager.h"
 
 int main(int argc, char* argv[]) {
 	Engine* engine = new Engine();

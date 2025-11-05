@@ -1,9 +1,5 @@
 #pragma once
 #include "Components/Transform.h"
-#include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_render.h>
-#include <string>
 
 class Renderer {
 protected:
