@@ -31,7 +31,8 @@
 #include <Math/Vector2.h>
 
 //Engine Includes
+#include "Renderers/Renderer.h"
+
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
 #include "Renderers/ImageRenderer.h"
-#include "Renderers/Renderer.h"

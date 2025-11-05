@@ -20,6 +20,7 @@ bool InputManager::Listen() {
 		}
 		else if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
 			if(event.button.button == SDL_BUTTON_LEFT) {
+				std::cout << "Left Clicked" << std::endl;
 				leftClick = true;
 			}
 		}
