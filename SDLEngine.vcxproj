@@ -191,6 +191,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Rigidbody.cpp" />
+    <ClCompile Include="src\Math\AABB.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Managers\InputManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
@@ -214,6 +216,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Renderers\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Rigidbody.h" />
+    <ClInclude Include="src\Math\AABB.h" />
     <ClInclude Include="src\Managers\InputManager.h" />
     <ClInclude Include="src\Managers\RenderManager.h" />
     <ClInclude Include="src\Components\Transform.h" />

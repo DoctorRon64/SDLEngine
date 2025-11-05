@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RenderManager.h"
 
-RenderManager::RenderManager() {
+RenderManager::~RenderManager() {
 	for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
 		if(it->second != nullptr) {
 			SDL_DestroyTexture(it->second);

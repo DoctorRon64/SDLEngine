@@ -1,5 +1,6 @@
 #pragma once
 #include "Components/Transform.h"
+#include "Renderers/Renderer.h"
 
 class ImageRenderer : public Renderer {
 public:
@@ -10,7 +11,7 @@ public:
 		sourceSize(_sourceSize) {}
 
 	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) override {}
-	virtual void Update(float dt) override;
+	virtual void Update(float _deltaTime) override;
 	virtual void Render() override;
 
 private:

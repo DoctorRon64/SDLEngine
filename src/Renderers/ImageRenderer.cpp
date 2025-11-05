@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "ImageRenderer.h"
 
-void ImageRenderer::Update(float dt) {
-	Vector2 offset = transform->scales * Vector2(-transform->size.x, -transform->size.y) / 2.0f;
+void ImageRenderer::Update(float _deltaTime) {
+	Vector2 offset = transform->scale * Vector2(-transform->size.x, -transform->size.y) / 2.0f;
 	destinationRect.x = transform->position.x + offset.x;
 	destinationRect.y = transform->position.y + offset.y;
-	destinationRect.w = transform->size.x * transform->scales.x;
-	destinationRect.h = transform->size.y * transform->scales.y;
+	destinationRect.w = transform->size.x * transform->scale.x;
+	destinationRect.h = transform->size.y * transform->scale.y;
 }
 
 void ImageRenderer::Render() {

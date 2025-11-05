@@ -22,10 +22,10 @@ public:
 	SDL_Texture* GetTexture(const std::string& textureName);
 
 private:
-	RenderManager();
+	RenderManager() = default;
 	RenderManager(RenderManager&) = delete;
 	RenderManager& operator=(const RenderManager&) = delete;
-	~RenderManager() {}
+	~RenderManager();
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
