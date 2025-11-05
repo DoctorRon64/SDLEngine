@@ -1,5 +1,5 @@
 #pragma once
-#include <cstdint>
+#include <SDL3/SDL_stdinc.h>
 #include <unordered_map>
 #define inputManager InputManager::GetInstance()
 
@@ -15,7 +15,7 @@ public:
 	float GetMouseX() const { return mouseX; }
 	float GetMouseY() const { return mouseY; }
 	bool GetLeftClick() const { return leftClick; }
-	bool GetEvent(int32_t _input, KeyState _inputValue);
+	bool GetEvent(Sint32 _input, KeyState _inputValue);
 private:
 	InputManager() : mouseX(0), mouseY(0), leftClick(false) {}
 	InputManager(InputManager&) = delete;
@@ -25,5 +25,5 @@ private:
 	float mouseX;
 	float mouseY;
 	bool leftClick;
-	std::unordered_map<int32_t, KeyState> keyReference;
+	std::unordered_map<Sint32, KeyState> keyReference;
 };

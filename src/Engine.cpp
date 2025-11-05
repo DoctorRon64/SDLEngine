@@ -1,14 +1,12 @@
 #include "Engine.h"
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
-#include "Objects/ImageObject.h"
 #include "Objects/Object.h"
 #include "Objects/TestObject.h"
-#include <SDL3/SDL_events.h>
+#include <iostream>
 #include <SDL3/SDL_keycode.h>
 
 void Engine::Init() {
-	renderManager->Init();
 	renderManager->LoadTexture("res/ship.jpg");
 
 	isRunning = true;
@@ -20,15 +18,15 @@ void Engine::Init() {
 }
 
 void Engine::HandleEvents() {
-	SDL_Event event;
+	//SDL_Event event;
 
-	while(SDL_PollEvent(&event)) {
-		switch(event.type) {
-			case  SDL_EVENT_QUIT:
-			isRunning = false;
-			break;
-		}
-	}
+	//while(SDL_PollEvent(&event)) {
+	//	switch(event.type) {
+	//		case  SDL_EVENT_QUIT:
+	//		isRunning = false;
+	//		break;
+	//	}
+	//}
 
 	isRunning = !inputManager->Listen();
 }

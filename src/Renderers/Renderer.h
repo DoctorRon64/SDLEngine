@@ -1,8 +1,8 @@
 #pragma once
 #include "Components/Transform.h"
-#include <cassert>
-#include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_rect.h>
+#include <SDL3/SDL_render.h>
 #include <string>
 
 class Renderer {
@@ -23,5 +23,5 @@ public:
 
 	virtual void SetDestinationRect(const SDL_FRect _destRect) { destinationRect = _destRect; }
 	virtual void SetColor(SDL_Color _color) { color = _color; }
-	SDL_Color GetColor() { return color; }
+	SDL_Color GetColor() const { return color; }
 };

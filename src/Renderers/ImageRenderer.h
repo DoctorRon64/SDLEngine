@@ -3,7 +3,6 @@
 #include "Managers/RenderManager.h"
 #include "Math/Vector2.h"
 #include "Renderer.h"
-#include <cassert>
 #include <SDL3/SDL_rect.h>
 #include <SDL3/SDL_render.h>
 #include <SDL3/SDL_surface.h>

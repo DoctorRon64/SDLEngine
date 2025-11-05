@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
 #include <map>
-#include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3/SDL_video.h>
 #include <string>
 
 #define renderManager RenderManager::GetInstance()
