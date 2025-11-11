@@ -15,9 +15,13 @@ int main(int argc, char* argv[]) {
 	}
 
 	while(engine->IsRunning()) {
-		engine->HandleEvents();
-		engine->Update();
-		engine->Render();
+		timeManager->Update();
+		if(timeManager->ShouldUpdateGame()) {
+			engine->HandleEvents();
+			engine->Update();
+			engine->Render();
+			timeManager->ResetDeltaTime();
+		}
 	}
 
 	delete(engine);

@@ -23,8 +23,7 @@ public:
 		rbComp = nullptr;
 	}
 	virtual void Update() {
-		float deltaTime = 0.02f;
-
+		float deltaTime = timeManager->GetDeltaTime();
 		if(rbComp != nullptr) {
 			rbComp->Update(deltaTime);
 		}

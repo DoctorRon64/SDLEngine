@@ -214,6 +214,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </ClCompile>
     <ClCompile Include="src\Renderers\ImageRenderer.cpp" />
     <ClCompile Include="src\Renderers\Renderer.cpp" />
+    <ClCompile Include="src\Managers\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\Rigidbody.h" />
@@ -229,6 +230,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\Objects\Object.h" />
     <ClInclude Include="src\Math\Vector2.h" />
     <ClInclude Include="src\Objects\TestObject.h" />
+    <ClInclude Include="src\Managers\TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

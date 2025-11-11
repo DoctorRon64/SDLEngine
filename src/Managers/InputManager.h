@@ -1,5 +1,4 @@
 #pragma once
-
 #define inputManager InputManager::GetInstance()
 
 enum KeyState { EMPTY, DOWN, UP, HOLD, RELEASED };
