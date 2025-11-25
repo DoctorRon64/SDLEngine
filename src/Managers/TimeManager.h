@@ -7,15 +7,16 @@ public:
 		static TimeManager instance;
 		return &instance;
 	}
-	float GetDeltaTime() { return deltaTime; }
-	float GetElapsedTime() { return elapsedTime; }
-	bool ShouldUpdateGame() { return deltaTime >= frameTime; }
+
+	float GetDeltaTime() const { return deltaTime; }
+	float GetElapsedTime() const { return static_cast<float>(elapsedTime); }
+	bool ShouldUpdateGame() const { return deltaTime >= frameTime; }
 	void ResetDeltaTime() {
 		deltaTime -= static_cast<float>(std::floor(deltaTime / frameTime)) * frameTime;
 	}
 	void Update() {
-		elapsedTime = static_cast<double>(SDL_GetTicks()) / 1000.0;
-		deltaTime += elapsedTime - previousElapsedTime;
+		elapsedTime = SDL_GetTicks() / 1000.0;
+		deltaTime += static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;
 	}
 private:
@@ -31,7 +32,7 @@ private:
 
 	//Time Controle
 	float deltaTime;
-	float elapsedTime;
+	double elapsedTime;
 	float previousElapsedTime;
 
 	//FPS Controle

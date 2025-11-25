@@ -32,6 +32,7 @@
 #include "Renderers/ImageRenderer.h"
 #include "Renderers/Renderer.h"
 
+#include "Managers/TimeManager.h"
+
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
-#include "Managers/TimeManager.h"

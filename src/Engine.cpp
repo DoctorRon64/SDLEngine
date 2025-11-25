@@ -1,10 +1,19 @@
 #include "pch.h"
 #include "Engine.h"
-#include "Objects/Object.h"
+#include "managers/SceneManager.h"
 #include "Objects/TestObject.h"
+#include "scenes/custom/GameplayScene.h"
 
 void Engine::Init() {
 	renderManager->LoadTexture("res/ship.jpg");
+
+	try {
+		sceneManager->AddScene("Gameplay", new GameplayScene());
+		sceneManager->InitFirstScene("Gameplay");
+	}
+	catch(const std::exception& e) {
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 
 	isRunning = true;
 
@@ -15,23 +24,11 @@ void Engine::Init() {
 }
 
 void Engine::HandleEvents() {
-	//SDL_Event event;
-
-	//while(SDL_PollEvent(&event)) {
-	//	switch(event.type) {
-	//		case  SDL_EVENT_QUIT:
-	//		isRunning = false;
-	//		break;
-	//	}
-	//}
-
 	isRunning = !inputManager->Listen();
 }
 
 void Engine::Update() {
-	for(Object* obj : gameObjects) {
-		obj->Update();
-	}
+	sceneManager->UpdateCurrentScene();
 
 	if(inputManager->GetEvent(SDLK_S, DOWN)) {
 		std::cout << "something happend yeeess" << std::endl;
@@ -40,10 +37,6 @@ void Engine::Update() {
 
 void Engine::Render() {
 	renderManager->ClearScreen();
-
-	for(Object* obj : gameObjects) {
-		obj->Render();
-	}
-
+	sceneManager->GetCurrentScene()->Render();
 	renderManager->RenderScreen();
 }

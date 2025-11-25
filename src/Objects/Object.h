@@ -34,4 +34,5 @@ public:
 	bool IsPendingDestroy() const { return isPendingDestroy; }
 	virtual void Destroy() { isPendingDestroy = true; }
 	virtual void SetTextureSize(const Vector2 _size) { textureSize = _size; }
+	RigidBody* GetRigidBody() const { return rbComp; }
 };

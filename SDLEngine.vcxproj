@@ -191,17 +191,20 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Components\Rigidbody.cpp" />
-    <ClCompile Include="src\Math\AABB.cpp" />
-    <ClCompile Include="src\Components\Transform.cpp" />
-    <ClCompile Include="src\Managers\InputManager.cpp" />
+    <ClCompile Include="src\managers\SceneManager.cpp" />
+    <ClCompile Include="src\scenes\custom\GameplayScene.cpp" />
+    <ClCompile Include="src\scenes\Scene.cpp" />
+    <ClCompile Include="src\components\Rigidbody.cpp" />
+    <ClCompile Include="src\math\AABB.cpp" />
+    <ClCompile Include="src\components\Transform.cpp" />
+    <ClCompile Include="src\managers\InputManager.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Managers\RenderManager.cpp" />
-    <ClCompile Include="src\Math\Vector2.cpp" />
-    <ClCompile Include="src\Objects\ImageObject.cpp" />
-    <ClCompile Include="src\Objects\Object.cpp" />
-    <ClCompile Include="src\Objects\TestObject.cpp" />
+    <ClCompile Include="src\managers\RenderManager.cpp" />
+    <ClCompile Include="src\math\Vector2.cpp" />
+    <ClCompile Include="src\objects\ImageObject.cpp" />
+    <ClCompile Include="src\objects\Object.cpp" />
+    <ClCompile Include="src\objects\TestObject.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
@@ -212,25 +215,28 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="src\Renderers\ImageRenderer.cpp" />
-    <ClCompile Include="src\Renderers\Renderer.cpp" />
-    <ClCompile Include="src\Managers\TimeManager.cpp" />
+    <ClCompile Include="src\renderers\ImageRenderer.cpp" />
+    <ClCompile Include="src\renderers\Renderer.cpp" />
+    <ClCompile Include="src\managers\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Components\Rigidbody.h" />
-    <ClInclude Include="src\Math\AABB.h" />
-    <ClInclude Include="src\Managers\InputManager.h" />
-    <ClInclude Include="src\Managers\RenderManager.h" />
-    <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\Objects\ImageObject.h" />
+    <ClInclude Include="src\managers\SceneManager.h" />
+    <ClInclude Include="src\scenes\custom\GameplayScene.h" />
+    <ClInclude Include="src\scenes\Scene.h" />
+    <ClInclude Include="src\components\Rigidbody.h" />
+    <ClInclude Include="src\math\AABB.h" />
+    <ClInclude Include="src\managers\InputManager.h" />
+    <ClInclude Include="src\managers\RenderManager.h" />
+    <ClInclude Include="src\components\Transform.h" />
+    <ClInclude Include="src\objects\ImageObject.h" />
     <ClInclude Include="src\pch.h" />
-    <ClInclude Include="src\Renderers\ImageRenderer.h" />
-    <ClInclude Include="src\Renderers\Renderer.h" />
+    <ClInclude Include="src\renderers\ImageRenderer.h" />
+    <ClInclude Include="src\renderers\Renderer.h" />
     <ClInclude Include="src\Engine.h" />
-    <ClInclude Include="src\Objects\Object.h" />
-    <ClInclude Include="src\Math\Vector2.h" />
-    <ClInclude Include="src\Objects\TestObject.h" />
-    <ClInclude Include="src\Managers\TimeManager.h" />
+    <ClInclude Include="src\objects\Object.h" />
+    <ClInclude Include="src\math\Vector2.h" />
+    <ClInclude Include="src\objects\TestObject.h" />
+    <ClInclude Include="src\managers\TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
