@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "Engine.h"
 #include "managers/SceneManager.h"
-#include "Objects/TestObject.h"
 #include "scenes/custom/GameplayScene.h"
 
 void Engine::Init() {
 	renderManager->LoadTexture("res/ship.jpg");
+	renderManager->LoadFont("res/fonts/Fredoka.ttf");
 
 	try {
 		sceneManager->AddScene("Gameplay", new GameplayScene());
@@ -17,10 +17,10 @@ void Engine::Init() {
 
 	isRunning = true;
 
-	TestObject* test1 = new TestObject();
-	gameObjects.push_back(test1);
-	TestObject* test2 = new TestObject();
-	gameObjects.push_back(test2);
+	//TestObject* test1 = new TestObject();
+	//gameObjects.push_back(test1);
+	//TestObject* test2 = new TestObject();
+	//gameObjects.push_back(test2);
 }
 
 void Engine::HandleEvents() {

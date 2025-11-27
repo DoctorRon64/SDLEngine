@@ -2,6 +2,8 @@
 #include "Scene.h"
 
 void Scene::OnExit() {
+	spawnerManager.ClearSpanwer();
+
 	for(Object* o : objects) {
 		delete o;
 	}
@@ -26,6 +28,10 @@ void Scene::OnUpdate() {
 			delete ui[i];
 			ui.erase(ui.begin() + i);
 		}
+	}
+
+	while(spawnerManager.AreObjectsPendingSpawn()) {
+		objects.push_back(spawnerManager.GetSpawnedObject());
 	}
 
 	for(Object* o : objects) {

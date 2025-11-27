@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\managers\Spawner.cpp" />
     <ClCompile Include="src\managers\SceneManager.cpp" />
     <ClCompile Include="src\scenes\custom\GameplayScene.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
@@ -218,8 +219,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\renderers\ImageRenderer.cpp" />
     <ClCompile Include="src\renderers\Renderer.cpp" />
     <ClCompile Include="src\managers\TimeManager.cpp" />
+    <ClCompile Include="src\objects\TextObject.cpp" />
+    <ClCompile Include="src\renderers\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\managers\Spawner.h" />
     <ClInclude Include="src\managers\SceneManager.h" />
     <ClInclude Include="src\scenes\custom\GameplayScene.h" />
     <ClInclude Include="src\scenes\Scene.h" />
@@ -237,6 +241,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\math\Vector2.h" />
     <ClInclude Include="src\objects\TestObject.h" />
     <ClInclude Include="src\managers\TimeManager.h" />
+    <ClInclude Include="src\objects\TextObject.h" />
+    <ClInclude Include="src\renderers\TextRenderer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\Fredoka.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

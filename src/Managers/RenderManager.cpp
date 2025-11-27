@@ -2,15 +2,30 @@
 #include "RenderManager.h"
 
 RenderManager::~RenderManager() {
-	for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
-		if(it->second != nullptr) {
-			SDL_DestroyTexture(it->second);
-		}
+	//TODO remove code
+	//for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
+	//	if(it->second != nullptr) {
+	//		SDL_DestroyTexture(it->second);
+	//	}
+	//}
+
+	for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); it++) {
+		SDL_DestroyTexture(it->second);
+		it->second = nullptr;
+	}
+
+	for(std::map<std::string, TTF_Font*>::iterator it = fonts.begin(); it != fonts.end(); it++) {
+		TTF_CloseFont(it->second);
+		it->second = nullptr;
 	}
 }
 
 void RenderManager::InitSDL() {
 	if(!SDL_Init(SDL_INIT_VIDEO)) {
+		throw SDL_GetError();
+	}
+
+	if(!TTF_Init()) {
 		throw SDL_GetError();
 	}
 }
@@ -66,5 +81,19 @@ SDL_Texture* RenderManager::GetTexture(const std::string& textureName) {
 	if(textures.find(textureName) != textures.end()) {
 		return textures[textureName];
 	}
+	return nullptr;
+}
+
+void RenderManager::LoadFont(std::string _path) {
+	if(fonts.find(_path) != fonts.end())
+		return;
+	fonts[_path] = TTF_OpenFont(_path.c_str(), 24);
+}
+
+TTF_Font* RenderManager::GetFont(std::string _path) {
+	if(fonts.find(_path) != fonts.end()) {
+		return fonts[_path];
+	}
+
 	return nullptr;
 }

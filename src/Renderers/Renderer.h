@@ -7,11 +7,11 @@ protected:
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_FRect sourceRect = { 0.0f, 0.0f, 0.0f, 0.0f };
 	SDL_FRect destinationRect = { 0.0f, 0.0f, 0.0f, 0.0f };
-	std::string texturePath = "";
+	std::string resourcePath = "";
 
 public:
 	Renderer() = default;
-	Renderer(Transform* _transform, std::string _texturePath) : transform(_transform), texturePath(_texturePath) {}
+	Renderer(Transform* _transform, std::string _texturePath) : transform(_transform), resourcePath(_texturePath) {}
 
 	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) = 0;
 	virtual void Update(float delta) = 0;

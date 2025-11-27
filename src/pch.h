@@ -7,6 +7,7 @@
 #include <exception>
 #include <iostream>
 #include <map>
+#include <queue>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -36,3 +37,4 @@
 
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
+#include "managers/Spawner.h"

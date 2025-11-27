@@ -21,6 +21,9 @@ public:
 	void LoadTexture(const std::string& _texturePath);
 	SDL_Texture* GetTexture(const std::string& textureName);
 
+	void LoadFont(std::string _path);
+	TTF_Font* GetFont(std::string _path);
+
 private:
 	RenderManager() = default;
 	RenderManager(RenderManager&) = delete;
@@ -33,4 +36,6 @@ private:
 
 	void InitSDL();
 	void CreateWindowAndRender();
+
+	std::map <std::string, TTF_Font*> fonts;
 };
