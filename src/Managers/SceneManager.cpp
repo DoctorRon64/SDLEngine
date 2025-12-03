@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SceneManager.h"
 
-bool SceneManager::AddScene(std::string _name, Scene* _scene) {
+bool SceneManager::AddScene(SceneState _name, Scene* _scene) {
 	if(scenes.find(_name) == scenes.end()) {
 		scenes.emplace(_name, _scene);
 		return true;
@@ -10,14 +10,14 @@ bool SceneManager::AddScene(std::string _name, Scene* _scene) {
 	return false;
 }
 
-Scene* SceneManager::GetScene(std::string _name) {
+Scene* SceneManager::GetScene(SceneState _name) {
 	if(scenes.find(_name) != scenes.end())
 		return scenes[_name];
 
 	return nullptr;
 }
 
-bool SceneManager::InitFirstScene(std::string _name) {
+bool SceneManager::InitFirstScene(SceneState _name) {
 	if(scenes.find(_name) != scenes.end()) {
 		currentScene = scenes[_name];
 		currentScene->OnEnter();
@@ -27,7 +27,7 @@ bool SceneManager::InitFirstScene(std::string _name) {
 	return false;
 }
 
-bool SceneManager::SetNextScene(std::string _name) {
+bool SceneManager::SetNextScene(SceneState _name) {
 	if(scenes.find(_name) == scenes.end()) {
 		return false;
 	}
@@ -37,11 +37,11 @@ bool SceneManager::SetNextScene(std::string _name) {
 }
 
 void SceneManager::UpdateCurrentScene() {
-	if(nextScene != " ") {
+	if(nextScene != NONE) {
 		currentScene->OnExit();
 		currentScene = scenes[nextScene];
 		currentScene->OnEnter();
-		nextScene = " ";
+		nextScene = NONE;
 	}
 
 	currentScene->OnUpdate();

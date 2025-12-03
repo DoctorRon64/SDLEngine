@@ -37,4 +37,5 @@
 
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
+#include "managers/SceneManager.h"
 #include "managers/Spawner.h"

@@ -2,6 +2,8 @@
 #include <Scenes/Scene.h>
 #define sceneManager SceneManager::GetInstance()
 
+enum SceneState { NONE, MENU, GAMEPLAY };
+
 class SceneManager {
 private:
 	SceneManager() = default;
@@ -9,9 +11,9 @@ private:
 	SceneManager& operator =(const SceneManager&) = delete;
 	~SceneManager() = default;
 
-	std::unordered_map <std::string, Scene*> scenes;
+	std::unordered_map <SceneState, Scene*> scenes;
 	Scene* currentScene = nullptr;
-	std::string nextScene = " ";
+	SceneState nextScene = NONE;
 
 public:
 	static SceneManager* GetInstance() {
@@ -19,10 +21,10 @@ public:
 		return &instance;
 	}
 
-	bool AddScene(std::string _name, Scene* _scene);
-	Scene* GetScene(std::string _name);
-	bool InitFirstScene(std::string _name);
+	bool AddScene(SceneState _name, Scene* _scene);
+	Scene* GetScene(SceneState _name);
+	bool InitFirstScene(SceneState _name);
 	Scene* GetCurrentScene() const { return currentScene; }
-	bool SetNextScene(std::string _name);
+	bool SetNextScene(SceneState _name);
 	void UpdateCurrentScene();
 };
