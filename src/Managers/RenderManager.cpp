@@ -65,16 +65,15 @@ void RenderManager::Init() {
 }
 
 void RenderManager::LoadTexture(const std::string& path) {
-	if(textures.find(path) != textures.end()) return;
+	auto it = textures.find(path);
+	if(it != textures.end()) return;
 
-	SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str());
-	if(!texture) {
-		throw SDL_GetError();
+	if(SDL_Texture* texture = IMG_LoadTexture(renderer, path.c_str())) {
+		textures.emplace(path, texture);
 	}
-	assert(texture);
-	assert(textures[path]);
-
-	textures[path] = texture;
+	else {
+		throw std::runtime_error(SDL_GetError());
+	}
 }
 
 SDL_Texture* RenderManager::GetTexture(const std::string& textureName) {
