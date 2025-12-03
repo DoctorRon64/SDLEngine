@@ -33,7 +33,7 @@ public:
 		else if(inputManager->GetEvent(SDLK_R, HOLD)) {
 			rbComp->AddTorque(0.1f);
 		}
-		else if(inputManager->GetEvent(SDLK_SPACE, HOLD)) {
+		else if(inputManager->GetEvent(SDLK_SPACE, DOWN)) {
 			Shoot();
 		}
 
@@ -41,9 +41,11 @@ public:
 	}
 
 	void Shoot() {
-		Vector2 startPos = transform->position + Vector2(40.f, 10.f);
-		auto b = new bullet("res/bullet.png", startPos, Vector2(40, 12));
-		b->SetLayer(14);
+		//Vector2 startPos = renderer->GetTransform().position;
+		renderManager->LoadTexture("res/bullet.png");
+		auto b = new bullet("res/bullet.png");
+
+		b->SetLayer(20);
 		spawnerManager.SpawnObject(b);
 		auto c = spawnerManager.GetSpawnedObject();
 		std::cout << c << std::endl;

@@ -20,4 +20,5 @@ public:
 	virtual void SetDestinationRect(const SDL_FRect _destRect) { destinationRect = _destRect; }
 	virtual void SetColor(SDL_Color _color) { color = _color; }
 	SDL_Color GetColor() const { return color; }
+	Transform GetTransform() const { return *transform; }
 };

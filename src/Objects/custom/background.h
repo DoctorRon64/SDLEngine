@@ -9,7 +9,7 @@ public:
 	background(std::string _name = "res/missing.png",
 		Vector2 _pos = Vector2(0.f, 0.f),
 		Vector2 _size = Vector2(1024.f, 1303.f),
-		Vector2 _scale = Vector2(1.f, 1.f))
+		Vector2 _scale = Vector2(1024.f, 1303.f))
 		: ImageObject(_name, _pos, _size) {
 		transform->position = _pos;
 		transform->scale = _scale;
