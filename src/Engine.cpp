@@ -1,26 +1,21 @@
 #include "pch.h"
 #include "Engine.h"
-#include "managers/SceneManager.h"
 #include "scenes/custom/GameplayScene.h"
+#include "scenes/custom/MenuScene.h"
 
 void Engine::Init() {
-	renderManager->LoadTexture("res/ship.jpg");
 	renderManager->LoadFont("res/fonts/Fredoka.ttf");
 
 	try {
-		sceneManager->AddScene("Gameplay", new GameplayScene());
-		sceneManager->InitFirstScene("Gameplay");
+		sceneManager->AddScene(MENU, new MenuScene());
+		sceneManager->AddScene(GAMEPLAY, new GameplayScene());
+		sceneManager->InitFirstScene(MENU);
 	}
 	catch(const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
 	}
 
 	isRunning = true;
-
-	//TestObject* test1 = new TestObject();
-	//gameObjects.push_back(test1);
-	//TestObject* test2 = new TestObject();
-	//gameObjects.push_back(test2);
 }
 
 void Engine::HandleEvents() {
@@ -29,10 +24,9 @@ void Engine::HandleEvents() {
 
 void Engine::Update() {
 	sceneManager->UpdateCurrentScene();
-
-	if(inputManager->GetEvent(SDLK_S, DOWN)) {
+	/*if(inputManager->GetEvent(SDLK_S, DOWN)) {
 		std::cout << "something happend yeeess" << std::endl;
-	}
+	}*/
 }
 
 void Engine::Render() {

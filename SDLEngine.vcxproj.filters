@@ -42,9 +42,6 @@
     <ClCompile Include="src\objects\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\TestObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\math\Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,6 +75,15 @@
     <ClCompile Include="src\objects\TextObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\custom\MenuScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\custom\baseEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\custom\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\math\Vector2.h">
@@ -102,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\RenderManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\TestObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\InputManager.h">
@@ -138,6 +141,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\TextObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\custom\MenuScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\custom\baseEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\custom\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
