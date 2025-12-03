@@ -1,5 +1,7 @@
 #pragma once
 #include "../ImageObject.h"
+#include "./baseEnemy.h"
+#include "./bullet.h"
 
 class Player : public ImageObject {
 public:
@@ -31,7 +33,19 @@ public:
 		else if(inputManager->GetEvent(SDLK_R, HOLD)) {
 			rbComp->AddTorque(0.1f);
 		}
+		else if(inputManager->GetEvent(SDLK_SPACE, HOLD)) {
+			Shoot();
+		}
 
 		Object::Update();
+	}
+
+	void Shoot() {
+		Vector2 startPos = transform->position + Vector2(40.f, 10.f);
+		auto b = new bullet("res/bullet.png", startPos, Vector2(40, 12));
+		b->SetLayer(14);
+		spawnerManager.SpawnObject(b);
+		auto c = spawnerManager.GetSpawnedObject();
+		std::cout << c << std::endl;
 	}
 };

@@ -191,6 +191,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\custom\bullet.cpp" />
+    <ClCompile Include="src\objects\custom\background.cpp" />
     <ClCompile Include="src\objects\custom\Player.cpp" />
     <ClCompile Include="src\objects\custom\baseEnemy.cpp" />
     <ClCompile Include="src\scenes\custom\MenuScene.cpp" />
@@ -225,6 +227,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\custom\bullet.h" />
+    <ClInclude Include="src\objects\custom\background.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
     <ClInclude Include="src\objects\custom\baseEnemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />

@@ -1,6 +1,7 @@
 #pragma once
 
 // Standard Library Includes
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <cstdint>

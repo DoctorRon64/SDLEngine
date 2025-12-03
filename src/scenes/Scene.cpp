@@ -34,6 +34,11 @@ void Scene::OnUpdate() {
 		objects.push_back(spawnerManager.GetSpawnedObject());
 	}
 
+	std::sort(objects.begin(), objects.end(),
+	[](Object* a, Object* b) {
+		return a->GetLayer() < b->GetLayer();
+	});
+
 	for(Object* o : objects) {
 		o->Update();
 	}

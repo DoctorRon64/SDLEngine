@@ -9,6 +9,8 @@ protected:
 	Transform* transform = nullptr;
 	RigidBody* rbComp = nullptr;
 	Vector2 textureSize = Vector2(300.0f, 380.0f);
+	short layer = 0;
+
 public:
 	Object() {
 		transform = new Transform();
@@ -35,4 +37,7 @@ public:
 	virtual void Destroy() { isPendingDestroy = true; }
 	virtual void SetTextureSize(const Vector2 _size) { textureSize = _size; }
 	RigidBody* GetRigidBody() const { return rbComp; }
+
+	short GetLayer() const { return layer; }
+	void SetLayer(const short& _value) { layer = _value; }
 };

@@ -25,6 +25,10 @@ public:
 		}
 	}
 
+	std::queue<Object*> GetSpawnedObjects() const {
+		return spawnedObjs;
+	}
+
 	Object* GetSpawnedObject() {
 		if(!AreObjectsPendingSpawn()) {
 			return nullptr;

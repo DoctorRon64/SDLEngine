@@ -25,6 +25,7 @@ public:
 		}
 	}
 
+	std::vector<AABB*> GetColliders() const { return colliders; }
 	void AddCollider(AABB* _collider) { colliders.push_back(_collider); }
 	void AddForce(Vector2 _force) { acceleration = acceleration + _force; }
 	void AddTorque(float _amount) { angularAcceleration += _amount; }
