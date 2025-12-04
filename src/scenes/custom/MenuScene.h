@@ -7,7 +7,7 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		Text* text = new Text("Menu");
+		Text* text = new Text("Menu / To continue press [Space] or [click] the { blue button }");
 		text->GetTransform()->position = { 200.f, 200.f };
 		ui.push_back(text);
 
