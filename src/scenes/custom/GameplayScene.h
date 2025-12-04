@@ -4,34 +4,31 @@
 #include "objects/custom/bullet.h"
 #include "objects/custom/Player.h"
 #include "scenes/Scene.h"
-#include <objects/TextObject.h>
+#include <objects/Text.h>
 
 class GameplayScene : public Scene {
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		const std::string bgTexture = "res/bg.jpg";
-		renderManager->LoadTexture(bgTexture);
-		auto bg = new background(bgTexture);
+		renderManager->LoadTexture("res/bg.jpg");
+		auto bg = new background();
 		bg->SetLayer(-999);
 		spawnerManager.SpawnObject(bg);
 		objects.push_back(bg);
 
-		const std::string enemyTexture = "res/evil-woman.png";
-		renderManager->LoadTexture(enemyTexture);
-		auto enemy = new baseEnemy(enemyTexture);
+		renderManager->LoadTexture("res/evil-woman.png");
+		auto enemy = new baseEnemy();
 		enemy->SetLayer(10);
 		spawnerManager.SpawnObject(enemy);
 		objects.push_back(enemy);
 
-		const std::string playerTexture = "res/man.png";
-		renderManager->LoadTexture(playerTexture);
-		auto player = new Player(playerTexture);
+		renderManager->LoadTexture("res/man.png");
+		auto player = new Player();
 		player->SetLayer(20);
 		spawnerManager.SpawnObject(player);
 		objects.push_back(player);
 
-		auto text = new TextObject("Hola, chico bienvenido con el mejor juego!");
+		auto text = new Text("Hola, chico bienvenido con el mejor juego!");
 		text->GetTransform()->position = { 200.f, 200.f };
 		ui.push_back(text);
 	}

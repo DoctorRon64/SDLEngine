@@ -1,10 +1,10 @@
 #pragma once
-
+#include "Object.h"
 #include "renderers/TextRenderer.h"
 
-class TextObject : public Object {
+class Text : public Object {
 public:
-	TextObject(std::string _text) : Object() {
+	Text(std::string _text) : Object() {
 		renderer = new TextRenderer(transform, _text);
 		renderer->SetColor({ 0xff, 0xff, 0xff, 0xFF });
 	}

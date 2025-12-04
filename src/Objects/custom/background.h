@@ -1,16 +1,16 @@
 ﻿#pragma once
-#include "../ImageObject.h"
+#include "../Image.h"
 
-class background : public ImageObject {
+class background : public Image {
 private:
 	float scrollSpeed = 200.0f;
 
 public:
-	background(std::string _name = "res/missing.png",
+	background(std::string _name = "res/bg.jpg",
 		Vector2 _pos = Vector2(0.f, 0.f),
 		Vector2 _size = Vector2(1024.f, 1303.f),
-		Vector2 _scale = Vector2(1024.f, 1303.f))
-		: ImageObject(_name, _pos, _size) {
+		Vector2 _scale = Vector2(10.0f, 10.0f))
+		: Image(_name, _pos, _size) {
 		transform->position = _pos;
 		transform->scale = _scale;
 
@@ -18,7 +18,7 @@ public:
 	}
 
 	void Update() override {
-		ImageObject::Update();
+		Image::Update();
 
 		float dt = timeManager->GetDeltaTime();
 

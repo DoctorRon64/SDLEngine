@@ -1,15 +1,12 @@
 #pragma once
-#include "../ImageObject.h"
+#include "../Image.h"
 
-class baseEnemy : public ImageObject {
+class baseEnemy : public Image {
 public:
-	baseEnemy(std::string _name = "res/missing.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(1024.f, 1303.f)) : ImageObject(_name, _pos, _size) {
-		Vector2 randomPosition = Vector2(
-			static_cast<float>(rand() % renderManager->WINDOW_WIDTH),
-			static_cast<float>(rand() % renderManager->WINDOW_HEIGHT)
-		);
+	baseEnemy(std::string _name = "res/evil-woman.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(1024.f, 1303.f)) : Image(_name, _pos, _size) {
+		Vector2 randomPosition = Vector2(500, 500);
 		transform->position = randomPosition;
-		transform->scale = Vector2(2.f, 2.f);
+		transform->scale = Vector2(2.5f, 2.5f);
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);

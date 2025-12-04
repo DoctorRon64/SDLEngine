@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "../ImageObject.h"
+#include "../Image.h"
 #include "./baseEnemy.h"
 
-class bullet : public ImageObject {
+class bullet : public Image {
 public:
-	bullet(std::string _name = "res/missing.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(400.f, 400.f))
-		: ImageObject(_name, _pos, _size) {
+	bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(400.f, 400.f))
+		: Image(_name, _pos, _size) {
 		//rbComp->SetVelocity(Vector2(1.f, 0.f));
 
 		transform->position = _pos;
@@ -20,7 +20,7 @@ public:
 	}
 
 	void Update() override {
-		ImageObject::Update();
+		Image::Update();
 
 		/*UpdateCollider();
 

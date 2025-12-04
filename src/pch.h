@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdint>
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <queue>
