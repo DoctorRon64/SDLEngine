@@ -5,6 +5,10 @@
 
 void Engine::Init() {
 	renderManager->LoadFont("res/fonts/Fredoka.ttf");
+	renderManager->LoadTexture("res/bg.jpg");
+	renderManager->LoadTexture("res/evil-woman.png");
+	renderManager->LoadTexture("res/man.png");
+	renderManager->LoadTexture("res/bullet.png");
 
 	try {
 		sceneManager->AddScene(MENU, new MenuScene());

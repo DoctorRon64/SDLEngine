@@ -10,5 +10,6 @@ public:
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
+		rbComp->AddCollider(new AABB(_pos, _size));
 	}
 };

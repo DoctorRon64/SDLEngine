@@ -3,7 +3,8 @@
 #include <Components/Rigidbody.h>
 
 class Object {
-private: bool isPendingDestroy = false;
+private:
+	bool isPendingDestroy = false;
 protected:
 	Renderer* renderer = nullptr;
 	Transform* transform = nullptr;

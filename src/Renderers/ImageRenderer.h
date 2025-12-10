@@ -13,7 +13,6 @@ public:
 	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) override {}
 	virtual void Update(float _deltaTime) override;
 	virtual void Render() override;
-
 private:
 	SDL_Texture* texture = nullptr;
 	std::string resourcePath;
