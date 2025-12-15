@@ -5,7 +5,9 @@
 #include <cassert>
 #include <cmath>
 #include <cstdint>
+#include <cstring>
 #include <exception>
+#include <fstream>
 #include <functional>
 #include <iostream>
 #include <map>
@@ -16,6 +18,7 @@
 
 //SDL3 Includes
 #include <SDL3/SDL.h>
+#include <SDL.h>
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>

@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "../Image.h"
-#include "./baseEnemy.h"
+#include "./Enemy.h"
 
-class bullet : public Image {
+class Bullet : public Image {
 public:
-	bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(400.f, 400.f))
+	Bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(400.f, 400.f))
 		: Image(_name, _pos, _size) {
 		transform->scale = Vector2(0.5f, 0.5f);
 		transform->rotation = 90.f;
@@ -20,14 +20,21 @@ public:
 	}
 
 	void Update() override {
-		Image::Update();
+		lifeTime -= timeManager->GetDeltaTime();
+		if(lifeTime <= 0.0f) {
+			Destroy();
+			return;
+		}
 
 		if(transform->position.x > renderManager->WINDOW_WIDTH || transform->position.x < -50) {
 			Destroy();
 			std::cout << this << "object has been dleteted" << std::endl;
 			return;
 		}
+
+		Image::Update();
 	}
 private:
 	float bulletSpeed = 350.f;
+	float lifeTime = 2.0f;
 };
