@@ -2,7 +2,14 @@
 #include <Scenes/Scene.h>
 #define sceneManager SceneManager::GetInstance()
 
-enum SceneState { NONE, MENU, GAMEPLAY };
+enum class SceneState {
+	NONE,
+	SPLASH,
+	MENU,
+	LEVEL_SELECT,
+	GAMEPLAY,
+	RANKING
+};
 
 class SceneManager {
 private:
@@ -13,7 +20,7 @@ private:
 
 	std::unordered_map <SceneState, Scene*> scenes;
 	Scene* currentScene = nullptr;
-	SceneState nextScene = NONE;
+	SceneState nextScene = SceneState::NONE;
 
 public:
 	static SceneManager* GetInstance() {

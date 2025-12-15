@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -191,11 +191,13 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\managers\ScoreManager.cpp" />
+    <ClCompile Include="src\objects\custom\HorizontalMedusa.cpp" />
     <ClCompile Include="src\objects\Button.cpp" />
-    <ClCompile Include="src\objects\custom\bullet.cpp" />
-    <ClCompile Include="src\objects\custom\background.cpp" />
+    <ClCompile Include="src\objects\custom\Bullet.cpp" />
+    <ClCompile Include="src\objects\custom\Background.cpp" />
     <ClCompile Include="src\objects\custom\Player.cpp" />
-    <ClCompile Include="src\objects\custom\baseEnemy.cpp" />
+    <ClCompile Include="src\objects\custom\Enemy.cpp" />
     <ClCompile Include="src\scenes\custom\MenuScene.cpp" />
     <ClCompile Include="src\managers\Spawner.cpp" />
     <ClCompile Include="src\managers\SceneManager.cpp" />
@@ -228,11 +230,13 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\managers\ScoreManager.h" />
+    <ClInclude Include="src\objects\custom\HorizontalMedusa.h" />
     <ClInclude Include="src\objects\Button.h" />
-    <ClInclude Include="src\objects\custom\bullet.h" />
-    <ClInclude Include="src\objects\custom\background.h" />
+    <ClInclude Include="src\objects\custom\Bullet.h" />
+    <ClInclude Include="src\objects\custom\Background.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
-    <ClInclude Include="src\objects\custom\baseEnemy.h" />
+    <ClInclude Include="src\objects\custom\Enemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />
     <ClInclude Include="src\managers\Spawner.h" />
     <ClInclude Include="src\managers\SceneManager.h" />

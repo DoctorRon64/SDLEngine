@@ -3,6 +3,17 @@
 #include "scenes/custom/GameplayScene.h"
 #include "scenes/custom/MenuScene.h"
 
+Engine::Engine() {
+	isRunning = false;
+	window = nullptr;
+	renderer = nullptr;
+}
+
+Engine::~Engine() {
+	delete window;
+	delete renderer;
+}
+
 void Engine::Init() {
 	renderManager->LoadFont("res/fonts/Fredoka.ttf");
 	renderManager->LoadTexture("res/bg.jpg");
@@ -11,9 +22,9 @@ void Engine::Init() {
 	renderManager->LoadTexture("res/bullet.png");
 
 	try {
-		sceneManager->AddScene(MENU, new MenuScene());
-		sceneManager->AddScene(GAMEPLAY, new GameplayScene());
-		sceneManager->InitFirstScene(MENU);
+		sceneManager->AddScene(SceneState::MENU, new MenuScene());
+		sceneManager->AddScene(SceneState::GAMEPLAY, new GameplayScene());
+		sceneManager->InitFirstScene(SceneState::MENU);
 	}
 	catch(const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
@@ -28,9 +39,6 @@ void Engine::HandleEvents() {
 
 void Engine::Update() {
 	sceneManager->UpdateCurrentScene();
-	/*if(inputManager->GetEvent(SDLK_S, DOWN)) {
-		std::cout << "something happend yeeess" << std::endl;
-	}*/
 }
 
 void Engine::Render() {

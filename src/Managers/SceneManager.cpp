@@ -37,11 +37,11 @@ bool SceneManager::SetNextScene(SceneState _name) {
 }
 
 void SceneManager::UpdateCurrentScene() {
-	if(nextScene != NONE) {
+	if(nextScene != SceneState::NONE) {
 		currentScene->OnExit();
 		currentScene = scenes[nextScene];
 		currentScene->OnEnter();
-		nextScene = NONE;
+		nextScene = SceneState::NONE;
 	}
 
 	currentScene->OnUpdate();

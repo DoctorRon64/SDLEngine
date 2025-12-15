@@ -2,13 +2,6 @@
 #include "RenderManager.h"
 
 RenderManager::~RenderManager() {
-	//TODO remove code
-	//for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
-	//	if(it->second != nullptr) {
-	//		SDL_DestroyTexture(it->second);
-	//	}
-	//}
-
 	for(std::map<std::string, SDL_Texture*>::iterator it = textures.begin(); it != textures.end(); it++) {
 		SDL_DestroyTexture(it->second);
 		it->second = nullptr;
