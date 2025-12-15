@@ -13,7 +13,7 @@ public:
 
 		renderManager->LoadTexture("res/btn.png");
 		auto texture = renderManager->GetTexture("res/btn.png");
-		Button* btn = new Button([]() { sceneManager->SetNextScene(GAMEPLAY); });
+		Button* btn = new Button([]() { sceneManager->SetNextScene(SceneState::GAMEPLAY); });
 		ui.push_back(btn);
 	}
 
@@ -26,7 +26,7 @@ public:
 
 		if(inputManager->GetEvent(SDLK_SPACE, DOWN)) {
 			std::cout << "something happend yeeess" << std::endl;
-			sceneManager->SetNextScene(GAMEPLAY);
+			sceneManager->SetNextScene(SceneState::GAMEPLAY);
 		}
 	}
 

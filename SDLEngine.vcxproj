@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\managers\FileManager.cpp" />
     <ClCompile Include="src\managers\ScoreManager.cpp" />
     <ClCompile Include="src\objects\custom\HorizontalMedusa.cpp" />
     <ClCompile Include="src\objects\Button.cpp" />
@@ -230,6 +231,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\managers\FileManager.h" />
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\custom\HorizontalMedusa.h" />
     <ClInclude Include="src\objects\Button.h" />

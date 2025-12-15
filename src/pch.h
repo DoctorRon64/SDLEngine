@@ -18,7 +18,6 @@
 
 //SDL3 Includes
 #include <SDL3/SDL.h>
-#include <SDL.h>
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -40,7 +39,10 @@
 
 #include "Managers/TimeManager.h"
 
+#include "managers/FileManager.h"
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
 #include "managers/SceneManager.h"
+#include "managers/ScoreManager.h"
+
 #include "managers/Spawner.h"

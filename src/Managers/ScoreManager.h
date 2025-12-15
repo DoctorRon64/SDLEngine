@@ -1,0 +1,46 @@
+#pragma once
+#define scoreManager ScoreManager::GetInstance()
+
+struct HighScore {
+	char name[16];
+	int score;
+};
+
+class ScoreManager {
+private:
+	ScoreManager() = default;
+	~ScoreManager() = default;
+	ScoreManager(const ScoreManager&) = delete;
+	ScoreManager& operator=(const ScoreManager&) = delete;
+
+	int score = 0;
+
+public:
+	static ScoreManager* GetInstance() {
+		static ScoreManager instance;
+		return &instance;
+	}
+
+	void AddScore(int value) {
+		score += value;
+	}
+
+	int GetScore() const {
+		return score;
+	}
+
+	void Save(const std::string& name) {
+		HighScore entry{};
+		for(size_t i = 0; i < sizeof(entry.name) - 1 && i < name.size(); i++) {
+			entry.name[i] = name[i];
+		}
+		entry.name[sizeof(entry.name) - 1] = '\0';
+		entry.score = score;
+
+		fileManager.WriteBinary("ranking.bin", entry);
+	}
+
+	std::vector<HighScore> Load() {
+		return fileManager.ReadBinary<HighScore>("ranking.bin");
+	}
+};

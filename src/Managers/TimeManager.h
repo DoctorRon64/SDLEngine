@@ -16,7 +16,7 @@ public:
 	}
 	void Update() {
 		elapsedTime = SDL_GetTicks() / 1000.0;
-		deltaTime += static_cast<float>(elapsedTime) - previousElapsedTime;
+		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;
 	}
 private:

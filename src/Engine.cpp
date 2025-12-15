@@ -7,11 +7,22 @@ Engine::Engine() {
 	isRunning = false;
 	window = nullptr;
 	renderer = nullptr;
+
+	auto highScores = scoreManager->Load();
 }
 
 Engine::~Engine() {
-	delete window;
-	delete renderer;
+	scoreManager->Save("Player");
+
+	if(renderer) {
+		SDL_DestroyRenderer(renderer);
+		renderer = nullptr;
+	}
+
+	if(window) {
+		SDL_DestroyWindow(window);
+		window = nullptr;
+	}
 }
 
 void Engine::Init() {

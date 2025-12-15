@@ -21,8 +21,9 @@ public:
 	}
 
 	virtual void Shoot() {}
+
 	virtual void OnDeath() {
-		//TODO scoreManager->AddScore(scoreValue);
+		scoreManager->AddScore(scoreValue);
 		Destroy();
 	}
 
