@@ -102,6 +102,18 @@
     <ClCompile Include="src\managers\FileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\Animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\custom\ScrollingBackground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\streams\AudioStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\managers\AudioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\math\Vector2.h">
@@ -186,6 +198,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\FileManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\Animator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\custom\ScrollingBackground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\streams\AudioStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\managers\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
