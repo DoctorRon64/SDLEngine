@@ -9,9 +9,6 @@ public:
 		transform->scale = Vector2(0.5f, 0.5f);
 		transform->rotation = 90.f;
 
-		std::cout << "Bullet Position: " << transform->position.x << ", " << transform->position.y << std::endl;
-		std::cout << "Bullet Scale: " << transform->scale.x << ", " << transform->scale.y << std::endl;
-
 		rbComp->SetAngularDrag(0.0f);
 		rbComp->SetLinearDrag(0.0f);
 		rbComp->AddCollider(new AABB(_pos, _size));
@@ -28,7 +25,6 @@ public:
 
 		if(transform->position.x > renderManager->WINDOW_WIDTH || transform->position.x < -50) {
 			Destroy();
-			std::cout << this << "object has been dleteted" << std::endl;
 			return;
 		}
 

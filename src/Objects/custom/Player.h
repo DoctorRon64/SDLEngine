@@ -1,25 +1,32 @@
 #pragma once
+#include "../../components/Animator.h"
 #include "../Image.h"
 #include "./Bullet.h"
 
 class Player : public Image {
 public:
-	Player(std::string _name = "res/man.png") :
-		Image(_name, Vector2(0.f, 0.f), Vector2(992.f, 1542.f)) {
+	Player(std::string _name = "res/player_sprite.png") :
+		Image(_name, Vector2(0.f, 0.f), Vector2(350.f, 150.f)) {
 		transform->position = Vector2(0.f, 0.f);
 		transform->scale = Vector2(2.f, 2.f);
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
+
+		//Animation idle{ 7, {350,150}, 0.12f, true, 0 };
+		//animator = new Animator(dynamic_cast<ImageRenderer*>(renderer), idle);
 	}
 
 	virtual void Update() override {
-		shootTimer -= timeManager->GetDeltaTime();
+		float dt = timeManager->GetDeltaTime();
+		shootTimer -= dt;
 
 		HandleMovement();
 		HandleShooting();
-
 		Image::Update();
+
+		ClampToScreen();
+		//animator->Update(dt);
 	}
 
 	void HandleMovement() {
@@ -54,15 +61,30 @@ public:
 		auto b = new Bullet();
 
 		b->SetLayer(20);
-		Vector2 pos = transform->position + (textureSize / 4);
+		Vector2 pos = Vector2(transform->position.x + (textureSize.x / 2), transform->position.y + (textureSize.y / 2));
+
 		b->GetTransform()->position = pos;
 
 		spawnerManager.SpawnObject(b);
 	}
 
 private:
+	void ClampToScreen() {
+		float w = textureSize.x * transform->scale.x;
+		float h = textureSize.y * transform->scale.y;
+
+		if(transform->position.x <= 0 || transform->position.x >= renderManager->WINDOW_WIDTH - w) {
+			rbComp->SetVelocity({ 0, rbComp->GetVelocity().y });
+		}
+
+		if(transform->position.y <= 0 || transform->position.y >= renderManager->WINDOW_HEIGHT - h) {
+			rbComp->SetVelocity({ rbComp->GetVelocity().x, 0 });
+		}
+	}
+
 	float shootCooldown = 0.2f;
 	float shootTimer = 0.0f;
 	int shields = 100;
 	bool invulnerable = false;
+	Animator* animator = nullptr;
 };

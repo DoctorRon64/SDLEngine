@@ -9,7 +9,7 @@ protected:
 	Renderer* renderer = nullptr;
 	Transform* transform = nullptr;
 	RigidBody* rbComp = nullptr;
-	Vector2 textureSize = Vector2(300.0f, 380.0f);
+	Vector2 textureSize;
 	short layer = 0;
 
 public:
@@ -33,12 +33,12 @@ public:
 		renderer->Update(deltaTime);
 	}
 	virtual void Render() { renderer->Render(); }
-	Transform* GetTransform() { return transform; }
-	bool IsPendingDestroy() const { return isPendingDestroy; }
 	virtual void Destroy() { isPendingDestroy = true; }
-	virtual void SetTextureSize(const Vector2 _size) { textureSize = _size; }
-	RigidBody* GetRigidBody() const { return rbComp; }
-
-	short GetLayer() const { return layer; }
 	void SetLayer(const short& _value) { layer = _value; }
+
+	Transform* GetTransform() const { return transform; }
+	bool IsPendingDestroy() const { return isPendingDestroy; }
+	RigidBody* GetRigidBody() const { return rbComp; }
+	Vector2 GetTextureSize() const { return textureSize; }
+	short GetLayer() const { return layer; }
 };

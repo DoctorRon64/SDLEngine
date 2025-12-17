@@ -13,7 +13,6 @@ public:
 	Renderer() = default;
 	Renderer(Transform* _transform, std::string _texturePath) : transform(_transform), resourcePath(_texturePath) {}
 
-	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) = 0;
 	virtual void Update(float delta) = 0;
 	virtual void Render() = 0;
 

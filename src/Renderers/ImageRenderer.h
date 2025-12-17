@@ -10,12 +10,19 @@ public:
 		sourceOffset(_sourceOffset),
 		sourceSize(_sourceSize) {}
 
-	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) override {}
 	virtual void Update(float _deltaTime) override;
 	virtual void Render() override;
+
+	Vector2 GetTextureSize() const { return textureSize; }
+
+	void SetSourceRect(Vector2 offset, Vector2 size) {
+		sourceOffset = offset;
+		sourceSize = size;
+	}
 private:
 	SDL_Texture* texture = nullptr;
 	std::string resourcePath;
+	Vector2 textureSize{ 0, 0 };
 	Vector2 sourceOffset;
 	Vector2 sourceSize;
 };

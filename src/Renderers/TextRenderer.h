@@ -32,8 +32,6 @@ public:
 		SDL_RenderTextureRotated(renderManager->GetRenderer(), textTexture, &sourceRect, &destinationRect, transform->rotation, NULL, SDL_FLIP_NONE);
 	}
 
-	virtual void LoadTexture(const std::string _texturePath, SDL_Renderer* _renderer) override {};
-
 	void SetText(std::string _text) {
 		if(textTexture != nullptr) {
 			SDL_DestroyTexture(textTexture);
