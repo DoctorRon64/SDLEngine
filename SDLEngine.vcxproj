@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\audio\AtomicWrapper.cpp" />
     <ClCompile Include="src\managers\AudioManager.cpp" />
     <ClCompile Include="src\objects\custom\ScrollingBackground.cpp" />
     <ClCompile Include="src\components\Animator.cpp" />
@@ -232,9 +233,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\managers\TimeManager.cpp" />
     <ClCompile Include="src\objects\Text.cpp" />
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
-    <ClCompile Include="src\streams\AudioStream.cpp" />
+    <ClCompile Include="src\audio\AudioStream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\audio\AtomicWrapper.h" />
     <ClInclude Include="src\managers\AudioManager.h" />
     <ClInclude Include="src\objects\custom\ScrollingBackground.h" />
     <ClInclude Include="src\components\Animator.h" />
@@ -266,7 +268,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\TimeManager.h" />
     <ClInclude Include="src\objects\Text.h" />
     <ClInclude Include="src\renderers\TextRenderer.h" />
-    <ClInclude Include="src\streams\AudioStream.h" />
+    <ClInclude Include="src\audio\AudioStream.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
