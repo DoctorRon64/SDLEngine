@@ -2,10 +2,14 @@
 #include "Engine.h"
 
 int main(int argc, char* argv[]) {
+	constexpr unsigned int Width = 800;
+	constexpr unsigned int Height = 800;
+	const std::string Title = "SDL_Engine";
+
 	Engine* engine = new Engine();
 
 	try {
-		renderManager->Init();
+		renderManager->Init(Width, Height, Title);
 		engine->Init();
 	}
 	catch(std::exception& result) {

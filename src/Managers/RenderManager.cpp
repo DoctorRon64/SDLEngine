@@ -24,7 +24,7 @@ void RenderManager::InitSDL() {
 }
 
 void RenderManager::CreateWindowAndRender() {
-	if(!SDL_CreateWindowAndRenderer(windowTitle.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+	if(!SDL_CreateWindowAndRenderer(WINDOW_TITLE.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
 		throw SDL_GetError();
 	}
 }
@@ -43,7 +43,11 @@ void RenderManager::ClearScreen() {
 	SDL_RenderClear(renderer);
 }
 
-void RenderManager::Init() {
+void RenderManager::Init(int _width, int _height, std::string _title) {
+	WINDOW_WIDTH = _width;
+	WINDOW_HEIGHT = _height;
+	WINDOW_TITLE = _title;
+
 	try {
 		InitSDL();
 		CreateWindowAndRender();

@@ -7,7 +7,6 @@ Engine::Engine() {
 	isRunning = false;
 	window = nullptr;
 	renderer = nullptr;
-
 	auto highScores = scoreManager->Load();
 }
 

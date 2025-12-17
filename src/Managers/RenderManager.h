@@ -8,11 +8,11 @@ public:
 		return &instance;
 	}
 
-	const std::string windowTitle = "SDL Engine";
-	const unsigned int WINDOW_WIDTH = 800;
-	const unsigned int WINDOW_HEIGHT = 800;
+	std::string WINDOW_TITLE;
+	unsigned int WINDOW_WIDTH;
+	unsigned int WINDOW_HEIGHT;
 
-	void Init();
+	void Init(int _width, int _height, std::string _title);
 	void Terminate();
 	void ClearScreen();
 	void RenderScreen();
