@@ -1,31 +1,55 @@
 ﻿#pragma once
 #include "../Image.h"
 
-class Background : public Image {
+class Background : public Object {
 private:
 	float scrollSpeed = 200.0f;
+	float width;
+
+	Image* bg1;
+	Image* bg2;
 
 public:
-	Background(std::string _name = "res/bg.jpg",
-		Vector2 _pos = Vector2(0.f, 0.f),
-		Vector2 _size = Vector2(1024.f, 1303.f),
-		Vector2 _scale = Vector2(10.0f, 13.0f))
-		: Image(_name, _pos, _size) {
-		transform->position = _pos;
-		transform->scale = _scale;
+	Background(const std::string& path = "res/bg.jpg") {
+		float textureWidth = 1175.f;
+		float textureHeight = 700.f;
+		float scale = 10.f;
 
-		SetLayer(-1000);
+		bg1 = new Image(path, { 0, 0 }, { textureWidth, textureHeight });
+		bg2 = new Image(path, { 0, 0 }, { textureWidth, textureHeight });
+
+		bg1->GetTransform()->scale = { scale, scale };
+		bg2->GetTransform()->scale = { scale, scale };
+
+		bg1->GetTransform()->position = { 0.f, 0.f };
+		bg2->GetTransform()->position = { textureWidth, 0.f };
+
+		bg1->SetLayer(-1000);
+		bg2->SetLayer(-999);
+
+		width = textureWidth * scale;
+
+		spawnerManager.SpawnObject(bg1);
+		spawnerManager.SpawnObject(bg2);
 	}
 
 	void Update() override {
-		Image::Update();
+		float deltaTime = timeManager->GetDeltaTime();
 
-		float dt = timeManager->GetDeltaTime();
+		bg1->GetTransform()->position.x -= scrollSpeed * deltaTime;
+		bg2->GetTransform()->position.x -= scrollSpeed * deltaTime;
 
-		transform->position.x -= scrollSpeed * dt;
-
-		if(transform->position.x <= -textureSize.x * transform->scale.x) {
-			transform->position.x = 0;
+		if(bg1->GetTransform()->position.x <= -width) {
+			bg1->GetTransform()->position.x = bg2->GetTransform()->position.x + width;
 		}
+
+		if(bg2->GetTransform()->position.x <= -width) {
+			bg2->GetTransform()->position.x = bg1->GetTransform()->position.x + width;
+		}
+	}
+
+	virtual void Render() override {
+		bg1->Render();
+		bg2->Render();
 	}
 };

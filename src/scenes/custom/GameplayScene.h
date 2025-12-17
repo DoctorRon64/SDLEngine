@@ -1,8 +1,8 @@
 #pragma once
-#include "objects/custom/background.h"
 #include "objects/custom/Bullet.h"
 #include "objects/custom/Enemy.h"
 #include "objects/custom/Player.h"
+#include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
 #include <objects/Text.h>
 
@@ -20,8 +20,11 @@ private:
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		auto bg = new Background();
-		bg->SetLayer(-999);
+		//auto bg = new Background();
+		//bg->SetLayer(-999);
+		//spawnerManager.SpawnObject(bg);
+
+		auto bg = new ScrollingBackground("res/bg.jpg", 200.0f, -1000);
 		spawnerManager.SpawnObject(bg);
 
 		auto enemy = new Enemy();
