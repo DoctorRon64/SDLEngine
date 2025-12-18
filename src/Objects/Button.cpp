@@ -2,12 +2,12 @@
 #include "Button.h"
 
 void Button::OnHoverEnter() {
-	transform->scale = (Vector2(2.f, 1.f) *= 1.1);
+	transform->scale *= 1.1;
 	isHovered = true;
 }
 
 void Button::OnHoverExit() {
-	transform->scale = Vector2(2.f, 1.f);
+	transform->scale /= 1.1;
 	isHovered = false;
 }
 

@@ -1,14 +1,13 @@
 #pragma once
-#include "../../components/Animator.h"
 #include "../Image.h"
 #include "./Bullet.h"
 
 class Player : public Image {
 public:
-	Player(std::string _name = "res/player_sprite.png") :
-		Image(_name, Vector2(0.f, 0.f), Vector2(350.f, 150.f)) {
+	Player(std::string _name = "res/man.png") :
+		Image(_name, Vector2(0.f, 0.f), Vector2(992, 1542)) {
 		transform->position = Vector2(0.f, 0.f);
-		transform->scale = Vector2(2.f, 2.f);
+		transform->scale = Vector2(.2f, .2f);
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
@@ -61,6 +60,8 @@ public:
 		auto b = new Bullet();
 
 		b->SetLayer(20);
+
+		Vector2 textureSize = b->GetTextureSize();
 		Vector2 pos = Vector2(transform->position.x + (textureSize.x / 2), transform->position.y + (textureSize.y / 2));
 
 		b->GetTransform()->position = pos;
@@ -86,5 +87,4 @@ private:
 	float shootTimer = 0.0f;
 	int shields = 100;
 	bool invulnerable = false;
-	Animator* animator = nullptr;
 };

@@ -9,7 +9,7 @@ public:
 		onClick = _onClick;
 
 		transform->position = Vector2(200.f, 200.f);
-		transform->scale = Vector2(2.f, 1.f);
+		transform->scale = Vector2(.05f, .05f);
 
 		GetRigidBody()->AddCollider(new AABB(transform->position, transform->size));
 	}
