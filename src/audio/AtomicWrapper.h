@@ -8,8 +8,8 @@ struct AtomicWrapper {
 	AtomicWrapper(const std::atomic<T>& other) : value(other.load()) {}
 	AtomicWrapper(const AtomicWrapper& other) : value(other.value.load()) {}
 
-	//AtomicWrapper& operator=(const AtomicWrapper& other) {
-	//	value.store(other.value.load());
-	//	return this*;
-	//}
+	AtomicWrapper& operator=(const AtomicWrapper& other) {
+		value.store(other.value.load());
+		return *this;
+	}
 };

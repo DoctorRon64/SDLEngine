@@ -30,6 +30,9 @@ void Engine::Init() {
 	renderManager->LoadTexture("res/evil-woman.png");
 	renderManager->LoadTexture("res/man.png");
 	renderManager->LoadTexture("res/bullet.png");
+	renderManager->LoadTexture("res/btn.png");
+
+	audioManager->LoadSoundData("res/audio/ML.wav");
 
 	try {
 		sceneManager->AddScene(SceneState::MENU, new MenuScene());

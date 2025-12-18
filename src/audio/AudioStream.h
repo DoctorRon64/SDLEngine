@@ -31,16 +31,35 @@ public:
 		state = READY;
 	};
 
-	~AudioStream() {
-		if(stream) {
-			SDL_DestroyAudioStream(stream);
-			stream = nullptr;
-		}
-	}
+	~AudioStream() {}
 
 	void CheckPlayBack(SoundData* _data, std::atomic<bool>& _haltRequest) {
 		while(state != STOPPED) {
+			std::cout << "Thread is ALIVE!" << std::endl;
+
 			if((state != READY && SDL_GetAudioStreamQueued(stream) == 0) || _haltRequest) {
+				StopStream();
+			}
+
+			if(state == READY) {
+				Uint32 bytesQueded = SDL_GetAudioStreamQueued(stream);
+				int bytesRemaining = static_cast<int>(_data->wavDataLength) - bytesQueded;
+
+				std::vector<Uint8> wavDataRemainginVec = std::vector<Uint8>(bytesRemaining, '\0');
+				Uint8* wavDataRemaining = &wavDataRemainginVec[0];
+
+				SDL_memcpy(wavDataRemaining, (const Uint32*)(&_data->wavData[bytesQueded]), bytesRemaining);
+				SDL_PutAudioStreamData(stream, wavDataRemaining, bytesRemaining);
+				SDL_FlushAudioStream(stream);
+
+				state = PLAYING;
+			}
+		}
+	}
+
+	void CheckPlayBackLooping(SoundData* _data, std::atomic<bool>& _haltRequest) {
+		while(state != STOPPED) {
+			if(_haltRequest) {
 				StopStream();
 			}
 
@@ -57,6 +76,11 @@ public:
 
 				state = PLAYING;
 			}
+
+			if(state != READY && SDL_GetAudioStreamQueued(stream) == 0) {
+				SDL_ClearAudioStream(stream);
+				state = READY;
+			}
 		}
-	}
+	};
 };

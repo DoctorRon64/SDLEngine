@@ -42,6 +42,7 @@
 
 #include "Managers/TimeManager.h"
 
+#include "managers/AudioManager.h"
 #include "managers/FileManager.h"
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"

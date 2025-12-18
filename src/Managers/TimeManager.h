@@ -9,6 +9,7 @@ public:
 	}
 
 	float GetDeltaTime() const { return deltaTime; }
+	float GetTimeFrame() const { return frameTime; }
 	float GetElapsedTime() const { return static_cast<float>(elapsedTime); }
 	bool ShouldUpdateGame() const { return deltaTime >= frameTime; }
 	void ResetDeltaTime() {

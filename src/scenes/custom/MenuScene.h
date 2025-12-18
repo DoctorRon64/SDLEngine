@@ -11,7 +11,8 @@ public:
 		text->GetTransform()->position = { 200.f, 200.f };
 		ui.push_back(text);
 
-		renderManager->LoadTexture("res/btn.png");
+		audioManager->PlaySound("res/audio/ML.wav"); //MUSIC
+
 		auto texture = renderManager->GetTexture("res/btn.png");
 		Button* btn = new Button([]() { sceneManager->SetNextScene(SceneState::GAMEPLAY); });
 		ui.push_back(btn);

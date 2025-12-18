@@ -16,6 +16,9 @@ public:
 
 	bool Init() {
 		try {
+			if(!SDL_Init(SDL_INIT_AUDIO)) {
+				throw SDL_GetError();
+			}
 			audioDevice = SDL_OpenAudioDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
 			if(audioDevice == 0) {
 				throw SDL_GetError();
@@ -60,15 +63,28 @@ public:
 			std::cerr << "LoadSoundData Error: " << e.what() << std::endl;
 			return false;
 		}
-	}
+	};
+
 	void PlaySound(const std::string& filePath) {
 		if(soundsData.find(filePath) == soundsData.end()) {
 			return;
 		}
 
 		threadsDone.push_back(std::atomic<bool>(false));
-		std::thread(&AudioManager::PlaySoundCallback, this, filePath, (threadsDone.size() - 1));
-	}
+		std::thread thread(&AudioManager::PlaySoundCallback, this, filePath, (threadsDone.size() - 1), false);
+		thread.detach();
+	};
+
+	void PlaySoundLooping(const std::string& filePath) {
+		if(soundsData.find(filePath) == soundsData.end()) {
+			return;
+		}
+
+		threadsDone.push_back(std::atomic<bool>(false));
+		std::thread thread(&AudioManager::PlaySoundCallback, this, filePath, (threadsDone.size() - 1), true);
+		thread.detach();
+	};
+
 	void Mute() {
 		if(muted) {
 			return;
@@ -77,6 +93,7 @@ public:
 		SDL_PauseAudioDevice(audioDevice);
 		muted = true;
 	};
+
 	void Unmute() {
 		if(!muted) {
 			return;
@@ -107,10 +124,15 @@ private:
 		soundsData.clear();
 	}
 
-	void PlaySoundCallback(const std::string& filePath, int threadIndex) {
+	void PlaySoundCallback(const std::string& filePath, int threadIndex, bool looping) {
 		AudioStream stream = AudioStream(soundsData[filePath]->spec, audioDevice);
-		stream.CheckPlayBack(soundsData[filePath], shouldHaltAudio);
-		threadsDone[threadIndex].value = true;
+		if(looping) {
+			stream.CheckPlayBackLooping(soundsData[filePath], shouldHaltAudio);
+		}
+		else {
+			stream.CheckPlayBack(soundsData[filePath], shouldHaltAudio);
+		}
+		threadsDone[threadIndex] = AtomicWrapper<bool>(std::atomic<bool>(true));
 	}
 
 	bool muted = false;

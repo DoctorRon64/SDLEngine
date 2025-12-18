@@ -191,10 +191,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\AnimatedImage.cpp" />
+    <ClCompile Include="src\renderers\AnimatedImageRenderer.cpp" />
     <ClCompile Include="src\audio\AtomicWrapper.cpp" />
     <ClCompile Include="src\managers\AudioManager.cpp" />
     <ClCompile Include="src\objects\custom\ScrollingBackground.cpp" />
-    <ClCompile Include="src\components\Animator.cpp" />
     <ClCompile Include="src\managers\FileManager.cpp" />
     <ClCompile Include="src\managers\ScoreManager.cpp" />
     <ClCompile Include="src\objects\custom\HorizontalMedusa.cpp" />
@@ -234,12 +235,14 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\Text.cpp" />
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
     <ClCompile Include="src\audio\AudioStream.cpp" />
+    <ClCompile Include="src\objects\custom\TestAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\AnimatedImage.h" />
+    <ClInclude Include="src\renderers\AnimatedImageRenderer.h" />
     <ClInclude Include="src\audio\AtomicWrapper.h" />
     <ClInclude Include="src\managers\AudioManager.h" />
     <ClInclude Include="src\objects\custom\ScrollingBackground.h" />
-    <ClInclude Include="src\components\Animator.h" />
     <ClInclude Include="src\managers\FileManager.h" />
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\custom\HorizontalMedusa.h" />
@@ -269,6 +272,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\objects\Text.h" />
     <ClInclude Include="src\renderers\TextRenderer.h" />
     <ClInclude Include="src\audio\AudioStream.h" />
+    <ClInclude Include="src\objects\custom\TestAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />

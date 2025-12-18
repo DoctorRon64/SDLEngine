@@ -102,9 +102,6 @@
     <ClCompile Include="src\managers\FileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\Animator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\custom\ScrollingBackground.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -115,6 +112,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\audio\AtomicWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderers\AnimatedImageRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\AnimatedImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\custom\TestAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,9 +209,6 @@
     <ClInclude Include="src\managers\FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\Animator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\objects\custom\ScrollingBackground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -216,6 +219,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\audio\AtomicWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderers\AnimatedImageRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\AnimatedImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\custom\TestAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
