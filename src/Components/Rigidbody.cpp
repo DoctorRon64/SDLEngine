@@ -35,9 +35,9 @@ void RigidBody::Update(float _deltaTime) {
 	acceleration = Vector2();
 	angularAcceleration = 0.0f;
 
-	Vector2 offset = (Vector2(-transform->size.x, -transform->size.y) / 2.0f) * transform->scale;
+	Vector2 offset = (-transform->GetSize() / 2.0f) * transform->scale;
 	for(AABB* collider : colliders) {
 		collider->SetTopLeft(transform->position + offset);
-		collider->SetSize(transform->size * transform->scale);
+		collider->SetSize(transform->GetSize());
 	}
 }

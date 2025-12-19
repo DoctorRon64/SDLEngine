@@ -15,10 +15,6 @@ public:
 
 	Vector2 GetTextureSize() const { return textureSize; }
 
-	void SetSourceRect(Vector2 offset, Vector2 size) {
-		sourceOffset = offset;
-		sourceSize = size;
-	}
 private:
 	SDL_Texture* texture = nullptr;
 	std::string resourcePath;

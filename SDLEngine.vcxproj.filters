@@ -233,5 +233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
+    <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
   </ItemGroup>
 </Project>

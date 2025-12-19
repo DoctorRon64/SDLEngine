@@ -7,15 +7,52 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		Text* text = new Text("Menu / To continue press [Space] or [click] the { blue button }");
-		text->GetTransform()->position = { 200.f, 200.f };
-		ui.push_back(text);
+		audioManager->PlaySoundLooping("res/audio/menu_music.wav");
 
-		audioManager->PlaySound("res/audio/ML.wav"); //MUSIC
+		Text* title = new Text("[MENACE ARCADE GAME]");
+		title->GetTransform()->scale = { 2.f, 2.f };
+		title->GetTransform()->position = { ((float)renderManager->WINDOW_WIDTH / 2) - 300, 200.f };
+		ui.push_back(title);
 
-		auto texture = renderManager->GetTexture("res/btn.png");
-		Button* btn = new Button([]() { sceneManager->SetNextScene(SceneState::GAMEPLAY); });
-		ui.push_back(btn);
+		float startX = 500.f;
+		float startY = 250.f;
+		float spacing = 90.f;
+
+		Button* playBtn = new Button([]() {
+			sceneManager->SetNextScene(SceneState::GAMEPLAY);
+		});
+		playBtn->GetTransform()->position = { startX, startY };
+		ui.push_back(playBtn);
+
+		//======================================================
+
+		Button* rankingBtn = new Button([]() {
+			sceneManager->SetNextScene(SceneState::RANKING);
+		});
+		rankingBtn->GetTransform()->position = { startX, startY + spacing };
+		ui.push_back(rankingBtn);
+
+		//=====================================================
+		Button* audioBtn = new Button([]() {
+			static bool muted = false;
+			muted = !muted;
+
+			if(muted)
+				audioManager->Mute();
+			else
+				audioManager->Unmute();
+		});
+		audioBtn->GetTransform()->position = { startX, startY + spacing * 2 };
+		ui.push_back(audioBtn);
+
+		//======================================================
+		Button* exitBtn = new Button([]() {
+			SDL_Event quit{};
+			quit.type = SDL_EVENT_QUIT;
+			SDL_PushEvent(&quit);
+		});
+		exitBtn->GetTransform()->position = { startX, startY + spacing * 3 };
+		ui.push_back(exitBtn);
 	}
 
 	void OnExit() override {

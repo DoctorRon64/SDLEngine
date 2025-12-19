@@ -2,16 +2,16 @@
 #include "Engine.h"
 
 int main(int argc, char* argv[]) {
-	constexpr unsigned int Width = 1200;
-	constexpr unsigned int Height = 1080;
-	const std::string Title = "SDL_Engine";
+	constexpr unsigned int WIDTH = 1360;
+	constexpr unsigned int HEIGHT = 768;
+	const std::string TITLE = "SDL_Engine";
 
 	Engine* engine = new Engine();
 
 	try {
-		renderManager->Init(Width, Height, Title);
-		engine->Init();
+		renderManager->Init(WIDTH, HEIGHT, TITLE);
 		audioManager->Init();
+		engine->Init();
 	}
 	catch(std::exception& result) {
 		std::cout << "There is a error: " << result.what() << std::endl;

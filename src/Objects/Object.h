@@ -9,7 +9,6 @@ protected:
 	Renderer* renderer = nullptr;
 	Transform* transform = nullptr;
 	RigidBody* rbComp = nullptr;
-	Vector2 textureSize;
 	short layer = 0;
 
 public:
@@ -39,6 +38,5 @@ public:
 	Transform* GetTransform() const { return transform; }
 	bool IsPendingDestroy() const { return isPendingDestroy; }
 	RigidBody* GetRigidBody() const { return rbComp; }
-	Vector2 GetTextureSize() const { return textureSize; }
 	short GetLayer() const { return layer; }
 };

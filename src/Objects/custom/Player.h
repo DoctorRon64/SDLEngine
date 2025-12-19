@@ -7,13 +7,10 @@ public:
 	Player(std::string _name = "res/man.png") :
 		Image(_name, Vector2(0.f, 0.f), Vector2(992, 1542)) {
 		transform->position = Vector2(0.f, 0.f);
-		transform->scale = Vector2(.2f, .2f);
+		transform->scale = Vector2(.1f, .1f);
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
-
-		//Animation idle{ 7, {350,150}, 0.12f, true, 0 };
-		//animator = new Animator(dynamic_cast<ImageRenderer*>(renderer), idle);
 	}
 
 	virtual void Update() override {
@@ -25,7 +22,10 @@ public:
 		Image::Update();
 
 		ClampToScreen();
-		//animator->Update(dt);
+
+		std::cout << "transform pos:" << transform->position.x << " , " << transform->position.y << std::endl;
+		std::cout << "destrect:" << renderer->GetDestinationRect().x << " , " << renderer->GetDestinationRect().y << "," << renderer->GetDestinationRect().w << "," << renderer->GetDestinationRect().h << "," << std::endl;
+		std::cout << "sourcrect" << renderer->GetSourceRect().x << " , " << renderer->GetSourceRect().y << "," << renderer->GetSourceRect().w << "," << renderer->GetSourceRect().h << "," << std::endl;
 	}
 
 	void HandleMovement() {
@@ -61,8 +61,7 @@ public:
 
 		b->SetLayer(20);
 
-		Vector2 textureSize = b->GetTextureSize();
-		Vector2 pos = Vector2(transform->position.x + (textureSize.x / 2), transform->position.y + (textureSize.y / 2));
+		Vector2 pos = Vector2(transform->position.x, transform->position.y);
 
 		b->GetTransform()->position = pos;
 
@@ -71,14 +70,13 @@ public:
 
 private:
 	void ClampToScreen() {
-		float w = textureSize.x * transform->scale.x;
-		float h = textureSize.y * transform->scale.y;
+		std::cout << "window: " << renderManager->WINDOW_WIDTH - transform->GetSize().x << " , " << renderManager->WINDOW_HEIGHT - transform->GetSize().y << std::endl;
 
-		if(transform->position.x <= 0 || transform->position.x >= renderManager->WINDOW_WIDTH - w) {
+		if(transform->position.x <= 0 || transform->position.x >= RenderManager::GetInstance()->WINDOW_WIDTH - transform->GetSize().x) {
 			rbComp->SetVelocity({ 0, rbComp->GetVelocity().y });
 		}
 
-		if(transform->position.y <= 0 || transform->position.y >= renderManager->WINDOW_HEIGHT - h) {
+		if(transform->position.y <= 0 || transform->position.y >= renderManager->WINDOW_HEIGHT - transform->GetSize().y) {
 			rbComp->SetVelocity({ rbComp->GetVelocity().x, 0 });
 		}
 	}

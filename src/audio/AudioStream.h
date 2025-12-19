@@ -70,9 +70,14 @@ public:
 				std::vector<Uint8> wavDataRemainginVec = std::vector<Uint8>(bytesRemaining, '\0');
 				Uint8* wavDataRemaining = &wavDataRemainginVec[0];
 
-				SDL_memcpy(wavDataRemaining, reinterpret_cast<const Uint32*>(&_data->wavData[bytesQueded]), bytesRemaining);
+				SDL_memcpy(wavDataRemaining, (const Uint32*)&_data->wavData[bytesQueded], bytesRemaining);
 				SDL_PutAudioStreamData(stream, wavDataRemaining, bytesRemaining);
 				SDL_FlushAudioStream(stream);
+
+				//Test
+				//SDL_memcpy(wavDataRemaining, &_data->wavData[bytesQueded], bytesRemaining);
+				//SDL_PutAudioStreamData(stream, _data->wavData, _data->wavDataLength);
+				//SDL_FlushAudioStream(stream);
 
 				state = PLAYING;
 			}

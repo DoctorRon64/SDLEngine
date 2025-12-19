@@ -10,7 +10,7 @@ public:
 		bgA->SetLayer(layer);
 		bgB->SetLayer(layer);
 
-		Vector2 texSize = bgA->GetTextureSize();
+		Vector2 texSize = bgA->GetTransform()->GetSize();
 		width = texSize.x;
 		height = texSize.y;
 

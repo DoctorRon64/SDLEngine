@@ -3,29 +3,36 @@
 
 class Button : public Image {
 public:
-	typedef std::function <void()> OnClick;
+	using OnClick = std::function<void()>;
 
-	Button(OnClick _onClick) : Image("res/btn.png", Vector2(0.f, 0.f), Vector2(3448.f, 1369.f)) {
-		onClick = _onClick;
+	Button(OnClick _onClick)
+		: Image("res/btn.png", { 0, 0 }, { 3448.f, 1369.f }), onClick(_onClick) {
+		transform->scale = Vector2(.1f, .1f);
 
-		transform->position = Vector2(200.f, 200.f);
-		transform->scale = Vector2(.05f, .05f);
+		collider = new AABB({ 0.f, 0.f }, transform->GetSize());
 
-		GetRigidBody()->AddCollider(new AABB(transform->position, transform->size));
+		Vector2 topLeft = { transform->position.x, transform->position.y };
+		collider->SetTopLeft(topLeft);
+		collider->SetSize(transform->GetSize());
+		GetRigidBody()->AddCollider(collider);
 	}
 
-	virtual void Render() override {
-		Object::Render();
-	}
+	void Update() override {
+		Vector2 mousePos = {
+			(float)inputManager->GetMouseX(),
+			(float)inputManager->GetMouseY()
+		};
 
-	virtual void Update() override {
-		if(!isHovered && GetRigidBody()->CheckOverlappingPoint({ (float)inputManager->GetMouseX() , (float)inputManager->GetMouseY() })) {
+		bool hovering = collider->CheckOverlappingPoint(mousePos);
+
+		if(hovering && !isHovered) {
 			OnHoverEnter();
 		}
-		else if(isHovered && !GetRigidBody()->CheckOverlappingPoint({ (float)inputManager->GetMouseX() , (float)inputManager->GetMouseY() })) {
+		else if(!hovering && isHovered) {
 			OnHoverExit();
 		}
-		else if(isHovered && inputManager->GetLeftClick()) {
+
+		if(isHovered && inputManager->GetLeftClick()) {
 			OnClicked();
 		}
 
@@ -33,10 +40,26 @@ public:
 	}
 
 private:
+	const float hoverScaleFactor = 1.1f;
 	bool isHovered = false;
+	AABB* collider = nullptr;
 	OnClick onClick;
 
-	void OnHoverEnter();
-	void OnHoverExit();
-	void OnClicked();
+	void OnHoverEnter() {
+		transform->scale = transform->scale * hoverScaleFactor;
+		//SetScaleCentered(transform->scale * hoverScaleFactor);
+		// audioManager->PlaySound("res/ui_hover.wav");
+
+		isHovered = true;
+	}
+
+	void OnHoverExit() {
+		transform->scale = transform->scale / hoverScaleFactor;
+		isHovered = false;
+	}
+
+	void OnClicked() {
+		// audioManager->PlaySound("res/ui_click.wav");
+		onClick();
+	}
 };

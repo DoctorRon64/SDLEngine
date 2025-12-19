@@ -5,8 +5,8 @@ class Renderer {
 protected:
 	Transform* transform = nullptr;
 	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_FRect sourceRect = { 0.0f, 0.0f, 0.0f, 0.0f };
-	SDL_FRect destinationRect = { 0.0f, 0.0f, 0.0f, 0.0f };
+	SDL_FRect sourceRect = { 0.0f, 0.0f, 0.0f, 0.0f }; //local space
+	SDL_FRect destinationRect = { 0.0f, 0.0f, 0.0f, 0.0f }; //screen space
 	std::string resourcePath = "";
 
 public:
@@ -20,4 +20,6 @@ public:
 	virtual void SetColor(SDL_Color _color) { color = _color; }
 	SDL_Color GetColor() const { return color; }
 	Transform GetTransform() const { return *transform; }
+	SDL_FRect GetDestinationRect() const { return destinationRect; }
+	SDL_FRect GetSourceRect() const { return sourceRect; }
 };

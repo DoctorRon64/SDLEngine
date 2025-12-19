@@ -14,7 +14,7 @@ public:
 	}
 
 	virtual void Update(float _deltaTime) override {
-		Vector2 offset = (Vector2(-transform->size.x, -transform->size.y) / 2.0f) * transform->scale;
+		Vector2 offset = (-transform->GetSize() / 2.0f) * transform->scale;
 
 		destinationRect.x = transform->position.x + offset.x;
 		destinationRect.y = transform->position.y + offset.y;
@@ -24,8 +24,8 @@ public:
 			destinationRect.h = sourceRect.h * transform->scale.y;
 		}
 		else {
-			destinationRect.w = transform->size.x * transform->scale.x;
-			destinationRect.h = transform->size.y * transform->scale.y;
+			destinationRect.w = transform->GetSize().x;
+			destinationRect.h = transform->GetSize().y;
 		}
 	}
 	virtual void Render() override {
