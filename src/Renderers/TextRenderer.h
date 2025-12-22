@@ -1,6 +1,6 @@
 #pragma once
 
-#define FONT_PATH "res/fonts/Fredoka.ttf"
+#define FONT_PATH "res/fonts/PixelifySans-VariableFont_wght.ttf"
 
 class TextRenderer : public Renderer {
 public:

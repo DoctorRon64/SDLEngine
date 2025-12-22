@@ -11,29 +11,60 @@ enum class EnemyState {
 class Enemy : public Image {
 protected:
 	EnemyState state = EnemyState::STAY;
+	float stateTimer = 0.f;
+
 	int hp = 1;
 	int scoreValue = 100;
-	float speed = 50.0f;
+	float speed = 50.f;
+
+	Vector2 velocity = { 0, 0 };
 
 public:
+	Enemy(
+		const std::string& texture,
+		Vector2 spawnPos,
+		Vector2 size
+	) : Image(texture, { 0,0 }, size) {
+		transform->position = spawnPos;
+		transform->scale = { 2.f, 2.f };
+
+		rbComp->SetLinearDrag(0.0f);
+	}
+
 	virtual void Update() override {
+		float dt = timeManager->GetDeltaTime();
+		stateTimer += dt;
+
+		UpdateState(dt);
 		Image::Update();
 	}
 
-	virtual void Shoot() {}
+	virtual void TakeDamage(int dmg) {
+		hp -= dmg;
+		if(hp <= 0) {
+			OnDeath();
+		}
+	}
 
 	virtual void OnDeath() {
 		scoreManager->AddScore(scoreValue);
 		Destroy();
 	}
 
-	Enemy(std::string _name = "res/evil-woman.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(1024.f, 1303.f)) : Image(_name, _pos, _size) {
-		Vector2 randomPosition = Vector2(500, 500);
-		transform->position = randomPosition;
-		transform->scale = Vector2(2.5f, 2.5f);
+protected:
+	float shootCooldown = 1.f;
+	float shootTimer = 0.f;
 
-		rbComp->SetAngularDrag(0.5f);
-		rbComp->SetLinearDrag(0.5f);
-		rbComp->AddCollider(new AABB(_pos, _size));
+	void UpdateShooting(float dt) {
+		shootTimer -= dt;
+		if(shootTimer <= 0.f) {
+			Shoot();
+			shootTimer = shootCooldown;
+		}
 	}
+
+	virtual void Shoot() {
+		// Default enemy does not shoot
+	}
+	virtual void UpdateState(float dt) = 0;
 };

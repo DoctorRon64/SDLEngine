@@ -191,6 +191,9 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
+    <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp" />
+    <ClCompile Include="src\objects\Enemies\BubbleEnemy.cpp" />
     <ClCompile Include="src\objects\AnimatedImage.cpp" />
     <ClCompile Include="src\renderers\AnimatedImageRenderer.cpp" />
     <ClCompile Include="src\audio\AtomicWrapper.cpp" />
@@ -198,7 +201,6 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\custom\ScrollingBackground.cpp" />
     <ClCompile Include="src\managers\FileManager.cpp" />
     <ClCompile Include="src\managers\ScoreManager.cpp" />
-    <ClCompile Include="src\objects\custom\HorizontalMedusa.cpp" />
     <ClCompile Include="src\objects\Button.cpp" />
     <ClCompile Include="src\objects\custom\Bullet.cpp" />
     <ClCompile Include="src\objects\custom\Background.cpp" />
@@ -236,8 +238,13 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\renderers\TextRenderer.cpp" />
     <ClCompile Include="src\audio\AudioStream.cpp" />
     <ClCompile Include="src\objects\custom\TestAnimation.cpp" />
+    <ClCompile Include="src\managers\WaveManager.cpp" />
+    <ClCompile Include="src\wave\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />
+    <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h" />
+    <ClInclude Include="src\objects\Enemies\BubbleEnemy.h" />
     <ClInclude Include="src\objects\AnimatedImage.h" />
     <ClInclude Include="src\renderers\AnimatedImageRenderer.h" />
     <ClInclude Include="src\audio\AtomicWrapper.h" />
@@ -245,7 +252,6 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\objects\custom\ScrollingBackground.h" />
     <ClInclude Include="src\managers\FileManager.h" />
     <ClInclude Include="src\managers\ScoreManager.h" />
-    <ClInclude Include="src\objects\custom\HorizontalMedusa.h" />
     <ClInclude Include="src\objects\Button.h" />
     <ClInclude Include="src\objects\custom\Bullet.h" />
     <ClInclude Include="src\objects\custom\Background.h" />
@@ -273,6 +279,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\renderers\TextRenderer.h" />
     <ClInclude Include="src\audio\AudioStream.h" />
     <ClInclude Include="src\objects\custom\TestAnimation.h" />
+    <ClInclude Include="src\managers\WaveManager.h" />
+    <ClInclude Include="src\wave\Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />

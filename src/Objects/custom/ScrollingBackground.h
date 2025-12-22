@@ -4,8 +4,8 @@
 class ScrollingBackground : public Object {
 public:
 	ScrollingBackground(const std::string& texturePath, float speed, int layer = -1000) : scrollSpeed(speed) {
-		bgA = new Image(texturePath, { 0, 0 }, { 0, 0 });
-		bgB = new Image(texturePath, { 0, 0 }, { 0, 0 });
+		bgA = new Image(texturePath, { 0, 0 }, { 1175, 700 });
+		bgB = new Image(texturePath, { 0, 0 }, { 1175, 700 });
 
 		bgA->SetLayer(layer);
 		bgB->SetLayer(layer);

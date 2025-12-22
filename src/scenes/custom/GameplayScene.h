@@ -4,7 +4,11 @@
 #include "objects/custom/Player.h"
 #include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
+#include <objects/Enemies/BubbleEnemy.h>
+#include <objects/Enemies/KillerWhaleEnemy.h>
+#include <objects/Enemies/MedusaEnemy.h>
 #include <objects/Text.h>
+#include <wave/Wave.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -20,42 +24,31 @@ private:
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		//auto bg = new Background();
-		//bg->SetLayer(-999);
-		//spawnerManager.SpawnObject(bg);
-
 		auto bg = new ScrollingBackground("res/bg.jpg", 200.0f, -1000);
 		spawnerManager.SpawnObject(bg);
 
-		auto enemy = new Enemy();
-		enemy->SetLayer(10);
-		spawnerManager.SpawnObject(enemy);
+		Wave wave1;
+		wave1.AddSpawn(0.0f, []() {
+			return new BubbleEnemy({ 1400.f, 200.f });
+		});
+		wave1.AddSpawn(0.5f, []() {
+			return new MedusaEnemy({ 1400.f, 400.f });
+		});
+		wave1.AddSpawn(0.5f, []() {
+			return new KillerWhaleEnemy({ 1400.f, 600.f });
+		});
+		waveManager->AddWave(std::move(wave1));
+		waveManager->Start();
 
 		auto player = new Player();
 		player->SetLayer(20);
 		spawnerManager.SpawnObject(player);
-
-		auto text = new Text("Hola, chico bienvenido con el mejor juego!");
-		text->GetTransform()->position = { 200.f, 200.f };
-		ui.push_back(text);
 	}
 
 	void OnExit() override { Scene::OnExit(); }
 	void OnUpdate() override {
-		switch(state) {
-			case GameplayState::GAMEPLAY:
-			Scene::OnUpdate();
-			break;
-			case GameplayState::PAUSED:
-			//UpdatePause();
-			break;
-			case GameplayState::FINISH_STAGE:
-			//UpdateFinishStage();
-			break;
-			case GameplayState::DEATH:
-			//UpdateDeath();
-			break;
-		}
+		waveManager->Update();
+		Scene::OnUpdate();
 	}
 
 	void Render() override { Scene::Render(); }

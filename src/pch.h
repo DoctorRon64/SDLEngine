@@ -48,5 +48,6 @@
 #include "Managers/RenderManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScoreManager.h"
+#include "managers/WaveManager.h"
 
 #include "managers/Spawner.h"

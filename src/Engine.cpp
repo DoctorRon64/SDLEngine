@@ -25,7 +25,7 @@ Engine::~Engine() {
 }
 
 void Engine::Init() {
-	renderManager->LoadFont("res/fonts/Fredoka.ttf");
+	renderManager->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
 
 	renderManager->LoadTexture("res/bg.jpg");
 	renderManager->LoadTexture("res/evil-woman.png");
