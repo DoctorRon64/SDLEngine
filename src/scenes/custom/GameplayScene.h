@@ -21,6 +21,7 @@ enum class GameplayState {
 class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
+	bool stateJustChanged = false;
 	Player* player = new Player();
 
 public:
@@ -50,6 +51,8 @@ public:
 
 	void OnUpdate() override {
 
+		bool stateChanged = stateJustChanged;
+
 		switch (state) {
 		case GameplayState::GAMEPLAY:
 			waveManager->Update();
@@ -57,11 +60,11 @@ public:
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(true);
-				state = GameplayState::PAUSED;
+				setState(GameplayState::PAUSED);
 			}
 
 			if (player->isDead()) {
-				state = GameplayState::DEATH;
+				setState(GameplayState::DEATH);
 			}
 
 			break;
@@ -80,7 +83,7 @@ public:
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(false);
-				state = GameplayState::GAMEPLAY;
+				setState(GameplayState::GAMEPLAY);
 			}
 			break;
 
@@ -89,25 +92,60 @@ public:
 			break;
 
 		case GameplayState::DEATH:
-			//TODO: Death
+			if (stateJustChanged) 
+				timeManager->SubscribeEvent(
+					std::make_pair(1.0f, [this](){ ShowDeathScreen(); })
+				);
 			break;
 		}
+
+		if (stateChanged) stateJustChanged = false;
+
 	}
 
 	void Render() override { Scene::Render(); }
 
+private:
 	void SetPauseMenuVisibility(bool visible) {
 		if (visible) {
 			Button* resumeBtn = new Button([this]() {
 				SetPauseMenuVisibility(false);
-				state = GameplayState::GAMEPLAY;
+				setState(GameplayState::GAMEPLAY);
 				});
-			resumeBtn->GetTransform()->position = { renderManager->WINDOW_WIDTH / 2, renderManager->WINDOW_WIDTH / 2 };
+			resumeBtn->GetTransform()->position = { (float)renderManager->WINDOW_WIDTH / 2.0f, (float)renderManager->WINDOW_WIDTH / 2.0f };
 			ui.push_back(resumeBtn);
 		}
 		else {
 			ui.pop_back();
 		}
+	}
+
+	void ShowDeathScreen() {
+		Image* blackScreen = new Image("res/black-screen.png", Vector2(0, 0), Vector2((float)renderManager->WINDOW_WIDTH, (float)renderManager->WINDOW_HEIGHT));
+		blackScreen->GetTransform()->position = { 0,0 };
+		ui.push_back(blackScreen);
+		timeManager->SubscribeEvent(std::make_pair(
+			2.0f, [this]() { ExitDeath(); }
+		));
+	}
+
+	void ExitDeath() {
+		ui.pop_back();
+		if (player->GetLives() > 0) {
+			player->DecrementLives(1);
+			player->HealToMax();
+			player->GetTransform()->position = { 0, 0 };
+			OnExit();
+			OnEnter();
+		}
+		else {
+			//TODO: Record hiscore
+		}
+	}
+
+	void setState(GameplayState _state) {
+		state = _state;
+		stateJustChanged = true;
 	}
 
 };
