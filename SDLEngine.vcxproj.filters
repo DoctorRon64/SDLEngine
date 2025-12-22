@@ -254,6 +254,9 @@
     <ClInclude Include="src\wave\Wave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utils\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />

@@ -9,6 +9,8 @@
 #include <objects/Enemies/MedusaEnemy.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
+#include <Objects/Button.h>
+#include <Utils/config.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -46,10 +48,63 @@ public:
 	}
 
 	void OnExit() override { Scene::OnExit(); }
+
 	void OnUpdate() override {
-		waveManager->Update();
-		Scene::OnUpdate();
+
+		switch (state) {
+		case GameplayState::GAMEPLAY:
+			waveManager->Update();
+			Scene::OnUpdate();
+
+			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
+				SetPauseMenuVisibility(true);
+				state = GameplayState::PAUSED;
+			}
+
+			break;
+
+		case GameplayState::PAUSED:
+			for (int i = ui.size() - 1; i >= 0; i--) {
+				if (ui[i]->IsPendingDestroy()) {
+					delete ui[i];
+					ui.erase(ui.begin() + i);
+				}
+			}
+
+			for (Object* u : ui) {
+				u->Update();
+			}
+
+			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
+				SetPauseMenuVisibility(false);
+				state = GameplayState::GAMEPLAY;
+			}
+			break;
+
+		case GameplayState::FINISH_STAGE:
+			//TODO: Finish Stage
+			break;
+
+		case GameplayState::DEATH:
+			//TODO: Death
+			break;
+		}
 	}
 
 	void Render() override { Scene::Render(); }
+
+	void SetPauseMenuVisibility(bool visible) {
+		if (visible) {
+			Button* resumeBtn = new Button([this]() {
+				SetPauseMenuVisibility(false);
+				state = GameplayState::GAMEPLAY;
+				});
+			resumeBtn->GetTransform()->position = { WIDTH / 2, HEIGHT / 2 };
+			ui.push_back(resumeBtn);
+		}
+		else {
+			ui.pop_back();
+		}
+	}
+
 };
