@@ -1,11 +1,12 @@
 #pragma once
-#include "../Image.h"
+#include "../Actor.h"
 #include "./Bullet.h"
 
-class Player : public Image {
+class Player : public Actor {
+
 public:
 	Player(std::string _name = "res/man.png") :
-		Image(_name, Vector2(0.f, 0.f), Vector2(992, 1542)) {
+		Actor(_name, Vector2(0.f, 0.f), Vector2(992, 1542)) {
 		transform->position = Vector2(0.f, 0.f);
 		transform->scale = Vector2(.1f, .1f);
 

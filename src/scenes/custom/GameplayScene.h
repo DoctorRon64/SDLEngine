@@ -10,7 +10,6 @@
 #include <objects/Text.h>
 #include <wave/Wave.h>
 #include <Objects/Button.h>
-#include <Utils/config.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -22,6 +21,7 @@ enum class GameplayState {
 class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
+	Player* player = new Player();
 
 public:
 	GameplayScene() = default;
@@ -42,7 +42,6 @@ public:
 		waveManager->AddWave(std::move(wave1));
 		waveManager->Start();
 
-		auto player = new Player();
 		player->SetLayer(20);
 		spawnerManager.SpawnObject(player);
 	}
@@ -59,6 +58,10 @@ public:
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(true);
 				state = GameplayState::PAUSED;
+			}
+
+			if (player->isDead()) {
+				state = GameplayState::DEATH;
 			}
 
 			break;
@@ -99,7 +102,7 @@ public:
 				SetPauseMenuVisibility(false);
 				state = GameplayState::GAMEPLAY;
 				});
-			resumeBtn->GetTransform()->position = { WIDTH / 2, HEIGHT / 2 };
+			resumeBtn->GetTransform()->position = { renderManager->WINDOW_WIDTH / 2, renderManager->WINDOW_WIDTH / 2 };
 			ui.push_back(resumeBtn);
 		}
 		else {
