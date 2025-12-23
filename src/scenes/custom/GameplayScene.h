@@ -93,7 +93,8 @@ public:
 				SetState(GameplayState::DEATH);
 			}
 
-			if (waveManager->IsCurrentWaveFinishedSpawning()) {
+			if (waveManager->IsCurrentWaveFinishedSpawning() &&
+				!AreEnemiesRemaining()) {
 				SetState(GameplayState::FINISH_STAGE);
 			}
 
