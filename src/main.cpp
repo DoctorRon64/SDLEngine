@@ -1,11 +1,8 @@
 #include "pch.h"
+#include "Utils/config.h"
 #include "Engine.h"
 
 int main(int argc, char* argv[]) {
-	constexpr unsigned int WIDTH = 1360;
-	constexpr unsigned int HEIGHT = 768;
-	const std::string TITLE = "SDL_Engine";
-
 	Engine* engine = new Engine();
 
 	try {

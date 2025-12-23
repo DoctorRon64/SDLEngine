@@ -1,11 +1,16 @@
 #pragma once
-#include "../Image.h"
+#include "../Actor.h"
 #include "./Bullet.h"
+#include <Utils/config.h>
 
-class Player : public Image {
+class Player : public Actor {
+
+private:
+	int lives = PLAYER_LIVES;
+
 public:
-	Player(std::string _name = "res/man.png") :
-		Image(_name, Vector2(0.f, 0.f), Vector2(992, 1542)) {
+	Player(std::string _path = "res/man.png") :
+		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542), PLAYER_HEALTH, PLAYER_HEALTH) {
 		transform->position = Vector2(0.f, 0.f);
 		transform->scale = Vector2(.1f, .1f);
 
@@ -67,6 +72,11 @@ public:
 
 		spawnerManager.SpawnObject(b);
 	}
+
+	int GetLives() { return lives; }
+	void SetLives(int _lives) { lives = _lives; }
+	void IncrementLives(int amount) { lives += amount; }
+	void DecrementLives(int amount) { lives -= amount; }
 
 private:
 	void ClampToScreen() {

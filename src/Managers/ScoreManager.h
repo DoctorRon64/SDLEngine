@@ -1,5 +1,6 @@
 #pragma once
 #define scoreManager ScoreManager::GetInstance()
+#include <Utils/config.h>
 
 struct HighScore {
 	char name[16];
@@ -27,6 +28,20 @@ public:
 
 	int GetScore() const {
 		return score;
+	}
+
+	const std::string GetScoreAsText() const {
+		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) : 1;
+		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
+		std::string result = "";
+		for (int i = 0; i < zeroCount; ++i) result += "0";
+		result += std::to_string(score);
+		return result;
+	}
+
+	bool IsHighScore() const {
+		//TODO: Check High Score
+		return true;
 	}
 
 	void Save(const std::string& name) {

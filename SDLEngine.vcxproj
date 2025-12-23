@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\Actor.cpp" />
     <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
     <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp" />
     <ClCompile Include="src\objects\Enemies\BubbleEnemy.cpp" />
@@ -242,6 +243,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\wave\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Objects\Actor.h" />
     <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />
     <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h" />
     <ClInclude Include="src\objects\Enemies\BubbleEnemy.h" />
@@ -268,6 +270,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\RenderManager.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\objects\Image.h" />
+    <ClInclude Include="src\Utils\config.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\renderers\ImageRenderer.h" />
     <ClInclude Include="src\renderers\Renderer.h" />

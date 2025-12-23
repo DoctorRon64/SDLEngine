@@ -2,24 +2,10 @@
 #define timeManager TimeManager::GetInstance()
 
 class TimeManager {
-public:
-	static TimeManager* GetInstance() {
-		static TimeManager instance;
-		return &instance;
-	}
+	using TimedEvent = std::pair<float, std::function<void()>>;
+private:
+	std::vector<TimedEvent> timedEvents = std::vector<TimedEvent>(0);
 
-	float GetDeltaTime() const { return deltaTime; }
-	float GetTimeFrame() const { return frameTime; }
-	float GetElapsedTime() const { return static_cast<float>(elapsedTime); }
-	bool ShouldUpdateGame() const { return deltaTime >= frameTime; }
-	void ResetDeltaTime() {
-		deltaTime -= static_cast<float>(std::floor(deltaTime / frameTime)) * frameTime;
-	}
-	void Update() {
-		elapsedTime = SDL_GetTicks() / 1000.0;
-		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
-		previousElapsedTime = elapsedTime;
-	}
 private:
 	TimeManager() {
 		deltaTime = 0.0f;
@@ -39,4 +25,35 @@ private:
 	//FPS Controle
 	const int fps = 60;
 	float frameTime;
+
+public:
+	static TimeManager* GetInstance() {
+		static TimeManager instance;
+		return &instance;
+	}
+
+	float GetDeltaTime() const { return deltaTime; }
+	float GetTimeFrame() const { return frameTime; }
+	float GetElapsedTime() const { return static_cast<float>(elapsedTime); }
+	bool ShouldUpdateGame() const { return deltaTime >= frameTime; }
+	void ResetDeltaTime() {
+		deltaTime -= static_cast<float>(std::floor(deltaTime / frameTime)) * frameTime;
+	}
+	void Update() {
+		elapsedTime = SDL_GetTicks() / 1000.0;
+		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
+		previousElapsedTime = elapsedTime;
+
+		for (int i = timedEvents.size() - 1; i >= 0; --i) {
+			timedEvents[i].first -= deltaTime;
+			if (timedEvents[i].first <= 0) {
+				timedEvents[i].second();
+				timedEvents.erase(timedEvents.begin() + i);
+			}
+		}
+	}
+
+	void SubscribeEvent(TimedEvent timedEvent) {
+		timedEvents.push_back(timedEvent);
+	}
 };

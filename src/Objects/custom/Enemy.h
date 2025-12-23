@@ -1,5 +1,5 @@
 #pragma once
-#include "../Image.h"
+#include "../Actor.h"
 
 enum class EnemyState {
 	STAY,
@@ -8,7 +8,7 @@ enum class EnemyState {
 	CHASE
 };
 
-class Enemy : public Image {
+class Enemy : public Actor {
 protected:
 	EnemyState state = EnemyState::STAY;
 	float stateTimer = 0.f;
@@ -24,7 +24,7 @@ public:
 		const std::string& texture,
 		Vector2 spawnPos,
 		Vector2 size
-	) : Image(texture, { 0,0 }, size) {
+	) : Actor(texture, { 0,0 }, size) {
 		transform->position = spawnPos;
 		transform->scale = { 2.f, 2.f };
 

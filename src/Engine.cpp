@@ -32,6 +32,7 @@ void Engine::Init() {
 	renderManager->LoadTexture("res/man.png");
 	renderManager->LoadTexture("res/bullet.png");
 	renderManager->LoadTexture("res/btn.png");
+	renderManager->LoadTexture("res/black-screen.png");
 
 	audioManager->LoadSoundData("res/audio/ML.wav");
 
