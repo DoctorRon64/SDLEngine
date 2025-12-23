@@ -6,3 +6,5 @@ const std::string TITLE = "SDL_Engine";
 
 constexpr unsigned int PLAYER_HEALTH = 100;
 constexpr unsigned int PLAYER_LIVES = 3;
+
+constexpr unsigned int SCORE_TEXT_DIGITS = 6;

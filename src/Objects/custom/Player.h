@@ -10,7 +10,7 @@ private:
 
 public:
 	Player(std::string _path = "res/man.png") :
-		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542), PLAYER_HEALTH, 0) {
+		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542), PLAYER_HEALTH, PLAYER_HEALTH) {
 		transform->position = Vector2(0.f, 0.f);
 		transform->scale = Vector2(.1f, .1f);
 

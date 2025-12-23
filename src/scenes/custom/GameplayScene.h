@@ -23,6 +23,8 @@ private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
 	Player* player = new Player();
+	Text* scoreText = new Text("Score");
+	Text* scoreNumberText = new Text("000000");
 
 public:
 	GameplayScene() = default;
@@ -42,6 +44,14 @@ public:
 		});
 		waveManager->AddWave(std::move(wave1));
 		waveManager->Start();
+
+		scoreText->GetTransform()->scale = { 2.f, 2.f };
+		scoreText->GetTransform()->position = { 400.0f, (float)renderManager->WINDOW_HEIGHT + 70.0f };
+		ui.push_back(scoreText);
+
+		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
+		scoreNumberText->GetTransform()->position = { 400.0f, (float)renderManager->WINDOW_HEIGHT + 30.0f };
+		ui.push_back(scoreNumberText);
 
 		player->SetLayer(20);
 		spawnerManager.SpawnObject(player);
@@ -111,6 +121,11 @@ public:
 		}
 
 		if (stateChanged) stateJustChanged = false;
+
+		scoreNumberText->SetText(scoreManager->GetScoreAsText());
+		if (scoreManager->IsHighScore()) {
+			scoreText->SetColor({ 0xff, 0xd7, 0x00, 0xff });
+		}
 
 	}
 

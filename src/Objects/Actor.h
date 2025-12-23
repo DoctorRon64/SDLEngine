@@ -16,6 +16,6 @@ public:
 	void Damage(int amount) { health -= amount; }
 	void Heal(int amount) { health += amount; }
 	void HealToMax() { health = maxHealth; }
-	bool isDead() { return health <= 0; }
+	bool IsDead() { return health <= 0; }
 };
 
