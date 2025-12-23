@@ -1,5 +1,4 @@
 #pragma once
-#define timeManager TimeManager::GetInstance()
 
 class TimeManager {
 	using TimedEvent = std::pair<float, std::function<void()>>;
@@ -44,8 +43,8 @@ public:
 		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;
 
-		for (int i = timedEvents.size() - 1; i >= 0; --i) {
-			if (timedEvents[i].first <= elapsedTime) {
+		for(int i = timedEvents.size() - 1; i >= 0; --i) {
+			if(timedEvents[i].first <= elapsedTime) {
 				timedEvents[i].second();
 				timedEvents.erase(timedEvents.begin() + i);
 			}

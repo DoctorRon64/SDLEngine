@@ -18,10 +18,10 @@ public:
 		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
 
-		spawnManager.SpawnObject(bgA);
+		SpawnManager::Instance().SpawnObject(bgA);
 		std::cout << bgA->GetTransform()->position.x << ", " << bgA->GetTransform()->position.y << std::endl;
 
-		spawnManager.SpawnObject(bgB);
+		SpawnManager::Instance().SpawnObject(bgB);
 	}
 
 	~ScrollingBackground() {
@@ -30,7 +30,7 @@ public:
 	}
 
 	virtual void Update() override {
-		float dt = timeManager->GetDeltaTime();
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
 
 		bgA->GetTransform()->position.x -= scrollSpeed * dt;
 		bgB->GetTransform()->position.x -= scrollSpeed * dt;

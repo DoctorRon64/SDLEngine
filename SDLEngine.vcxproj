@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\managers\CollisionManager.cpp" />
     <ClCompile Include="src\objects\Enemies\CirclerEnemy.cpp" />
     <ClCompile Include="src\Objects\Actor.cpp" />
     <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
@@ -243,6 +244,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\wave\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\managers\CollisionManager.h" />
     <ClInclude Include="src\objects\Enemies\CirclerEnemy.h" />
     <ClInclude Include="src\Objects\Actor.h" />
     <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />

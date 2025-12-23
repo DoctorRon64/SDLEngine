@@ -1,6 +1,5 @@
 #pragma once
 #include <Scenes/Scene.h>
-#define sceneManager SceneManager::GetInstance()
 
 enum class SceneState {
 	NONE,

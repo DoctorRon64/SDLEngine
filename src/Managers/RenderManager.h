@@ -1,5 +1,4 @@
 #pragma once
-#define renderManager RenderManager::GetInstance()
 
 class RenderManager {
 public:

@@ -25,7 +25,7 @@ protected:
 	void MoveStraight(float dt) {
 		transform->position += velocity * dt;
 
-		if(transform->position.x < renderManager->WINDOW_WIDTH * 0.66f) {
+		if(transform->position.x < RenderManager::GetInstance()->WINDOW_WIDTH * 0.66f) {
 			state = EnemyState::CIRCLE_MOVE;
 			circleCenter = transform->position;
 			angle = 0.f;

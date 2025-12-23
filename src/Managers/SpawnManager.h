@@ -1,8 +1,6 @@
 #pragma once
 #include <objects/Object.h>
 
-#define spawnManager SpawnManager::Instance()
-
 class SpawnManager {
 public:
 	static SpawnManager& Instance() {
@@ -38,6 +36,8 @@ public:
 		spawnedObjs.pop();
 		return temp;
 	}
+
+	std::queue<Object*> GetSpawnedObjects() { return spawnedObjs; }
 
 private:
 	SpawnManager() = default;

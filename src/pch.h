@@ -40,6 +40,8 @@
 #include "Renderers/ImageRenderer.h"
 #include "Renderers/Renderer.h"
 
+#include "managers/CollisionManager.h"
+
 #include "Managers/TimeManager.h"
 
 #include "managers/AudioManager.h"

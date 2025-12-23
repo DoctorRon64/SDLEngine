@@ -7,11 +7,11 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		audioManager->PlaySoundLooping("res/audio/music/menace_title.wav");
+		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_title.wav");
 
 		Text* title = new Text("[MENACE ARCADE GAME]");
 		title->GetTransform()->scale = { 2.f, 2.f };
-		title->GetTransform()->position = { ((float)renderManager->WINDOW_WIDTH / 2) - 300, 200.f };
+		title->GetTransform()->position = { ((float)RenderManager::GetInstance()->WINDOW_WIDTH / 2) - 300, 200.f };
 		ui.push_back(title);
 
 		float startX = 500.f;
@@ -19,7 +19,7 @@ public:
 		float spacing = 90.f;
 
 		Button* playBtn = new Button([]() {
-			sceneManager->SetNextScene(SceneState::GAMEPLAY);
+			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
 		});
 		playBtn->GetTransform()->position = { startX, startY };
 		ui.push_back(playBtn);
@@ -27,7 +27,7 @@ public:
 		//======================================================
 
 		Button* rankingBtn = new Button([]() {
-			sceneManager->SetNextScene(SceneState::RANKING);
+			SceneManager::GetInstance()->SetNextScene(SceneState::RANKING);
 		});
 		rankingBtn->GetTransform()->position = { startX, startY + spacing };
 		ui.push_back(rankingBtn);
@@ -38,9 +38,9 @@ public:
 			muted = !muted;
 
 			if(muted)
-				audioManager->Mute();
+				AudioManager::GetInstance()->Mute();
 			else
-				audioManager->Unmute();
+				AudioManager::GetInstance()->Unmute();
 		});
 		audioBtn->GetTransform()->position = { startX, startY + spacing * 2 };
 		ui.push_back(audioBtn);
@@ -62,9 +62,9 @@ public:
 	void OnUpdate() override {
 		Scene::OnUpdate();
 
-		if(inputManager->GetEvent(SDLK_SPACE, DOWN)) {
+		if(InputManager::GetInstance()->GetEvent(SDLK_SPACE, DOWN)) {
 			std::cout << "something happend yeeess" << std::endl;
-			sceneManager->SetNextScene(SceneState::GAMEPLAY);
+			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
 		}
 	}
 

@@ -6,24 +6,24 @@ int main(int argc, char* argv[]) {
 	Engine* engine = new Engine();
 
 	try {
-		renderManager->Init(WIDTH, HEIGHT, TITLE);
-		audioManager->Init();
+		RenderManager::GetInstance()->Init(WIDTH, HEIGHT, TITLE);
+		AudioManager::GetInstance()->Init();
 		engine->Init();
 	}
 	catch(std::exception& result) {
 		std::cout << "There is a error: " << result.what() << std::endl;
-		renderManager->Terminate();
-		audioManager->HaltAudio();
+		RenderManager::GetInstance()->Terminate();
+		AudioManager::GetInstance()->HaltAudio();
 		return -1;
 	}
 
 	while(engine->IsRunning()) {
-		timeManager->Update();
-		if(timeManager->ShouldUpdateGame()) {
+		TimeManager::GetInstance()->Update();
+		if(TimeManager::GetInstance()->ShouldUpdateGame()) {
 			engine->HandleEvents();
 			engine->Update();
 			engine->Render();
-			timeManager->ResetDeltaTime();
+			TimeManager::GetInstance()->ResetDeltaTime();
 		}
 	}
 

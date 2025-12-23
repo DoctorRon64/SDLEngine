@@ -12,8 +12,8 @@ void ImageRenderer::Render() {
 	sourceRect = { sourceOffset.x, sourceOffset.y, sourceSize.x, sourceSize.y };
 
 	SDL_RenderTextureRotated(
-		renderManager->GetRenderer(),
-		renderManager->GetTexture(resourcePath),
+		RenderManager::GetInstance()->GetRenderer(),
+		RenderManager::GetInstance()->GetTexture(resourcePath),
 		&sourceRect,
 		&destinationRect,
 		transform->rotation,

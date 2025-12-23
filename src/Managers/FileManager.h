@@ -1,5 +1,4 @@
 #pragma once
-#define fileManager FileManager::Instance()
 
 class FileManager {
 private:
