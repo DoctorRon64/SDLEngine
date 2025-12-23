@@ -82,7 +82,7 @@ public:
 				state = PLAYING;
 			}
 
-			if(state != READY && SDL_GetAudioStreamQueued(stream) == 0) {
+			if(state == PLAYING && SDL_GetAudioStreamQueued(stream) == 0) {
 				SDL_ClearAudioStream(stream);
 				state = READY;
 			}
