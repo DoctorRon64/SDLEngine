@@ -19,12 +19,6 @@ public:
 		waves[currentWave].Start();
 	}
 
-	void Update() {
-		if(currentWave >= waves.size()) return;
-
-		waves[currentWave].Update();
-	}
-
 	void StartNextWave() {
 		currentWave++;
 		assert(currentWave < waves.size());
@@ -38,9 +32,10 @@ public:
 	}
 
 	bool IsCurrentWaveFinishedSpawning() { return waves[currentWave].IsFinishedSpawning(); }
-	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() && IsCurrentWaveFinishedSpawning(); }
+	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() - 1 && IsCurrentWaveFinishedSpawning(); }
 
 private:
 	std::vector<Wave> waves;
 	size_t currentWave = 0;
+	std::vector<bool> currentWaveSpawns = std::vector<bool>();
 };

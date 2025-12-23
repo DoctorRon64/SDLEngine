@@ -34,13 +34,13 @@ public:
 
 		Wave wave1;
 		wave1.AddSpawn(0.0f, []() {
-			return new BubbleEnemy({ 1400.f, 200.f });
+			spawnerManager.SpawnObject(new BubbleEnemy({ 1400.f, 200.f }));
 		});
 		wave1.AddSpawn(0.5f, []() {
-			return new MedusaEnemy({ 1400.f, 400.f });
+			spawnerManager.SpawnObject(new MedusaEnemy({ 1400.f, 400.f }));
 		});
 		wave1.AddSpawn(0.5f, []() {
-			return new KillerWhaleEnemy({ 1400.f, 600.f });
+			spawnerManager.SpawnObject(new KillerWhaleEnemy({ 1400.f, 600.f }));
 		});
 		waveManager->AddWave(std::move(wave1));
 		waveManager->Start();
@@ -67,7 +67,6 @@ public:
 
 		switch (state) {
 		case GameplayState::GAMEPLAY:
-			//waveManager->Update();
 			Scene::OnUpdate();
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
@@ -111,6 +110,7 @@ public:
 			else {
 				//TODO: Finish Stage Transition
 				waveManager->StartNextWave();
+				SetState(GameplayState::GAMEPLAY);
 			}
 			break;
 
