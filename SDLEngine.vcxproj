@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\Enemies\CirclerEnemy.cpp" />
     <ClCompile Include="src\Objects\Actor.cpp" />
     <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
     <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp" />
@@ -204,11 +205,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\managers\ScoreManager.cpp" />
     <ClCompile Include="src\objects\Button.cpp" />
     <ClCompile Include="src\objects\custom\Bullet.cpp" />
-    <ClCompile Include="src\objects\custom\Background.cpp" />
     <ClCompile Include="src\objects\custom\Player.cpp" />
     <ClCompile Include="src\objects\custom\Enemy.cpp" />
     <ClCompile Include="src\scenes\custom\MenuScene.cpp" />
-    <ClCompile Include="src\managers\Spawner.cpp" />
+    <ClCompile Include="src\managers\SpawnManager.cpp" />
     <ClCompile Include="src\managers\SceneManager.cpp" />
     <ClCompile Include="src\scenes\custom\GameplayScene.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
@@ -243,6 +243,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\wave\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\Enemies\CirclerEnemy.h" />
     <ClInclude Include="src\Objects\Actor.h" />
     <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />
     <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h" />
@@ -256,11 +257,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\Button.h" />
     <ClInclude Include="src\objects\custom\Bullet.h" />
-    <ClInclude Include="src\objects\custom\Background.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
     <ClInclude Include="src\objects\custom\Enemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />
-    <ClInclude Include="src\managers\Spawner.h" />
+    <ClInclude Include="src\managers\SpawnManager.h" />
     <ClInclude Include="src\managers\SceneManager.h" />
     <ClInclude Include="src\scenes\custom\GameplayScene.h" />
     <ClInclude Include="src\scenes\Scene.h" />

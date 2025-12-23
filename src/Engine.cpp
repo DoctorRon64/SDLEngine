@@ -42,8 +42,12 @@ void Engine::Init() {
 void Engine::LoadAssets() {
 	renderManager->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
 
+	renderManager->LoadTexture("res/enemies/bubble_sprite.png");
+	renderManager->LoadTexture("res/enemies/circler_sprite.png");
+	renderManager->LoadTexture("res/enemies/medusa_sprite.png");
+	renderManager->LoadTexture("res/enemies/whale_sprite.png");
+
 	renderManager->LoadTexture("res/bg.png");
-	renderManager->LoadTexture("res/evil-woman.png");
 	renderManager->LoadTexture("res/man.png");
 	renderManager->LoadTexture("res/bullet.png");
 	renderManager->LoadTexture("res/btn.png");

@@ -50,4 +50,4 @@
 #include "managers/ScoreManager.h"
 #include "managers/WaveManager.h"
 
-#include "managers/Spawner.h"
+#include "managers/SpawnManager.h"

@@ -1,12 +1,12 @@
 #pragma once
 #include <objects/Object.h>
 
-#define spawnerManager Spawner::Instance()
+#define spawnManager SpawnManager::Instance()
 
-class Spawner {
+class SpawnManager {
 public:
-	static Spawner& Instance() {
-		static Spawner spawner;
+	static SpawnManager& Instance() {
+		static SpawnManager spawner;
 		return spawner;
 	}
 
@@ -40,9 +40,9 @@ public:
 	}
 
 private:
-	Spawner() = default;
-	Spawner(Spawner&) = delete;
-	Spawner& operator=(const Spawner&) = delete;
+	SpawnManager() = default;
+	SpawnManager(SpawnManager&) = delete;
+	SpawnManager& operator=(const SpawnManager&) = delete;
 
 	std::queue<Object*> spawnedObjs;
 };

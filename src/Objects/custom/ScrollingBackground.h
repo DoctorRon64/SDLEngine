@@ -15,10 +15,13 @@ public:
 		height = texSize.y;
 
 		bgA->GetTransform()->position = { 0, 0 };
+		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
 
-		spawnerManager.SpawnObject(bgA);
-		spawnerManager.SpawnObject(bgB);
+		spawnManager.SpawnObject(bgA);
+		std::cout << bgA->GetTransform()->position.x << ", " << bgA->GetTransform()->position.y << std::endl;
+
+		spawnManager.SpawnObject(bgB);
 	}
 
 	~ScrollingBackground() {

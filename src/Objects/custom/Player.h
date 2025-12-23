@@ -27,9 +27,9 @@ public:
 
 		ClampToScreen();
 
-		std::cout << "transform pos:" << transform->position.x << " , " << transform->position.y << std::endl;
-		std::cout << "destrect:" << renderer->GetDestinationRect().x << " , " << renderer->GetDestinationRect().y << "," << renderer->GetDestinationRect().w << "," << renderer->GetDestinationRect().h << "," << std::endl;
-		std::cout << "sourcrect" << renderer->GetSourceRect().x << " , " << renderer->GetSourceRect().y << "," << renderer->GetSourceRect().w << "," << renderer->GetSourceRect().h << "," << std::endl;
+		/*	std::cout << "transform pos:" << transform->position.x << " , " << transform->position.y << std::endl;
+			std::cout << "destrect:" << renderer->GetDestinationRect().x << " , " << renderer->GetDestinationRect().y << "," << renderer->GetDestinationRect().w << "," << renderer->GetDestinationRect().h << "," << std::endl;
+			std::cout << "sourcrect" << renderer->GetSourceRect().x << " , " << renderer->GetSourceRect().y << "," << renderer->GetSourceRect().w << "," << renderer->GetSourceRect().h << "," << std::endl;*/
 	}
 
 	void HandleMovement() {
@@ -69,7 +69,7 @@ public:
 
 		b->GetTransform()->position = pos;
 
-		spawnerManager.SpawnObject(b);
+		spawnManager.SpawnObject(b);
 
 		audioManager->PlaySound("res/audio/sfx/laserShoot.wav");
 	}
@@ -81,8 +81,6 @@ public:
 
 private:
 	void ClampToScreen() {
-		std::cout << "window: " << renderManager->WINDOW_WIDTH - transform->GetSize().x << " , " << renderManager->WINDOW_HEIGHT - transform->GetSize().y << std::endl;
-
 		if(transform->position.x <= 0 || transform->position.x >= RenderManager::GetInstance()->WINDOW_WIDTH - transform->GetSize().x) {
 			rbComp->SetVelocity({ 0, rbComp->GetVelocity().y });
 		}
