@@ -31,6 +31,12 @@ public:
 		waves[currentWave].Start();
 	}
 
+	void RestartWave() {
+		if (currentWave >= waves.size()) return;
+
+		waves[currentWave].Start();
+	}
+
 	bool IsCurrentWaveFinishedSpawning() { return waves[currentWave].IsFinishedSpawning(); }
 	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() && IsCurrentWaveFinishedSpawning(); }
 
