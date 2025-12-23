@@ -22,9 +22,17 @@ class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
+
+	//Player
 	Player* player = new Player();
-	Text* scoreText;
-	Text* scoreNumberText;
+
+	//Score UI
+	Text* scoreText = new Text("Score");
+	Text* scoreNumberText = new Text("000000");
+
+	//Score set UI
+	Text* setScoreText = new Text("Enter Name: ");
+	Text* setScoreNameText = new Text(" ");
 
 public:
 	GameplayScene() = default;
@@ -34,13 +42,13 @@ public:
 
 		Wave wave1;
 		wave1.AddSpawn(0.0f, []() {
-			return new BubbleEnemy({ 1400.f, 200.f });
+			spawnerManager.SpawnObject(new BubbleEnemy({ 1400.f, 200.f }));
 		});
 		wave1.AddSpawn(0.5f, []() {
-			return new MedusaEnemy({ 1400.f, 400.f });
+			spawnerManager.SpawnObject(new MedusaEnemy({ 1400.f, 400.f }));
 		});
 		wave1.AddSpawn(0.5f, []() {
-			return new KillerWhaleEnemy({ 1400.f, 600.f });
+			spawnerManager.SpawnObject(new KillerWhaleEnemy({ 1400.f, 600.f }));
 		});
 		waveManager->AddWave(std::move(wave1));
 		waveManager->Start();
@@ -55,6 +63,13 @@ public:
 		scoreNumberText->GetTransform()->position = { 400.0f, (float)renderManager->WINDOW_HEIGHT + 30.0f };
 		ui.push_back(scoreNumberText);
 
+		setScoreText = new Text("Enter Name: ");
+		setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
+		setScoreText->GetTransform()->position = { renderManager->WINDOW_WIDTH / 2.0f, renderManager->WINDOW_HEIGHT / 2.0f };
+		setScoreNameText = new Text(" ");
+		setScoreNameText->GetTransform()->scale = { 2.0f, 2.0f };
+		setScoreNameText->GetTransform()->position = { renderManager->WINDOW_WIDTH / 2.0f + 300.0f, renderManager->WINDOW_HEIGHT / 2.0f };
+
 		player->SetLayer(20);
 		spawnerManager.SpawnObject(player);
 	}
@@ -67,7 +82,6 @@ public:
 
 		switch (state) {
 		case GameplayState::GAMEPLAY:
-			//waveManager->Update();
 			Scene::OnUpdate();
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
@@ -79,8 +93,7 @@ public:
 				SetState(GameplayState::DEATH);
 			}
 
-			if (waveManager->IsCurrentWaveFinishedSpawning() &&
-				!AreEnemiesRemaining()) {
+			if (waveManager->IsCurrentWaveFinishedSpawning()) {
 				SetState(GameplayState::FINISH_STAGE);
 			}
 
@@ -106,11 +119,12 @@ public:
 
 		case GameplayState::FINISH_STAGE:
 			if (waveManager->AreAllWavesFinishedSpawning()) {
-				//TODO: Record hiscore
+				RecordHighScore();
 			}
 			else {
 				//TODO: Finish Stage Transition
 				waveManager->StartNextWave();
+				SetState(GameplayState::GAMEPLAY);
 			}
 			break;
 
@@ -144,7 +158,7 @@ private:
 			ui.push_back(resumeBtn);
 		}
 		else {
-			ui.back()->Destroy();
+			ui.pop_back();
 		}
 	}
 
@@ -153,12 +167,11 @@ private:
 		blackScreen->GetTransform()->position = { 0,0 };
 		ui.push_back(blackScreen);
 		timeManager->SubscribeEvent(std::make_pair(
-			2.0f, [this]() { ExitDeath(); }
+			2.0f, [this]() { ui.pop_back(); ExitDeath(); }
 		));
 	}
 
 	void ExitDeath() {
-		ui.back()->Destroy();
 		if (player->GetLives() > 0) {
 			player->DecrementLives(1);
 			player->HealToMax();
@@ -173,7 +186,7 @@ private:
 			this->SetState(GameplayState::GAMEPLAY);
 		}
 		else {
-			//TODO: Record hiscore
+			RecordHighScore();
 		}
 	}
 
@@ -188,6 +201,38 @@ private:
 			if (enemy = dynamic_cast<Enemy*>(obj)) return true;
 		}
 		return false;
+	}
+
+	void RecordHighScore() {
+		if (stateJustChanged) {
+			ui.push_back(setScoreText);
+			ui.push_back(setScoreNameText);
+			std::cout << "Set Score";
+		}
+		for (Sint32 key = SDLK_A; key < SDLK_Z; ++key) {
+			if (inputManager->GetEvent(key, DOWN)) {
+				std::string name = setScoreNameText->GetText();
+				char letter = key - SDLK_A + 'A';
+				name += letter;
+				setScoreNameText->SetText(name);
+				break;
+			}
+		}
+		if (inputManager->GetEvent(SDLK_RETURN, DOWN)) {
+			//TODO: Hook up to file manager
+			sceneManager->SetNextScene(SceneState::MENU);
+		}
+
+		for (int i = ui.size() - 1; i >= 0; i--) {
+			if (ui[i]->IsPendingDestroy()) {
+				delete ui[i];
+				ui.erase(ui.begin() + i);
+			}
+		}
+
+		for (Object* u : ui) {
+			u->Update();
+		}
 	}
 
 };

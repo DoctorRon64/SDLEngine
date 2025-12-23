@@ -54,6 +54,8 @@ public:
 		SetText(text);
 	}
 
+	std::string GetText() const { return text; }
+
 protected:
 	std::string text;
 	SDL_Texture* textTexture;

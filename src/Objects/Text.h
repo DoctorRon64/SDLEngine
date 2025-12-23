@@ -15,6 +15,8 @@ public:
 		dynamic_cast<TextRenderer*>(renderer)->SetText(_text);
 	}
 
+	std::string GetText() const { return dynamic_cast<TextRenderer*>(renderer)->GetText(); }
+
 	void SetColor(SDL_Color _colour) {
 		colour = _colour;
 		renderer->SetColor(colour);
