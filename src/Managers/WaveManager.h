@@ -23,30 +23,18 @@ public:
 		if(currentWave >= waves.size()) return;
 
 		waves[currentWave].Update();
-
-		if(waves[currentWave].IsFinishedSpawning() && AreAllEnemiesDead()) {
-			currentWave++;
-
-			if(currentWave < waves.size()) {
-				waves[currentWave].Start();
-			}
-			else {
-				OnAllWavesCompleted();
-			}
-		}
 	}
+
+	void StartNextWave() {
+		currentWave++;
+		assert(currentWave < waves.size());
+		waves[currentWave].Start();
+	}
+
+	bool IsCurrentWaveFinishedSpawning() { return waves[currentWave].IsFinishedSpawning(); }
+	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() && IsCurrentWaveFinishedSpawning(); }
 
 private:
 	std::vector<Wave> waves;
 	size_t currentWave = 0;
-
-	bool AreAllEnemiesDead() {
-		// You probably already have:
-		// objectManager->Count<Enemy>() == 0
-		return true;
-	}
-
-	void OnAllWavesCompleted() {
-		// spawn powerup / boss
-	}
 };

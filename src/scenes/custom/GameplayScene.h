@@ -60,11 +60,16 @@ public:
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(true);
-				setState(GameplayState::PAUSED);
+				SetState(GameplayState::PAUSED);
 			}
 
-			if (player->isDead()) {
-				setState(GameplayState::DEATH);
+			if (player->IsDead()) {
+				SetState(GameplayState::DEATH);
+			}
+
+			if (waveManager->IsCurrentWaveFinishedSpawning() &&
+				!AreEnemiesRemaining()) {
+				SetState(GameplayState::FINISH_STAGE);
 			}
 
 			break;
@@ -83,12 +88,18 @@ public:
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(false);
-				setState(GameplayState::GAMEPLAY);
+				SetState(GameplayState::GAMEPLAY);
 			}
 			break;
 
 		case GameplayState::FINISH_STAGE:
-			//TODO: Finish Stage
+			if (waveManager->AreAllWavesFinishedSpawning()) {
+				//TODO: Record hiscore
+			}
+			else {
+				//TODO: Finish Stage Transition
+				waveManager->StartNextWave();
+			}
 			break;
 
 		case GameplayState::DEATH:
@@ -110,7 +121,7 @@ private:
 		if (visible) {
 			Button* resumeBtn = new Button([this]() {
 				SetPauseMenuVisibility(false);
-				setState(GameplayState::GAMEPLAY);
+				SetState(GameplayState::GAMEPLAY);
 				});
 			resumeBtn->GetTransform()->position = { (float)renderManager->WINDOW_WIDTH / 2.0f, (float)renderManager->WINDOW_WIDTH / 2.0f };
 			ui.push_back(resumeBtn);
@@ -143,9 +154,17 @@ private:
 		}
 	}
 
-	void setState(GameplayState _state) {
+	void SetState(GameplayState _state) {
 		state = _state;
 		stateJustChanged = true;
+	}
+
+	bool AreEnemiesRemaining() {
+		for (Object* obj : objects) {
+			Enemy* enemy; 
+			if (enemy = static_cast<Enemy*>(obj)) return true;
+		}
+		return false;
 	}
 
 };
