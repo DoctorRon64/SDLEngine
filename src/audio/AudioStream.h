@@ -35,8 +35,6 @@ public:
 
 	void CheckPlayBack(SoundData* _data, std::atomic<bool>& _haltRequest) {
 		while(state != STOPPED) {
-			std::cout << "Thread is ALIVE!" << std::endl;
-
 			if((state != READY && SDL_GetAudioStreamQueued(stream) == 0) || _haltRequest) {
 				StopStream();
 			}
@@ -74,15 +72,10 @@ public:
 				SDL_PutAudioStreamData(stream, wavDataRemaining, bytesRemaining);
 				SDL_FlushAudioStream(stream);
 
-				//Test
-				//SDL_memcpy(wavDataRemaining, &_data->wavData[bytesQueded], bytesRemaining);
-				//SDL_PutAudioStreamData(stream, _data->wavData, _data->wavDataLength);
-				//SDL_FlushAudioStream(stream);
-
 				state = PLAYING;
 			}
 
-			if(state != READY && SDL_GetAudioStreamQueued(stream) == 0) {
+			if(state == PLAYING && SDL_GetAudioStreamQueued(stream) == 0) {
 				SDL_ClearAudioStream(stream);
 				state = READY;
 			}

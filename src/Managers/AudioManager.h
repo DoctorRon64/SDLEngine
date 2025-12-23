@@ -4,7 +4,9 @@
 
 //Para controlar cuando hay que terminar los threads
 static std::atomic<bool> shouldHaltAudio = false;
+static std::atomic<bool> soundEffectsHalt = false;
 static std::vector<AtomicWrapper<bool>> threadsDone;
+static std::vector<AtomicWrapper<bool>> activeLoops;
 
 #define audioManager AudioManager::GetInstance()
 class AudioManager {
@@ -30,6 +32,7 @@ public:
 			return false;
 		}
 	};
+
 	void HaltAudio() {
 		shouldHaltAudio = true;
 
@@ -66,24 +69,37 @@ public:
 	};
 
 	void PlaySound(const std::string& filePath) {
-		if(soundsData.find(filePath) == soundsData.end()) {
-			return;
-		}
+		if(soundsData.find(filePath) == soundsData.end()) return;
 
-		threadsDone.push_back(std::atomic<bool>(false));
-		std::thread thread(&AudioManager::PlaySoundCallback, this, filePath, (threadsDone.size() - 1), false);
-		thread.detach();
-	};
+		threadsDone.push_back(AtomicWrapper<bool>(false));
+		int index = threadsDone.size() - 1;
+
+		std::thread([this, filePath, index]() {
+			AudioStream stream(soundsData[filePath]->spec, audioDevice);
+			stream.CheckPlayBack(soundsData[filePath], threadsDone[index].value);
+			threadsDone[index].value = true;
+		}).detach();
+	}
 
 	void PlaySoundLooping(const std::string& filePath) {
-		if(soundsData.find(filePath) == soundsData.end()) {
-			return;
+		if(soundsData.find(filePath) == soundsData.end()) return;
+
+		// Stop previous music if any
+		if(musicThread.joinable()) {
+			musicThreadDone.value = true;
+			musicThread.join();
 		}
 
-		threadsDone.push_back(std::atomic<bool>(false));
-		std::thread thread(&AudioManager::PlaySoundCallback, this, filePath, (threadsDone.size() - 1), true);
-		thread.detach();
-	};
+		// Reset flag for new music
+		musicThreadDone.value = false;
+
+		// Start new music thread
+		musicThread = std::thread([this, filePath]() {
+			AudioStream stream(soundsData[filePath]->spec, audioDevice);
+			stream.CheckPlayBackLooping(soundsData[filePath], musicThreadDone.value);
+			musicThreadDone.value = true; // done
+		});
+	}
 
 	void Mute() {
 		if(muted) {
@@ -127,10 +143,10 @@ private:
 	void PlaySoundCallback(const std::string& filePath, int threadIndex, bool looping) {
 		AudioStream stream = AudioStream(soundsData[filePath]->spec, audioDevice);
 		if(looping) {
-			stream.CheckPlayBackLooping(soundsData[filePath], shouldHaltAudio);
+			stream.CheckPlayBackLooping(soundsData[filePath], threadsDone[threadIndex].value);
 		}
 		else {
-			stream.CheckPlayBack(soundsData[filePath], shouldHaltAudio);
+			stream.CheckPlayBack(soundsData[filePath], threadsDone[threadIndex].value);
 		}
 		threadsDone[threadIndex] = AtomicWrapper<bool>(std::atomic<bool>(true));
 	}
@@ -138,4 +154,8 @@ private:
 	bool muted = false;
 	SDL_AudioDeviceID audioDevice = 0;
 	std::map<std::string, SoundData*> soundsData;
+
+	std::vector<AtomicWrapper<bool>> threadsDone;
+	std::thread musicThread;
+	AtomicWrapper<bool> musicThreadDone;
 };

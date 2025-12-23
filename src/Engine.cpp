@@ -25,16 +25,7 @@ Engine::~Engine() {
 }
 
 void Engine::Init() {
-	renderManager->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
-
-	renderManager->LoadTexture("res/bg.jpg");
-	renderManager->LoadTexture("res/evil-woman.png");
-	renderManager->LoadTexture("res/man.png");
-	renderManager->LoadTexture("res/bullet.png");
-	renderManager->LoadTexture("res/btn.png");
-	renderManager->LoadTexture("res/black-screen.png");
-
-	audioManager->LoadSoundData("res/audio/ML.wav");
+	LoadAssets();
 
 	try {
 		sceneManager->AddScene(SceneState::MENU, new MenuScene());
@@ -46,6 +37,24 @@ void Engine::Init() {
 	}
 
 	isRunning = true;
+}
+
+void Engine::LoadAssets() {
+	renderManager->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
+
+	renderManager->LoadTexture("res/bg.png");
+	renderManager->LoadTexture("res/evil-woman.png");
+	renderManager->LoadTexture("res/man.png");
+	renderManager->LoadTexture("res/bullet.png");
+	renderManager->LoadTexture("res/btn.png");
+	renderManager->LoadTexture("res/black-screen.png");
+
+	audioManager->LoadSoundData("res/audio/music/menace_subtune_2.wav");
+	audioManager->LoadSoundData("res/audio/music/menace_title.wav");
+
+	audioManager->LoadSoundData("res/audio/sfx/laserShoot.wav");
+	audioManager->LoadSoundData("res/audio/sfx/ui_select.wav");
+	audioManager->LoadSoundData("res/audio/sfx/ui_hover.wav");
 }
 
 void Engine::HandleEvents() {
