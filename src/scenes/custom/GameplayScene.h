@@ -4,12 +4,12 @@
 #include "objects/custom/Player.h"
 #include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
+#include <Objects/Button.h>
 #include <objects/Enemies/BubbleEnemy.h>
 #include <objects/Enemies/KillerWhaleEnemy.h>
 #include <objects/Enemies/MedusaEnemy.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
-#include <Objects/Button.h>
 
 enum class GameplayState {
 	GAMEPLAY,

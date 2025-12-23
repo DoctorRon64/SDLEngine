@@ -6,6 +6,7 @@ public:
 	Engine();
 	~Engine();
 	void Init();
+	void LoadAssets();
 	void HandleEvents();
 	void Update();
 	void Render();
