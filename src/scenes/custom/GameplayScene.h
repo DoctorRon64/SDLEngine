@@ -23,13 +23,13 @@ private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
 	Player* player = new Player();
-	Text* scoreText = new Text("Score");
-	Text* scoreNumberText = new Text("000000");
+	Text* scoreText;
+	Text* scoreNumberText;
 
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		auto bg = new ScrollingBackground("res/bg.jpg", 200.0f, -1000);
+		ScrollingBackground* bg = new ScrollingBackground("res/bg.jpg", 200.0f, -1000);
 		spawnerManager.SpawnObject(bg);
 
 		Wave wave1;
@@ -45,10 +45,12 @@ public:
 		waveManager->AddWave(std::move(wave1));
 		waveManager->Start();
 
+		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
 		scoreText->GetTransform()->position = { 400.0f, (float)renderManager->WINDOW_HEIGHT + 70.0f };
 		ui.push_back(scoreText);
 
+		scoreNumberText = new Text("000000");
 		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
 		scoreNumberText->GetTransform()->position = { 400.0f, (float)renderManager->WINDOW_HEIGHT + 30.0f };
 		ui.push_back(scoreNumberText);
@@ -65,7 +67,7 @@ public:
 
 		switch (state) {
 		case GameplayState::GAMEPLAY:
-			waveManager->Update();
+			//waveManager->Update();
 			Scene::OnUpdate();
 
 			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
@@ -142,7 +144,7 @@ private:
 			ui.push_back(resumeBtn);
 		}
 		else {
-			ui.pop_back();
+			ui.back()->Destroy();
 		}
 	}
 
@@ -156,13 +158,19 @@ private:
 	}
 
 	void ExitDeath() {
-		ui.pop_back();
+		ui.back()->Destroy();
 		if (player->GetLives() > 0) {
 			player->DecrementLives(1);
 			player->HealToMax();
 			player->GetTransform()->position = { 0, 0 };
-			OnExit();
-			OnEnter();
+			for (int i = 0; i < objects.size(); ++i) {
+				Enemy* enemy;
+				if (enemy = dynamic_cast<Enemy*>(objects[i])) {
+					objects[i]->Destroy();
+				}
+			}
+			waveManager->RestartWave();
+			this->SetState(GameplayState::GAMEPLAY);
 		}
 		else {
 			//TODO: Record hiscore
@@ -177,7 +185,7 @@ private:
 	bool AreEnemiesRemaining() {
 		for (Object* obj : objects) {
 			Enemy* enemy; 
-			if (enemy = static_cast<Enemy*>(obj)) return true;
+			if (enemy = dynamic_cast<Enemy*>(obj)) return true;
 		}
 		return false;
 	}

@@ -45,8 +45,7 @@ public:
 		previousElapsedTime = elapsedTime;
 
 		for (int i = timedEvents.size() - 1; i >= 0; --i) {
-			timedEvents[i].first -= deltaTime;
-			if (timedEvents[i].first <= 0) {
+			if (timedEvents[i].first <= elapsedTime) {
 				timedEvents[i].second();
 				timedEvents.erase(timedEvents.begin() + i);
 			}
@@ -54,6 +53,8 @@ public:
 	}
 
 	void SubscribeEvent(TimedEvent timedEvent) {
-		timedEvents.push_back(timedEvent);
+		timedEvents.push_back(
+			std::make_pair(timedEvent.first + elapsedTime, timedEvent.second)
+		);
 	}
 };
