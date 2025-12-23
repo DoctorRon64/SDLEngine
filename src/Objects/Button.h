@@ -48,7 +48,7 @@ private:
 	void OnHoverEnter() {
 		transform->scale = transform->scale * hoverScaleFactor;
 		//SetScaleCentered(transform->scale * hoverScaleFactor);
-		// audioManager->PlaySound("res/ui_hover.wav");
+		audioManager->PlaySound("res/audio/sfx/ui_hover.wav");
 
 		isHovered = true;
 	}
@@ -59,7 +59,7 @@ private:
 	}
 
 	void OnClicked() {
-		// audioManager->PlaySound("res/ui_click.wav");
+		audioManager->PlaySound("res/audio/sfx/ui_select.wav");
 		onClick();
 	}
 };

@@ -29,7 +29,9 @@ private:
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		auto bg = new ScrollingBackground("res/bg.jpg", 200.0f, -1000);
+		audioManager->PlaySoundLooping("res/audio/music/menace_subtune_2.wav");
+
+		auto bg = new ScrollingBackground("res/bg.png", 200.0f, -1000);
 		spawnerManager.SpawnObject(bg);
 
 		Wave wave1;
@@ -60,50 +62,49 @@ public:
 	void OnExit() override { Scene::OnExit(); }
 
 	void OnUpdate() override {
-
 		bool stateChanged = stateJustChanged;
 
-		switch (state) {
-		case GameplayState::GAMEPLAY:
+		switch(state) {
+			case GameplayState::GAMEPLAY:
 			waveManager->Update();
 			Scene::OnUpdate();
 
-			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
+			if(inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(true);
 				SetState(GameplayState::PAUSED);
 			}
 
-			if (player->IsDead()) {
+			if(player->IsDead()) {
 				SetState(GameplayState::DEATH);
 			}
 
-			if (waveManager->IsCurrentWaveFinishedSpawning() &&
+			if(waveManager->IsCurrentWaveFinishedSpawning() &&
 				!AreEnemiesRemaining()) {
 				SetState(GameplayState::FINISH_STAGE);
 			}
 
 			break;
 
-		case GameplayState::PAUSED:
-			for (int i = ui.size() - 1; i >= 0; i--) {
-				if (ui[i]->IsPendingDestroy()) {
+			case GameplayState::PAUSED:
+			for(int i = ui.size() - 1; i >= 0; i--) {
+				if(ui[i]->IsPendingDestroy()) {
 					delete ui[i];
 					ui.erase(ui.begin() + i);
 				}
 			}
 
-			for (Object* u : ui) {
+			for(Object* u : ui) {
 				u->Update();
 			}
 
-			if (inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
+			if(inputManager->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(false);
 				SetState(GameplayState::GAMEPLAY);
 			}
 			break;
 
-		case GameplayState::FINISH_STAGE:
-			if (waveManager->AreAllWavesFinishedSpawning()) {
+			case GameplayState::FINISH_STAGE:
+			if(waveManager->AreAllWavesFinishedSpawning()) {
 				//TODO: Record hiscore
 			}
 			else {
@@ -112,32 +113,31 @@ public:
 			}
 			break;
 
-		case GameplayState::DEATH:
-			if (stateJustChanged) 
+			case GameplayState::DEATH:
+			if(stateJustChanged)
 				timeManager->SubscribeEvent(
-					std::make_pair(1.0f, [this](){ ShowDeathScreen(); })
+					std::make_pair(1.0f, [this]() { ShowDeathScreen(); })
 				);
 			break;
 		}
 
-		if (stateChanged) stateJustChanged = false;
+		if(stateChanged) stateJustChanged = false;
 
 		scoreNumberText->SetText(scoreManager->GetScoreAsText());
-		if (scoreManager->IsHighScore()) {
+		if(scoreManager->IsHighScore()) {
 			scoreText->SetColor({ 0xff, 0xd7, 0x00, 0xff });
 		}
-
 	}
 
 	void Render() override { Scene::Render(); }
 
 private:
 	void SetPauseMenuVisibility(bool visible) {
-		if (visible) {
+		if(visible) {
 			Button* resumeBtn = new Button([this]() {
 				SetPauseMenuVisibility(false);
 				SetState(GameplayState::GAMEPLAY);
-				});
+			});
 			resumeBtn->GetTransform()->position = { (float)renderManager->WINDOW_WIDTH / 2.0f, (float)renderManager->WINDOW_WIDTH / 2.0f };
 			ui.push_back(resumeBtn);
 		}
@@ -157,7 +157,7 @@ private:
 
 	void ExitDeath() {
 		ui.pop_back();
-		if (player->GetLives() > 0) {
+		if(player->GetLives() > 0) {
 			player->DecrementLives(1);
 			player->HealToMax();
 			player->GetTransform()->position = { 0, 0 };
@@ -175,11 +175,10 @@ private:
 	}
 
 	bool AreEnemiesRemaining() {
-		for (Object* obj : objects) {
-			Enemy* enemy; 
-			if (enemy = static_cast<Enemy*>(obj)) return true;
+		for(Object* obj : objects) {
+			Enemy* enemy;
+			if(enemy = static_cast<Enemy*>(obj)) return true;
 		}
 		return false;
 	}
-
 };

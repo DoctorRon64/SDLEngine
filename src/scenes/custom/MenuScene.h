@@ -7,7 +7,7 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		audioManager->PlaySoundLooping("res/audio/music/ML.wav");
+		audioManager->PlaySoundLooping("res/audio/music/menace_title.wav");
 
 		Text* title = new Text("[MENACE ARCADE GAME]");
 		title->GetTransform()->scale = { 2.f, 2.f };

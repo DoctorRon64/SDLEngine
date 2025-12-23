@@ -4,7 +4,6 @@
 #include <Utils/config.h>
 
 class Player : public Actor {
-
 private:
 	int lives = PLAYER_LIVES;
 
@@ -71,6 +70,8 @@ public:
 		b->GetTransform()->position = pos;
 
 		spawnerManager.SpawnObject(b);
+
+		audioManager->PlaySound("res/audio/sfx/laserShoot.wav");
 	}
 
 	int GetLives() { return lives; }
