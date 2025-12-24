@@ -117,13 +117,13 @@
     <ClCompile Include="src\objects\custom\TestAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Enemies\BubbleEnemy.cpp">
+    <ClCompile Include="src\objects\enemies\BubbleEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp">
+    <ClCompile Include="src\objects\enemies\KillerWhaleEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp">
+    <ClCompile Include="src\objects\enemies\MedusaEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\managers\WaveManager.cpp">
@@ -135,7 +135,7 @@
     <ClCompile Include="src\Objects\Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Enemies\CirclerEnemy.cpp">
+    <ClCompile Include="src\objects\enemies\CirclerEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\managers\CollisionManager.cpp">
@@ -242,13 +242,13 @@
     <ClInclude Include="src\objects\custom\TestAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Enemies\BubbleEnemy.h">
+    <ClInclude Include="src\objects\enemies\BubbleEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h">
+    <ClInclude Include="src\objects\enemies\KillerWhaleEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Enemies\MedusaEnemy.h">
+    <ClInclude Include="src\objects\enemies\MedusaEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\WaveManager.h">
@@ -257,13 +257,13 @@
     <ClInclude Include="src\wave\Wave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\config.h">
+    <ClInclude Include="src\utils\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\Actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\Enemies\CirclerEnemy.h">
+    <ClInclude Include="src\objects\enemies\CirclerEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\managers\CollisionManager.h">

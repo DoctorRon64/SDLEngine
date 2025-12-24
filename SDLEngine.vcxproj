@@ -192,11 +192,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\managers\CollisionManager.cpp" />
-    <ClCompile Include="src\objects\Enemies\CirclerEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\CirclerEnemy.cpp" />
     <ClCompile Include="src\Objects\Actor.cpp" />
-    <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
-    <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp" />
-    <ClCompile Include="src\objects\Enemies\BubbleEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\MedusaEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\KillerWhaleEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BubbleEnemy.cpp" />
     <ClCompile Include="src\objects\AnimatedImage.cpp" />
     <ClCompile Include="src\renderers\AnimatedImageRenderer.cpp" />
     <ClCompile Include="src\audio\AtomicWrapper.cpp" />
@@ -245,11 +245,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\managers\CollisionManager.h" />
-    <ClInclude Include="src\objects\Enemies\CirclerEnemy.h" />
+    <ClInclude Include="src\objects\enemies\CirclerEnemy.h" />
     <ClInclude Include="src\Objects\Actor.h" />
-    <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />
-    <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h" />
-    <ClInclude Include="src\objects\Enemies\BubbleEnemy.h" />
+    <ClInclude Include="src\objects\enemies\MedusaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\KillerWhaleEnemy.h" />
+    <ClInclude Include="src\objects\enemies\BubbleEnemy.h" />
     <ClInclude Include="src\objects\AnimatedImage.h" />
     <ClInclude Include="src\renderers\AnimatedImageRenderer.h" />
     <ClInclude Include="src\audio\AtomicWrapper.h" />
@@ -272,7 +272,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\RenderManager.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\objects\Image.h" />
-    <ClInclude Include="src\Utils\config.h" />
+    <ClInclude Include="src\utils\config.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\renderers\ImageRenderer.h" />
     <ClInclude Include="src\renderers\Renderer.h" />

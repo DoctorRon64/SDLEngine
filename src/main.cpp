@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Engine.h"
-#include "Utils/config.h"
+#include "utils/config.h"
 
 int main(int argc, char* argv[]) {
 	Engine* engine = new Engine();

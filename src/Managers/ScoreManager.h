@@ -1,5 +1,5 @@
 #pragma once
-#include <Utils/config.h>
+#include <utils/config.h>
 
 struct HighScore {
 	char name[16];

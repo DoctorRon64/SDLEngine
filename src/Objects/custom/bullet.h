@@ -6,8 +6,8 @@ class Bullet : public Image {
 public:
 	bool isPlayerBullet = true;
 
-	Bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), bool _isPlayer = true)
-		: Image(_name, _pos, Vector2(40.f, 40.f)), isPlayerBullet(_isPlayer) {
+	Bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(40.f, 40.f)), bool _isPlayer = true)
+	: Image(_name, _pos, _size), isPlayerBullet(_isPlayer)  {
 		rbComp->AddCollider(new AABB(_pos, Vector2(40.f, 40.f)));
 		rbComp->SetVelocity(Vector2(bulletSpeed, 0.f));
 
