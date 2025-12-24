@@ -19,8 +19,8 @@ public:
 
 	void Update() override {
 		Vector2 mousePos = {
-			(float)inputManager->GetMouseX(),
-			(float)inputManager->GetMouseY()
+			(float)InputManager::GetInstance()->GetMouseX(),
+			(float)InputManager::GetInstance()->GetMouseY()
 		};
 
 		bool hovering = collider->CheckOverlappingPoint(mousePos);
@@ -32,7 +32,7 @@ public:
 			OnHoverExit();
 		}
 
-		if(isHovered && inputManager->GetLeftClick()) {
+		if(isHovered && InputManager::GetInstance()->GetLeftClick()) {
 			OnClicked();
 		}
 
@@ -48,7 +48,7 @@ private:
 	void OnHoverEnter() {
 		transform->scale = transform->scale * hoverScaleFactor;
 		//SetScaleCentered(transform->scale * hoverScaleFactor);
-		audioManager->PlaySound("res/audio/sfx/ui_hover.wav");
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/ui_hover.wav");
 
 		isHovered = true;
 	}
@@ -59,7 +59,7 @@ private:
 	}
 
 	void OnClicked() {
-		audioManager->PlaySound("res/audio/sfx/ui_select.wav");
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/ui_select.wav");
 		onClick();
 	}
 };

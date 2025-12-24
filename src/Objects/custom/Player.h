@@ -1,6 +1,6 @@
 #pragma once
 #include "../Actor.h"
-#include "./Bullet.h"
+#include "Bullet.h"
 #include <Utils/config.h>
 
 class Player : public Actor {
@@ -18,7 +18,7 @@ public:
 	}
 
 	virtual void Update() override {
-		float dt = timeManager->GetDeltaTime();
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
 		shootTimer -= dt;
 
 		HandleMovement();
@@ -26,36 +26,42 @@ public:
 		Image::Update();
 
 		ClampToScreen();
-
-		std::cout << "transform pos:" << transform->position.x << " , " << transform->position.y << std::endl;
-		std::cout << "destrect:" << renderer->GetDestinationRect().x << " , " << renderer->GetDestinationRect().y << "," << renderer->GetDestinationRect().w << "," << renderer->GetDestinationRect().h << "," << std::endl;
-		std::cout << "sourcrect" << renderer->GetSourceRect().x << " , " << renderer->GetSourceRect().y << "," << renderer->GetSourceRect().w << "," << renderer->GetSourceRect().h << "," << std::endl;
 	}
 
 	void HandleMovement() {
-		if(inputManager->GetEvent(SDLK_W, HOLD)) {
-			rbComp->AddForce(Vector2(0.0f, -300.0f));
-		}
-		if(inputManager->GetEvent(SDLK_S, HOLD)) {
-			rbComp->AddForce(Vector2(0.0f, 300.0f));
-		}
-		if(inputManager->GetEvent(SDLK_A, HOLD)) {
-			rbComp->AddForce(Vector2(-300.0f, 0.0f));
-		}
-		if(inputManager->GetEvent(SDLK_D, HOLD)) {
-			rbComp->AddForce(Vector2(300.0f, 0.0f));
-		}
-		if(inputManager->GetEvent(SDLK_R, HOLD)) {
-			rbComp->AddTorque(0.1f);
-		}
+		Vector2 move(0.f, 0.f);
+
+		// Keyboard WASD
+		if(InputManager::GetInstance()->GetEvent(SDLK_W, HOLD)) move.y -= 1;
+		if(InputManager::GetInstance()->GetEvent(SDLK_S, HOLD)) move.y += 1;
+		if(InputManager::GetInstance()->GetEvent(SDLK_A, HOLD)) move.x -= 1;
+		if(InputManager::GetInstance()->GetEvent(SDLK_D, HOLD)) move.x += 1;
+
+		// Arrow keys
+		if(InputManager::GetInstance()->GetArrowInput(SDLK_UP)) move.y -= 1;
+		if(InputManager::GetInstance()->GetArrowInput(SDLK_DOWN)) move.y += 1;
+		if(InputManager::GetInstance()->GetArrowInput(SDLK_LEFT)) move.x -= 1;
+		if(InputManager::GetInstance()->GetArrowInput(SDLK_RIGHT)) move.x += 1;
+
+		// Gamepad
+		move.x += InputManager::GetInstance()->GetGamepadAxisX();
+		move.y += InputManager::GetInstance()->GetGamepadAxisY();
+
+		rbComp->AddForce(move * 300.f);
 	}
 
 	void HandleShooting() {
-		if(inputManager->GetEvent(SDLK_SPACE, DOWN) || inputManager->GetLeftClick()) {
-			if(shootTimer <= 0.0f) {
-				Shoot();
-				shootTimer = shootCooldown;
-			}
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
+		shootTimer -= dt;
+
+		bool fireInput = InputManager::GetInstance()->GetEvent(SDLK_SPACE, DOWN) ||
+			InputManager::GetInstance()->GetLeftClick() ||
+			InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_SOUTH) ||
+			InputManager::GetInstance()->GetArrowInput(UP);
+
+		if(fireInput && shootTimer <= 0.0f) {
+			Shoot();
+			shootTimer = 0.2f;
 		}
 	}
 
@@ -69,9 +75,9 @@ public:
 
 		b->GetTransform()->position = pos;
 
-		spawnerManager.SpawnObject(b);
+		SpawnManager::Instance().SpawnObject(b);
 
-		audioManager->PlaySound("res/audio/sfx/laserShoot.wav");
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
 	}
 
 	int GetLives() { return lives; }
@@ -81,13 +87,11 @@ public:
 
 private:
 	void ClampToScreen() {
-		std::cout << "window: " << renderManager->WINDOW_WIDTH - transform->GetSize().x << " , " << renderManager->WINDOW_HEIGHT - transform->GetSize().y << std::endl;
-
 		if(transform->position.x <= 0 || transform->position.x >= RenderManager::GetInstance()->WINDOW_WIDTH - transform->GetSize().x) {
 			rbComp->SetVelocity({ 0, rbComp->GetVelocity().y });
 		}
 
-		if(transform->position.y <= 0 || transform->position.y >= renderManager->WINDOW_HEIGHT - transform->GetSize().y) {
+		if(transform->position.y <= 0 || transform->position.y >= RenderManager::GetInstance()->WINDOW_HEIGHT - transform->GetSize().y) {
 			rbComp->SetVelocity({ rbComp->GetVelocity().x, 0 });
 		}
 	}

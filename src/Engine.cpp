@@ -7,11 +7,11 @@ Engine::Engine() {
 	isRunning = false;
 	window = nullptr;
 	renderer = nullptr;
-	auto highScores = scoreManager->Load();
+	auto highScores = ScoreManager::GetInstance()->Load();
 }
 
 Engine::~Engine() {
-	scoreManager->Save("Player");
+	ScoreManager::GetInstance()->Save("Player");
 
 	if(renderer) {
 		SDL_DestroyRenderer(renderer);
@@ -28,9 +28,9 @@ void Engine::Init() {
 	LoadAssets();
 
 	try {
-		sceneManager->AddScene(SceneState::MENU, new MenuScene());
-		sceneManager->AddScene(SceneState::GAMEPLAY, new GameplayScene());
-		sceneManager->InitFirstScene(SceneState::MENU);
+		SceneManager::GetInstance()->AddScene(SceneState::MENU, new MenuScene());
+		SceneManager::GetInstance()->AddScene(SceneState::GAMEPLAY, new GameplayScene());
+		SceneManager::GetInstance()->InitFirstScene(SceneState::MENU);
 	}
 	catch(const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
@@ -40,33 +40,37 @@ void Engine::Init() {
 }
 
 void Engine::LoadAssets() {
-	renderManager->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
+	RenderManager::GetInstance()->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
 
-	renderManager->LoadTexture("res/bg.png");
-	renderManager->LoadTexture("res/evil-woman.png");
-	renderManager->LoadTexture("res/man.png");
-	renderManager->LoadTexture("res/bullet.png");
-	renderManager->LoadTexture("res/btn.png");
-	renderManager->LoadTexture("res/black-screen.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/bubble_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/circler_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/medusa_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/whale_sprite.png");
 
-	audioManager->LoadSoundData("res/audio/music/menace_subtune_2.wav");
-	audioManager->LoadSoundData("res/audio/music/menace_title.wav");
+	RenderManager::GetInstance()->LoadTexture("res/bg.png");
+	RenderManager::GetInstance()->LoadTexture("res/man.png");
+	RenderManager::GetInstance()->LoadTexture("res/bullet.png");
+	RenderManager::GetInstance()->LoadTexture("res/btn.png");
+	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
 
-	audioManager->LoadSoundData("res/audio/sfx/laserShoot.wav");
-	audioManager->LoadSoundData("res/audio/sfx/ui_select.wav");
-	audioManager->LoadSoundData("res/audio/sfx/ui_hover.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_subtune_2.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_title.wav");
+
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/laserShoot.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_select.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_hover.wav");
 }
 
 void Engine::HandleEvents() {
-	isRunning = !inputManager->Listen();
+	isRunning = !InputManager::GetInstance()->Listen();
 }
 
 void Engine::Update() {
-	sceneManager->UpdateCurrentScene();
+	SceneManager::GetInstance()->UpdateCurrentScene();
 }
 
 void Engine::Render() {
-	renderManager->ClearScreen();
-	sceneManager->GetCurrentScene()->Render();
-	renderManager->RenderScreen();
+	RenderManager::GetInstance()->ClearScreen();
+	SceneManager::GetInstance()->GetCurrentScene()->Render();
+	RenderManager::GetInstance()->RenderScreen();
 }

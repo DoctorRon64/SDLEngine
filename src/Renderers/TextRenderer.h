@@ -29,7 +29,7 @@ public:
 		}
 	}
 	virtual void Render() override {
-		SDL_RenderTextureRotated(renderManager->GetRenderer(), textTexture, &sourceRect, &destinationRect, transform->rotation, NULL, SDL_FLIP_NONE);
+		SDL_RenderTextureRotated(RenderManager::GetInstance()->GetRenderer(), textTexture, &sourceRect, &destinationRect, transform->rotation, NULL, SDL_FLIP_NONE);
 	}
 
 	void SetText(std::string _text) {
@@ -38,11 +38,11 @@ public:
 		}
 
 		SDL_Surface* surf = TTF_RenderText_Solid(
-			renderManager->GetFont(resourcePath), _text.c_str(), _text.length(), color
+			RenderManager::GetInstance()->GetFont(resourcePath), _text.c_str(), _text.length(), color
 		);
 		assert(surf);
 
-		textTexture = SDL_CreateTextureFromSurface(renderManager->GetRenderer(), surf);
+		textTexture = SDL_CreateTextureFromSurface(RenderManager::GetInstance()->GetRenderer(), surf);
 		assert(textTexture);
 
 		sourceRect = { 0.f , 0.f , (float)surf->w , (float)surf->h };

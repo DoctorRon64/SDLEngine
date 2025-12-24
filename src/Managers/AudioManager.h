@@ -8,7 +8,6 @@ static std::atomic<bool> soundEffectsHalt = false;
 static std::vector<AtomicWrapper<bool>> threadsDone;
 static std::vector<AtomicWrapper<bool>> activeLoops;
 
-#define audioManager AudioManager::GetInstance()
 class AudioManager {
 public:
 	static AudioManager* GetInstance() {

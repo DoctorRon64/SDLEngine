@@ -20,7 +20,7 @@ public:
 
 		currentFrameTime += _deltaTime;
 
-		if(currentFrameTime >= timeManager->GetTimeFrame()) {
+		if(currentFrameTime >= TimeManager::GetInstance()->GetTimeFrame()) {
 			currentFrame++;
 			if(looping) {
 				currentFrame = 0;

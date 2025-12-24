@@ -1,8 +1,6 @@
 #pragma once
 #include <wave/Wave.h>
 
-#define waveManager WaveManager::GetInstance()
-
 class WaveManager {
 public:
 	static WaveManager* GetInstance() {
@@ -26,7 +24,7 @@ public:
 	}
 
 	void RestartWave() {
-		if (currentWave >= waves.size()) return;
+		if(currentWave >= waves.size()) return;
 
 		waves[currentWave].Start();
 	}

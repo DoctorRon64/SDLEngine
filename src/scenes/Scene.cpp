@@ -2,7 +2,7 @@
 #include "Scene.h"
 
 void Scene::OnExit() {
-	spawnerManager.ClearSpanwer();
+	SpawnManager::Instance().ClearSpanwer();
 
 	for(Object* o : objects) {
 		delete o;
@@ -30,8 +30,8 @@ void Scene::OnUpdate() {
 		}
 	}
 
-	while(spawnerManager.AreObjectsPendingSpawn()) {
-		objects.push_back(spawnerManager.GetSpawnedObject());
+	while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
+		objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 	}
 
 	//std::sort(objects.begin(), objects.end(),

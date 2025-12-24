@@ -17,7 +17,7 @@ public:
 		spawnsSpawned = 0;
 
 		for (EnemySpawn eSpawn : spawns) 
-			timeManager->SubscribeEvent(std::make_pair(
+			TimeManager::GetInstance()->SubscribeEvent(std::make_pair(
 				eSpawn.delay, 
 				[this, eSpawn]() { eSpawn.create(); spawnsSpawned++; }
 			));
