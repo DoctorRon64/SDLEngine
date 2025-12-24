@@ -39,7 +39,7 @@ public:
 	GameplayScene() = default;
 	void OnEnter() override {
 		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", 200.0f, -1000);
-		SpawnManager::Instance().SpawnObject(bg);
+		//SpawnManager::Instance().SpawnObject(bg);
 
 		Wave wave1;
 		wave1.AddSpawn(0.0f, []() { SpawnManager::Instance().SpawnObject(new BubbleEnemy({ 1400.f, 200.f })); });
