@@ -5,6 +5,7 @@
 class Player : public Actor {
 private:
 	int lives = PLAYER_LIVES;
+	float speed = BASE_PLAYER_SPEED;
 
 public:
 	Player(std::string _path = "res/man.png") :
@@ -15,6 +16,8 @@ public:
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
 	}
+	Player(Player&) = delete;
+	Player& operator=(const Player&) = delete;
 
 	virtual void Update() override;
 	void HandleMovement();
@@ -25,6 +28,15 @@ public:
 	void SetLives(int _lives) { lives = _lives; }
 	void IncrementLives(int amount) { lives += amount; }
 	void DecrementLives(int amount) { lives -= amount; }
+
+	float GetSpeed() { return speed; }
+	void SetSpeed(float _speed) { speed = _speed; }
+	void ScaleSpeed(float scale) { speed *= scale; }
+
+	static Player* GetInstance() {
+		static Player instance;
+		return &instance;
+	}
 
 private:
 	void ClampToScreen();
