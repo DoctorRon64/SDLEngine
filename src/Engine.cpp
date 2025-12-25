@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "scenes/custom/GameplayScene.h"
 #include "scenes/custom/MenuScene.h"
+#include "scenes/custom/SplashScreenScene.h"
 
 Engine::Engine() {
 	isRunning = false;
@@ -28,9 +29,10 @@ void Engine::Init() {
 	LoadAssets();
 
 	try {
+		SceneManager::GetInstance()->AddScene(SceneState::SPLASH, new SplashScreenScene());
 		SceneManager::GetInstance()->AddScene(SceneState::MENU, new MenuScene());
 		SceneManager::GetInstance()->AddScene(SceneState::GAMEPLAY, new GameplayScene());
-		SceneManager::GetInstance()->InitFirstScene(SceneState::MENU);
+		SceneManager::GetInstance()->InitFirstScene(SceneState::SPLASH);
 	}
 	catch(const std::exception& e) {
 		std::cerr << "Error: " << e.what() << std::endl;
