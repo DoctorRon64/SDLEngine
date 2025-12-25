@@ -191,8 +191,13 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PowerUp.cpp" />
-    <ClCompile Include="PowerUpFactory.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\CannonEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\EngineEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\LaserEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\ScorePowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\ShieldEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\PowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\PowerUpFactory.cpp" />
     <ClCompile Include="src\scenes\custom\SplashScreenScene.cpp" />
     <ClCompile Include="src\managers\CollisionManager.cpp" />
     <ClCompile Include="src\objects\enemies\CirclerEnemy.cpp" />
@@ -245,10 +250,16 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\custom\TestAnimation.cpp" />
     <ClCompile Include="src\managers\WaveManager.cpp" />
     <ClCompile Include="src\wave\Wave.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PowerUp.h" />
-    <ClInclude Include="PowerUpFactory.h" />
+    <ClInclude Include="src\Objects\PowerUps\CannonEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\EngineEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\LaserEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\ScorePowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\ShieldEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\PowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\PowerUpFactory.h" />
     <ClInclude Include="src\scenes\custom\SplashScreenScene.h" />
     <ClInclude Include="src\managers\CollisionManager.h" />
     <ClInclude Include="src\objects\enemies\CirclerEnemy.h" />
@@ -292,6 +303,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\objects\custom\TestAnimation.h" />
     <ClInclude Include="src\managers\WaveManager.h" />
     <ClInclude Include="src\wave\Wave.h" />
+    <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
