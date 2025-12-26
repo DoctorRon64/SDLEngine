@@ -14,10 +14,8 @@ public:
 	}
 
 	virtual void Update(float _deltaTime) override {
-		Vector2 offset = (-transform->GetSize() / 2.0f) * transform->scale;
-
-		destinationRect.x = transform->position.x + offset.x;
-		destinationRect.y = transform->position.y + offset.y;
+		destinationRect.x = transform->position.x;
+		destinationRect.y = transform->position.y;
 
 		if(autoSize) {
 			destinationRect.w = sourceRect.w * transform->scale.x;

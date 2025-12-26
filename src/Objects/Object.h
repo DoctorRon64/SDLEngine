@@ -39,4 +39,5 @@ public:
 	bool IsPendingDestroy() const { return isPendingDestroy; }
 	RigidBody* GetRigidBody() const { return rbComp; }
 	short GetLayer() const { return layer; }
+	Renderer* GetRenderer() const { return renderer; }
 };

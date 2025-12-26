@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
     <ClCompile Include="src\Objects\PowerUps\CannonEnergyPowerUp.cpp" />
     <ClCompile Include="src\Objects\PowerUps\EngineEnergyPowerUp.cpp" />
     <ClCompile Include="src\Objects\PowerUps\LaserEnergyPowerUp.cpp" />
@@ -253,6 +254,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderers\ButtonRenderer.h" />
     <ClInclude Include="src\Objects\PowerUps\CannonEnergyPowerUp.h" />
     <ClInclude Include="src\Objects\PowerUps\EngineEnergyPowerUp.h" />
     <ClInclude Include="src\Objects\PowerUps\LaserEnergyPowerUp.h" />
@@ -308,9 +310,6 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
     <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\Pictures\Screenshots\Captura de pantalla 2025-12-26 140940.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
