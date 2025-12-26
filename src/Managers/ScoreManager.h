@@ -1,6 +1,5 @@
 #pragma once
-#define scoreManager ScoreManager::GetInstance()
-#include <Utils/config.h>
+#include <utils/config.h>
 
 struct HighScore {
 	char name[16];
@@ -34,7 +33,7 @@ public:
 		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) : 1;
 		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
 		std::string result = "";
-		for (int i = 0; i < zeroCount; ++i) result += "0";
+		for(int i = 0; i < zeroCount; ++i) result += "0";
 		result += std::to_string(score);
 		return result;
 	}
@@ -52,10 +51,10 @@ public:
 		entry.name[sizeof(entry.name) - 1] = '\0';
 		entry.score = score;
 
-		fileManager.WriteBinary("ranking.bin", entry);
+		FileManager::Instance().WriteBinary("ranking.bin", entry);
 	}
 
 	std::vector<HighScore> Load() {
-		return fileManager.ReadBinary<HighScore>("ranking.bin");
+		return FileManager::Instance().ReadBinary<HighScore>("ranking.bin");
 	}
 };

@@ -37,17 +37,18 @@
 
 #include "Math/Vector2.h"
 
-#include "Renderers/ImageRenderer.h"
-#include "Renderers/Renderer.h"
+#include "managers/RenderManager.h"
 
-#include "Managers/TimeManager.h"
+#include "managers/TimeManager.h"
+
+#include "renderers/ImageRenderer.h"
 
 #include "managers/AudioManager.h"
+#include "managers/InputManager.h"
+
+#include "managers/CollisionManager.h"
 #include "managers/FileManager.h"
-#include "Managers/InputManager.h"
-#include "Managers/RenderManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScoreManager.h"
+#include "managers/SpawnManager.h"
 #include "managers/WaveManager.h"
-
-#include "managers/Spawner.h"

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -191,10 +191,21 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\CannonEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\EngineEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\LaserEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\ScorePowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\ShieldEnergyPowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\PowerUp.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\PowerUpFactory.cpp" />
+    <ClCompile Include="src\scenes\custom\SplashScreenScene.cpp" />
+    <ClCompile Include="src\managers\CollisionManager.cpp" />
+    <ClCompile Include="src\objects\enemies\CirclerEnemy.cpp" />
     <ClCompile Include="src\Objects\Actor.cpp" />
-    <ClCompile Include="src\objects\Enemies\MedusaEnemy.cpp" />
-    <ClCompile Include="src\objects\Enemies\KillerWhaleEnemy.cpp" />
-    <ClCompile Include="src\objects\Enemies\BubbleEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\MedusaEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\KillerWhaleEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BubbleEnemy.cpp" />
     <ClCompile Include="src\objects\AnimatedImage.cpp" />
     <ClCompile Include="src\renderers\AnimatedImageRenderer.cpp" />
     <ClCompile Include="src\audio\AtomicWrapper.cpp" />
@@ -204,11 +215,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\managers\ScoreManager.cpp" />
     <ClCompile Include="src\objects\Button.cpp" />
     <ClCompile Include="src\objects\custom\Bullet.cpp" />
-    <ClCompile Include="src\objects\custom\Background.cpp" />
     <ClCompile Include="src\objects\custom\Player.cpp" />
     <ClCompile Include="src\objects\custom\Enemy.cpp" />
     <ClCompile Include="src\scenes\custom\MenuScene.cpp" />
-    <ClCompile Include="src\managers\Spawner.cpp" />
+    <ClCompile Include="src\managers\SpawnManager.cpp" />
     <ClCompile Include="src\managers\SceneManager.cpp" />
     <ClCompile Include="src\scenes\custom\GameplayScene.cpp" />
     <ClCompile Include="src\scenes\Scene.cpp" />
@@ -241,12 +251,24 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\custom\TestAnimation.cpp" />
     <ClCompile Include="src\managers\WaveManager.cpp" />
     <ClCompile Include="src\wave\Wave.cpp" />
+    <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderers\ButtonRenderer.h" />
+    <ClInclude Include="src\Objects\PowerUps\CannonEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\EngineEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\LaserEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\ScorePowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\ShieldEnergyPowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\PowerUp.h" />
+    <ClInclude Include="src\Objects\PowerUps\PowerUpFactory.h" />
+    <ClInclude Include="src\scenes\custom\SplashScreenScene.h" />
+    <ClInclude Include="src\managers\CollisionManager.h" />
+    <ClInclude Include="src\objects\enemies\CirclerEnemy.h" />
     <ClInclude Include="src\Objects\Actor.h" />
-    <ClInclude Include="src\objects\Enemies\MedusaEnemy.h" />
-    <ClInclude Include="src\objects\Enemies\KillerWhaleEnemy.h" />
-    <ClInclude Include="src\objects\Enemies\BubbleEnemy.h" />
+    <ClInclude Include="src\objects\enemies\MedusaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\KillerWhaleEnemy.h" />
+    <ClInclude Include="src\objects\enemies\BubbleEnemy.h" />
     <ClInclude Include="src\objects\AnimatedImage.h" />
     <ClInclude Include="src\renderers\AnimatedImageRenderer.h" />
     <ClInclude Include="src\audio\AtomicWrapper.h" />
@@ -256,11 +278,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\Button.h" />
     <ClInclude Include="src\objects\custom\Bullet.h" />
-    <ClInclude Include="src\objects\custom\Background.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
     <ClInclude Include="src\objects\custom\Enemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />
-    <ClInclude Include="src\managers\Spawner.h" />
+    <ClInclude Include="src\managers\SpawnManager.h" />
     <ClInclude Include="src\managers\SceneManager.h" />
     <ClInclude Include="src\scenes\custom\GameplayScene.h" />
     <ClInclude Include="src\scenes\Scene.h" />
@@ -270,7 +291,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\RenderManager.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\objects\Image.h" />
-    <ClInclude Include="src\Utils\config.h" />
+    <ClInclude Include="src\utils\config.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\renderers\ImageRenderer.h" />
     <ClInclude Include="src\renderers\Renderer.h" />
@@ -284,6 +305,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\objects\custom\TestAnimation.h" />
     <ClInclude Include="src\managers\WaveManager.h" />
     <ClInclude Include="src\wave\Wave.h" />
+    <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />

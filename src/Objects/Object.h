@@ -25,7 +25,7 @@ public:
 		rbComp = nullptr;
 	}
 	virtual void Update() {
-		float deltaTime = timeManager->GetDeltaTime();
+		float deltaTime = TimeManager::GetInstance()->GetDeltaTime();
 		if(rbComp != nullptr) {
 			rbComp->Update(deltaTime);
 		}
@@ -39,4 +39,5 @@ public:
 	bool IsPendingDestroy() const { return isPendingDestroy; }
 	RigidBody* GetRigidBody() const { return rbComp; }
 	short GetLayer() const { return layer; }
+	Renderer* GetRenderer() const { return renderer; }
 };

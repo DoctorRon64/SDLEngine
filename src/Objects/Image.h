@@ -15,6 +15,7 @@ public:
 		});
 	}
 
+	//TODO delete this
 	virtual void SetScaleCentered(const Vector2& newScale) {
 		Vector2 oldSize = transform->GetSize();
 		Vector2 newSize = transform->GetSize() * newScale;

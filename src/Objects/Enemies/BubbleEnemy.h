@@ -8,7 +8,7 @@ private:
 
 public:
 	BubbleEnemy(Vector2 spawn)
-		: Enemy("res/enemies/bubble.png", spawn, { 128,128 }) {
+		: Enemy("res/enemies/bubble_sprite.png", spawn, { 32, 32 }) {
 		state = EnemyState::SIMPLE_MOVE;
 		velocity = { -speed, 0 };
 	}
@@ -16,26 +16,17 @@ public:
 protected:
 	void UpdateState(float dt) override {
 		switch(state) {
-			case EnemyState::SIMPLE_MOVE:
-			MoveStraight(dt);
-			break;
-
-			case EnemyState::CIRCLE_MOVE:
-			MoveCircle(dt);
-			break;
-
-			case EnemyState::CHASE:
-			MoveStraight(dt);
-			break;
+			case EnemyState::SIMPLE_MOVE: MoveStraight(dt); break;
+			case EnemyState::CIRCLE_MOVE: MoveCircle(dt); break;
+			case EnemyState::CHASE: MoveStraight(dt); break;
 		}
 	}
 
 	void MoveStraight(float dt) {
 		transform->position += velocity * dt;
 
-		if(transform->position.x < renderManager->WINDOW_WIDTH * 0.66f) {
+		if(transform->position.x < RenderManager::GetInstance()->WINDOW_WIDTH * 0.66f) {
 			state = EnemyState::CIRCLE_MOVE;
-			stateTimer = 0.f;
 			circleCenter = transform->position;
 			angle = 0.f;
 		}

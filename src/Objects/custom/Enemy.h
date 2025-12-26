@@ -32,7 +32,7 @@ public:
 	}
 
 	virtual void Update() override {
-		float dt = timeManager->GetDeltaTime();
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
 		stateTimer += dt;
 
 		UpdateState(dt);
@@ -47,7 +47,7 @@ public:
 	}
 
 	virtual void OnDeath() {
-		scoreManager->AddScore(scoreValue);
+		ScoreManager::GetInstance()->AddScore(scoreValue);
 		Destroy();
 	}
 

@@ -1,29 +1,18 @@
 ﻿#pragma once
-#include "../Image.h"
-#include "./Enemy.h"
+#include "Enemy.h"
+#include "Player.h"
 
 class Bullet : public Image {
 public:
-	Bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(400.f, 400.f))
-		: Image(_name, _pos, _size) {
-		transform->scale = Vector2(0.1f, 0.1f);
-		transform->rotation = 90.f;
+	bool isPlayerBullet = true;
 
-		rbComp->SetAngularDrag(0.0f);
-		rbComp->SetLinearDrag(0.0f);
-		rbComp->AddCollider(new AABB(_pos, _size));
+	Bullet(std::string _name = "res/bullet.png", Vector2 _pos = Vector2(0.f, 0.f), Vector2 _size = Vector2(40.f, 40.f), bool _isPlayer = true);
+	~Bullet();
 
-		rbComp->SetVelocity(Vector2(bulletSpeed, 0.f));
-	}
+	void Update() override;
 
-	void Update() override {
-		if(transform->position.x > renderManager->WINDOW_WIDTH || transform->position.x < -50) {
-			Destroy();
-			return;
-		}
-
-		Image::Update();
-	}
 private:
+	void CheckCollision();
+
 	float bulletSpeed = 350.f;
 };

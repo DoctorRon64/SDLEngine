@@ -1,5 +1,4 @@
 #pragma once
-#define inputManager InputManager::GetInstance()
 
 enum KeyState { EMPTY, DOWN, UP, HOLD, RELEASED };
 
@@ -14,14 +13,19 @@ public:
 	float GetMouseY() const { return mouseY; }
 	bool GetLeftClick() const { return leftClick; }
 	bool GetEvent(Sint32 _input, KeyState _inputValue);
+
+	bool GetArrowInput(Sint32 arrowKey);
+	bool GetGamepadButton(int buttonID);
+	float GetGamepadAxisX();
+	float GetGamepadAxisY();
 private:
 	InputManager() : mouseX(0), mouseY(0), leftClick(false) {}
 	InputManager(InputManager&) = delete;
 	InputManager& operator=(const InputManager&) = delete;
 	~InputManager() {}
 
-	float mouseX;
-	float mouseY;
+	float mouseX = 0;
+	float mouseY = 0;
 	bool leftClick;
 	std::unordered_map<Sint32, KeyState> keyReference;
 };

@@ -7,52 +7,70 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		audioManager->PlaySoundLooping("res/audio/menu_music.wav");
+		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_title.wav");
 
 		Text* title = new Text("[MENACE ARCADE GAME]");
 		title->GetTransform()->scale = { 2.f, 2.f };
-		title->GetTransform()->position = { ((float)renderManager->WINDOW_WIDTH / 2) - 300, 200.f };
+		title->GetTransform()->position = { ((float)RenderManager::GetInstance()->WINDOW_WIDTH / 2) - 300, 0 };
 		ui.push_back(title);
 
 		float startX = 500.f;
-		float startY = 250.f;
-		float spacing = 90.f;
+		float startY = 180.0f;
+		float spacing = 130.0f;
 
+		Text* playLabel = new Text("Play");
+		playLabel->GetTransform()->scale = { 2.f, 2.f };
+		
 		Button* playBtn = new Button([]() {
-			sceneManager->SetNextScene(SceneState::GAMEPLAY);
-		});
+			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
+		}, playLabel);
 		playBtn->GetTransform()->position = { startX, startY };
 		ui.push_back(playBtn);
+		ui.push_back(playLabel);
 
 		//======================================================
 
+		Text* rankingLabel = new Text("Ranking");
+		rankingLabel->GetTransform()->scale = { 2.f, 2.f };
+
 		Button* rankingBtn = new Button([]() {
-			sceneManager->SetNextScene(SceneState::RANKING);
-		});
+			SceneManager::GetInstance()->SetNextScene(SceneState::RANKING);
+		}, rankingLabel);
 		rankingBtn->GetTransform()->position = { startX, startY + spacing };
 		ui.push_back(rankingBtn);
+		ui.push_back(rankingLabel);
 
 		//=====================================================
+
+		Text* audioLabel = new Text("Audio");
+		audioLabel->GetTransform()->scale = { 2.f, 2.f };
+
 		Button* audioBtn = new Button([]() {
 			static bool muted = false;
 			muted = !muted;
 
 			if(muted)
-				audioManager->Mute();
+				AudioManager::GetInstance()->Mute();
 			else
-				audioManager->Unmute();
-		});
+				AudioManager::GetInstance()->Unmute();
+		}, audioLabel);
 		audioBtn->GetTransform()->position = { startX, startY + spacing * 2 };
 		ui.push_back(audioBtn);
+		ui.push_back(audioLabel);
 
 		//======================================================
+
+		Text* exitLabel = new Text("Exit");
+		exitLabel->GetTransform()->scale = { 2.f, 2.f };
+
 		Button* exitBtn = new Button([]() {
 			SDL_Event quit{};
 			quit.type = SDL_EVENT_QUIT;
 			SDL_PushEvent(&quit);
-		});
+		}, exitLabel);
 		exitBtn->GetTransform()->position = { startX, startY + spacing * 3 };
 		ui.push_back(exitBtn);
+		ui.push_back(exitLabel);
 	}
 
 	void OnExit() override {
@@ -62,9 +80,9 @@ public:
 	void OnUpdate() override {
 		Scene::OnUpdate();
 
-		if(inputManager->GetEvent(SDLK_SPACE, DOWN)) {
+		if(InputManager::GetInstance()->GetEvent(SDLK_SPACE, DOWN)) {
 			std::cout << "something happend yeeess" << std::endl;
-			sceneManager->SetNextScene(SceneState::GAMEPLAY);
+			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
 		}
 	}
 

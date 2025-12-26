@@ -4,8 +4,8 @@
 class ScrollingBackground : public Object {
 public:
 	ScrollingBackground(const std::string& texturePath, float speed, int layer = -1000) : scrollSpeed(speed) {
-		bgA = new Image(texturePath, { 0, 0 }, { 1175, 700 });
-		bgB = new Image(texturePath, { 0, 0 }, { 1175, 700 });
+		bgA = new Image(texturePath, { 0, 0 }, { WIDTH, HEIGHT });
+		bgB = new Image(texturePath, { 0, 0 }, { WIDTH, HEIGHT });
 
 		bgA->SetLayer(layer);
 		bgB->SetLayer(layer);
@@ -15,10 +15,13 @@ public:
 		height = texSize.y;
 
 		bgA->GetTransform()->position = { 0, 0 };
+		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
 
-		spawnerManager.SpawnObject(bgA);
-		spawnerManager.SpawnObject(bgB);
+		SpawnManager::Instance().SpawnObject(bgA);
+		std::cout << bgA->GetTransform()->position.x << ", " << bgA->GetTransform()->position.y << std::endl;
+
+		SpawnManager::Instance().SpawnObject(bgB);
 	}
 
 	~ScrollingBackground() {
@@ -27,7 +30,7 @@ public:
 	}
 
 	virtual void Update() override {
-		float dt = timeManager->GetDeltaTime();
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
 
 		bgA->GetTransform()->position.x -= scrollSpeed * dt;
 		bgB->GetTransform()->position.x -= scrollSpeed * dt;

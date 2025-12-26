@@ -1,10 +1,24 @@
 #pragma once
-#define timeManager TimeManager::GetInstance()
 
 class TimeManager {
-	using TimedEvent = std::pair<float, std::function<void()>>;
+	struct TimedEvent {
+		float time;
+		std::function<void()> event;
+		TimedEvent(float _time, std::function<void()> _event) : time(_time), event(_event) {}
+
+		bool operator< (const TimedEvent& other) {
+			return this->time < other.time;
+		}
+
+		friend bool operator> (const TimedEvent l, const TimedEvent& r) {
+			return l.time > r.time;
+		}
+
+	};
+
+	using TimedEventQueue = std::priority_queue<TimedEvent, std::vector<TimedEvent>, std::greater<TimedEvent>>;
 private:
-	std::vector<TimedEvent> timedEvents = std::vector<TimedEvent>(0);
+	TimedEventQueue timedEvents = TimedEventQueue();
 
 private:
 	TimeManager() {
@@ -40,21 +54,22 @@ public:
 		deltaTime -= static_cast<float>(std::floor(deltaTime / frameTime)) * frameTime;
 	}
 	void Update() {
+		//std::cout << "Delta Time: " << deltaTime << std::endl;
+
 		elapsedTime = SDL_GetTicks() / 1000.0;
 		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;
 
-		for (int i = timedEvents.size() - 1; i >= 0; --i) {
-			if (timedEvents[i].first <= elapsedTime) {
-				timedEvents[i].second();
-				timedEvents.erase(timedEvents.begin() + i);
-			}
+		while (timedEvents.size() > 0 && timedEvents.top().time <= elapsedTime) {
+			TimedEvent timedEvent = timedEvents.top();
+			timedEvent.event();
+			timedEvents.pop();
 		}
 	}
 
-	void SubscribeEvent(TimedEvent timedEvent) {
-		timedEvents.push_back(
-			std::make_pair(timedEvent.first + elapsedTime, timedEvent.second)
-		);
+	void SubscribeEvent(float timeToExecution, std::function<void()> event) {
+		timedEvents.push(TimedEvent(
+			timeToExecution + (float)elapsedTime, event
+		));
 	}
 };
