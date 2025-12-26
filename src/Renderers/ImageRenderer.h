@@ -15,7 +15,7 @@ public:
 
 	Vector2 GetTextureSize() const { return textureSize; }
 
-private:
+protected:
 	SDL_Texture* texture = nullptr;
 	std::string resourcePath;
 	Vector2 textureSize{ 0, 0 };
