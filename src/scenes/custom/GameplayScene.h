@@ -11,6 +11,7 @@
 #include <objects/Enemies/MedusaEnemy.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
+#include <Objects/custom/TestAnimation.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -68,6 +69,12 @@ public:
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
+
+		AnimatedImage* testAnim = new AnimatedImage("res/man.png", {0, 0}, Vector2(992 / 2, 1542 / 2), 4, 2, 992 / 2, 1542 / 2, 10, false);
+		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
+		testAnim->GetTransform()->scale = { .1, .1 };
+		testAnim->SetLayer(20);
+		SpawnManager::Instance().SpawnObject(testAnim);
 	}
 
 	void OnExit() override { Scene::OnExit(); }
@@ -127,7 +134,7 @@ public:
 			case GameplayState::DEATH:
 			if(stateJustChanged)
 				TimeManager::GetInstance()->SubscribeEvent(
-					std::make_pair(1.0f, [this]() { ShowDeathScreen(); })
+					1.0f, [this]() { ShowDeathScreen(); }
 				);
 			break;
 		}
@@ -161,9 +168,9 @@ private:
 		Image* blackScreen = new Image("res/black-screen.png", Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
 		blackScreen->GetTransform()->position = { 0,0 };
 		ui.push_back(blackScreen);
-		TimeManager::GetInstance()->SubscribeEvent(std::make_pair(
+		TimeManager::GetInstance()->SubscribeEvent(
 			2.0f, [this]() { ui.pop_back(); ExitDeath(); }
-		));
+		);
 	}
 
 	void ExitDeath() {
