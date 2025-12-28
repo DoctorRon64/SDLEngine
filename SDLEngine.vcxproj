@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\scenes\custom\RankingScene.cpp" />
     <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
     <ClCompile Include="src\Objects\PowerUps\CannonEnergyPowerUp.cpp" />
     <ClCompile Include="src\Objects\PowerUps\EngineEnergyPowerUp.cpp" />
@@ -254,6 +255,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\scenes\custom\RankingScene.h" />
     <ClInclude Include="src\Renderers\ButtonRenderer.h" />
     <ClInclude Include="src\Objects\PowerUps\CannonEnergyPowerUp.h" />
     <ClInclude Include="src\Objects\PowerUps\EngineEnergyPowerUp.h" />
