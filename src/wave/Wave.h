@@ -17,10 +17,10 @@ public:
 		spawnsSpawned = 0;
 
 		for (EnemySpawn eSpawn : spawns) 
-			TimeManager::GetInstance()->SubscribeEvent(std::make_pair(
+			TimeManager::GetInstance()->SubscribeEvent(
 				eSpawn.delay, 
 				[this, eSpawn]() { eSpawn.create(); spawnsSpawned++; }
-			));
+			);
 	}
 
 	bool IsFinishedSpawning() const {
