@@ -12,6 +12,7 @@
 #include <objects/Text.h>
 #include <wave/Wave.h>
 #include <Objects/custom/TestAnimation.h>
+#include <Objects/custom/Explosion.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -70,9 +71,8 @@ public:
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
 
-		AnimatedImage* testAnim = new AnimatedImage("res/man.png", {0, 0}, Vector2(992 / 2, 1542 / 2), 4, 2, 992 / 2, 1542 / 2, 10, false);
+		Explosion* testAnim = new Explosion();
 		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
-		testAnim->GetTransform()->scale = { .1, .1 };
 		testAnim->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(testAnim);
 	}
