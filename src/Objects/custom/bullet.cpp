@@ -3,8 +3,11 @@
 
 Bullet::Bullet(std::string _name, Vector2 _pos, Vector2 _size, bool _isPlayer)
 	: Image(_name, _pos, _size), isPlayerBullet(_isPlayer) {
-	rbComp->AddCollider(new AABB(_pos, Vector2(40.f, 40.f)));
+	rbComp->AddCollider(new AABB(_pos, _size));
 	rbComp->SetVelocity(Vector2(bulletSpeed, 0.f));
+
+	transform->scale = { .1f, .1f };
+	transform->rotation = (_isPlayer) ? 90 : -90;
 
 	CollisionManager::Instance().Register(rbComp, this, isPlayerBullet);
 }

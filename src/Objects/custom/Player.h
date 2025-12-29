@@ -2,6 +2,13 @@
 #include "../Actor.h"
 #include "Bullet.h"
 
+enum class Powerup : int {
+	LASER = 0,
+	CANNONS = 1,
+	TURRETS = 2,
+	COUNT = 3
+};
+
 class Player : public Actor {
 private:
 	int lives = PLAYER_LIVES;
@@ -15,6 +22,8 @@ public:
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
+
+		RefreshShooting();
 	}
 	Player(Player&) = delete;
 	Player& operator=(const Player&) = delete;
@@ -23,6 +32,10 @@ public:
 	void HandleMovement();
 	void HandleShooting();
 	void Shoot();
+	void RefreshShooting() {
+		canShoot = true;
+		TimeManager::GetInstance()->SubscribeEvent(1.0f / BULLETS_PER_SECOND, [this]() { RefreshShooting(); });
+	}
 
 	int GetLives() { return lives; }
 	void SetLives(int _lives) { lives = _lives; }
@@ -38,11 +51,14 @@ public:
 		return &instance;
 	}
 
+	bool GetPowerupFlag(Powerup powerup) { return powerUpFlags[(int)powerup]; }
+	void SetPowerupFlag(Powerup powerup, bool state) { powerUpFlags[(int)powerup] = state; }
+
 private:
 	void ClampToScreen();
 
-	float shootCooldown = 0.2f;
-	float shootTimer = 0.0f;
+	bool canShoot;
+	bool powerUpFlags[(int)Powerup::COUNT] = {};
 	int shields = 100;
 	bool invulnerable = false;
 };
