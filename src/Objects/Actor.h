@@ -2,7 +2,7 @@
 #include "Objects/Image.h"
 class Actor : public Image 
 {
-private:
+protected:
 	int maxHealth;
 	int health;
 

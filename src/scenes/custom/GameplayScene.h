@@ -13,6 +13,7 @@
 #include <wave/Wave.h>
 #include <Objects/custom/TestAnimation.h>
 #include <Objects/custom/Explosion.h>
+#include <Objects/PowerUps/CannonEnergyPowerUp.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -27,7 +28,7 @@ private:
 	bool stateJustChanged = false;
 
 	//Player
-	Player* player = new Player();
+	Player* player = Player::GetInstance();
 
 	//Score UI
 	Text* scoreText = new Text("Score");
