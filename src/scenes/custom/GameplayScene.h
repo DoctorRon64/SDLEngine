@@ -11,6 +11,8 @@
 #include <objects/Enemies/MedusaEnemy.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
+#include <Objects/custom/TestAnimation.h>
+#include <Objects/custom/Explosion.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -51,12 +53,12 @@ public:
 
 		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
-		scoreText->GetTransform()->position = { 400.0f, (float)RenderManager::GetInstance()->WINDOW_HEIGHT + 70.0f };
+		scoreText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 150 };
 		ui.push_back(scoreText);
 
 		scoreNumberText = new Text("000000");
 		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
-		scoreNumberText->GetTransform()->position = { 400.0f, (float)RenderManager::GetInstance()->WINDOW_HEIGHT + 30.0f };
+		scoreNumberText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 200 };
 		ui.push_back(scoreNumberText);
 
 		setScoreText = new Text("Enter Name: ");
@@ -68,6 +70,11 @@ public:
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
+
+		Explosion* testAnim = new Explosion();
+		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
+		testAnim->SetLayer(20);
+		SpawnManager::Instance().SpawnObject(testAnim);
 	}
 
 	void OnExit() override { Scene::OnExit(); }
@@ -127,7 +134,7 @@ public:
 			case GameplayState::DEATH:
 			if(stateJustChanged)
 				TimeManager::GetInstance()->SubscribeEvent(
-					std::make_pair(1.0f, [this]() { ShowDeathScreen(); })
+					1.0f, [this]() { ShowDeathScreen(); }
 				);
 			break;
 		}
@@ -145,15 +152,19 @@ public:
 private:
 	void SetPauseMenuVisibility(bool visible) {
 		if(visible) {
+			Text* resumeText = new Text("Resume");
+			resumeText->GetTransform()->scale = { 2,2 };
 			Button* resumeBtn = new Button([this]() {
 				SetPauseMenuVisibility(false);
 				SetState(GameplayState::GAMEPLAY);
-			});
-			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f, (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f };
+			}, resumeText);
+			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 344.8f/2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 136.9f / 2 };
 			ui.push_back(resumeBtn);
+			ui.push_back(resumeText);
 		}
 		else {
-			ui.pop_back();
+			ui.back()->Destroy();
+			ui[ui.size() - 2]->Destroy();
 		}
 	}
 
@@ -161,9 +172,9 @@ private:
 		Image* blackScreen = new Image("res/black-screen.png", Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
 		blackScreen->GetTransform()->position = { 0,0 };
 		ui.push_back(blackScreen);
-		TimeManager::GetInstance()->SubscribeEvent(std::make_pair(
+		TimeManager::GetInstance()->SubscribeEvent(
 			2.0f, [this]() { ui.pop_back(); ExitDeath(); }
-		));
+		);
 	}
 
 	void ExitDeath() {

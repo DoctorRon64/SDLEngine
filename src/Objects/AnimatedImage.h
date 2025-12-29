@@ -5,9 +5,9 @@
 class AnimatedImage : public Object {
 public:
 	AnimatedImage(std::string _texturePath, Vector2 _sourceOffset, Vector2 _sourceSize,
-		int _numberOfFrames, int _numberOfRows, float _frameWidth, float _frameHeight, bool _looping)
+		int _numberOfFrames, int _numberOfRows, float _frameWidth, float _frameHeight, int _frameTime, bool _looping)
 		: Object() {
-		renderer = new AnimatedImageRenderer(transform, _texturePath, _sourceOffset, _sourceSize, _numberOfFrames, _numberOfRows, _frameWidth, _frameHeight, _looping);
+		renderer = new AnimatedImageRenderer(transform, _texturePath, _sourceOffset, _sourceSize, _numberOfFrames, _numberOfRows, _frameWidth, _frameHeight, _frameTime, _looping);
 		transform->SetSize(_sourceSize);
 		renderer->SetDestinationRect({
 			static_cast<float>(transform->position.x),

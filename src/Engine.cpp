@@ -3,6 +3,7 @@
 #include "scenes/custom/GameplayScene.h"
 #include "scenes/custom/MenuScene.h"
 #include "scenes/custom/SplashScreenScene.h"
+#include "scenes/custom/RankingScene.h"
 
 Engine::Engine() {
 	isRunning = false;
@@ -32,6 +33,7 @@ void Engine::Init() {
 		SceneManager::GetInstance()->AddScene(SceneState::SPLASH, new SplashScreenScene());
 		SceneManager::GetInstance()->AddScene(SceneState::MENU, new MenuScene());
 		SceneManager::GetInstance()->AddScene(SceneState::GAMEPLAY, new GameplayScene());
+		SceneManager::GetInstance()->AddScene(SceneState::RANKING, new RankingScene());
 		SceneManager::GetInstance()->InitFirstScene(SceneState::SPLASH);
 	}
 	catch(const std::exception& e) {
@@ -54,6 +56,8 @@ void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadTexture("res/bullet.png");
 	RenderManager::GetInstance()->LoadTexture("res/btn.png");
 	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
+	RenderManager::GetInstance()->LoadTexture("res/splash_screen.png");
+	RenderManager::GetInstance()->LoadTexture("res/explosion.png");
 
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_subtune_2.wav");
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_title.wav");

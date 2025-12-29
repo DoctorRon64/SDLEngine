@@ -168,6 +168,12 @@
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderers\ButtonRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenes\custom\RankingScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\math\Vector2.h">
@@ -321,6 +327,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderers\ButtonRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\custom\RankingScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
