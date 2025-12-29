@@ -2,6 +2,6 @@
 #include "../Object.h"
 
 class PowerUp : public Object {
-private:
+protected:
 	virtual void OnCollect() = 0;
 };
