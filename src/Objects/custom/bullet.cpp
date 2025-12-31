@@ -26,12 +26,14 @@ void Bullet::Update() {
 void Bullet::OnCollision(Object* other) {
 	if(isPlayerBullet) {
 		if(auto enemy = dynamic_cast<Enemy*>(other)) {
+			std::cout << enemy << "enemy1" << std::endl;
 			enemy->TakeDamage(10);
 			Destroy();
 		}
 	}
 	else {
 		if(auto player = dynamic_cast<Player*>(other)) {
+			std::cout << player << "player1" << std::endl;
 			player->DecrementLives(1);
 			Destroy();
 		}
