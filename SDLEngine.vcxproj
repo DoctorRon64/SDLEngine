@@ -191,6 +191,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Objects\Decorations\Decoration1.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration2.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration3.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration.cpp" />
+    <ClCompile Include="src\Objects\custom\BackgroundDecorator.cpp" />
     <ClCompile Include="src\Objects\custom\Explosion.cpp" />
     <ClCompile Include="src\scenes\custom\RankingScene.cpp" />
     <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
@@ -256,6 +261,11 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Objects\Decorations\Decoration1.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration2.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration3.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration.h" />
+    <ClInclude Include="src\Objects\custom\BackgroundDecorator.h" />
     <ClInclude Include="src\Objects\custom\Explosion.h" />
     <ClInclude Include="src\scenes\custom\RankingScene.h" />
     <ClInclude Include="src\Renderers\ButtonRenderer.h" />

@@ -15,3 +15,8 @@ constexpr unsigned int SCORE_POWERUP_VALUE = 1000u;
 constexpr float ENGINE_POWERUP_SCALE_VALUE = 1.3f;
 
 constexpr unsigned int BULLETS_PER_SECOND = 5;
+
+constexpr float BACKGROUND_SPEED = 200.0f;
+
+constexpr unsigned int DECORATION_MIN_TIME = 1;
+constexpr unsigned int DECORATION_MAX_TIME = 3;

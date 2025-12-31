@@ -58,6 +58,9 @@ void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
 	RenderManager::GetInstance()->LoadTexture("res/splash_screen.png");
 	RenderManager::GetInstance()->LoadTexture("res/explosion.png");
+	RenderManager::GetInstance()->LoadTexture("res/minecraft_tall_grass.png");
+	RenderManager::GetInstance()->LoadTexture("res/minecraft_rose_bush.png");
+	RenderManager::GetInstance()->LoadTexture("res/minecraft_poppy.png");
 
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_subtune_2.wav");
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_title.wav");
