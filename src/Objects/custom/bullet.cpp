@@ -9,7 +9,7 @@ Bullet::Bullet(std::string _name, Vector2 _pos, Vector2 _size, bool _isPlayer)
 	transform->scale = { .1f, .1f };
 	transform->rotation = (_isPlayer) ? 90 : -90;
 
-	CollisionManager::Instance().Register(rbComp, this, isPlayerBullet);
+	CollisionManager::Instance().Register(rbComp, this);
 }
 
 Bullet::~Bullet() {
@@ -23,25 +23,17 @@ void Bullet::Update() {
 	}
 }
 
-void Bullet::CheckCollision() {
-	std::queue<Object*> objs = SpawnManager::Instance().GetSpawnedObjects(); // copy queue
-	while(!objs.empty()) {
-		Object* obj = objs.front();
-		objs.pop();
-
-		if(Enemy* enemy = dynamic_cast<Enemy*>(obj)) {
-			if(isPlayerBullet && rbComp->CheckCollision(enemy->GetRigidBody())) {
-				enemy->TakeDamage(10);
-				Destroy();
-				break;
-			}
+void Bullet::OnCollision(Object* other) {
+	if(isPlayerBullet) {
+		if(auto enemy = dynamic_cast<Enemy*>(other)) {
+			enemy->TakeDamage(10);
+			Destroy();
 		}
-		else if(Player* player = dynamic_cast<Player*>(obj)) {
-			if(!isPlayerBullet && rbComp->CheckCollision(player->GetRigidBody())) {
-				player->DecrementLives(1);
-				Destroy();
-				break;
-			}
+	}
+	else {
+		if(auto player = dynamic_cast<Player*>(other)) {
+			player->DecrementLives(1);
+			Destroy();
 		}
 	}
 }

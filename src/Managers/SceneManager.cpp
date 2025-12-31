@@ -45,4 +45,5 @@ void SceneManager::UpdateCurrentScene() {
 	}
 
 	currentScene->OnUpdate();
+	CollisionManager::Instance().CheckCollisions();
 }

@@ -12,7 +12,7 @@ public:
 	void Update() override;
 
 private:
-	void CheckCollision();
+	void OnCollision(Object* other) override;
 
 	float bulletSpeed = 350.f;
 };

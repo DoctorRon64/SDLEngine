@@ -18,6 +18,7 @@ void Scene::OnExit() {
 void Scene::OnUpdate() {
 	for(int i = objects.size() - 1; i >= 0; i--) {
 		if(objects[i]->IsPendingDestroy()) {
+			//std::cout << "destroying object\n" << objects[i] << std::endl;
 			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
