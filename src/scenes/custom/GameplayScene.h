@@ -14,6 +14,7 @@
 #include <Objects/custom/TestAnimation.h>
 #include <Objects/custom/Explosion.h>
 #include <Objects/PowerUps/CannonEnergyPowerUp.h>
+#include <Objects/custom/BackgroundDecorator.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -41,7 +42,7 @@ private:
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", 200.0f, -1000);
+		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", BACKGROUND_SPEED, -1000);
 		//SpawnManager::Instance().SpawnObject(bg);
 
 		Wave wave1;
@@ -76,6 +77,8 @@ public:
 		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
 		testAnim->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(testAnim);
+
+		BackgroundDecorator* decorator = new BackgroundDecorator();
 	}
 
 	void OnExit() override { Scene::OnExit(); }
