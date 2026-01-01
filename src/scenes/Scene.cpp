@@ -16,20 +16,6 @@ void Scene::OnExit() {
 }
 
 void Scene::OnUpdate() {
-	for(int i = objects.size() - 1; i >= 0; i--) {
-		if(objects[i]->IsPendingDestroy()) {
-			delete objects[i];
-			objects.erase(objects.begin() + i);
-		}
-	}
-
-	for(int i = ui.size() - 1; i >= 0; i--) {
-		if(ui[i]->IsPendingDestroy()) {
-			delete ui[i];
-			ui.erase(ui.begin() + i);
-		}
-	}
-
 	while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
 		objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 	}
@@ -43,6 +29,20 @@ void Scene::OnUpdate() {
 	}
 
 	CollisionManager::Instance().CheckCollisions();
+
+	for(int i = objects.size() - 1; i >= 0; i--) {
+		if(objects[i]->IsPendingDestroy()) {
+			delete objects[i];
+			objects.erase(objects.begin() + i);
+		}
+	}
+
+	for(int i = ui.size() - 1; i >= 0; i--) {
+		if(ui[i]->IsPendingDestroy()) {
+			delete ui[i];
+			ui.erase(ui.begin() + i);
+		}
+	}
 }
 
 void Scene::Render() {

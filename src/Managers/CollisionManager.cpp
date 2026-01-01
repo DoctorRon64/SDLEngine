@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "CollisionManager.h"
 #include "Components/RigidBody.h"
 #include "Objects/Object.h"
 
@@ -21,18 +20,16 @@ void CollisionManager::Unregister(Object* owner) {
 }
 
 void CollisionManager::CheckCollisions() {
-	for(size_t i = 0; i < collidables.size(); ++i) {
-		for(size_t j = i + 1; j < collidables.size(); ++j) {
-			Collidable& a = collidables[i];
-			Collidable& b = collidables[j];
+	for(size_t i = 0; i < collidables.size(); i++) {
+		for(size_t j = i + 1; j < collidables.size(); j++) {
+			auto& a = collidables[i];
+			auto& b = collidables[j];
 
-			if(!a.rb || !b.rb) continue;
+			if(!a.rb->CheckCollision(b.rb))
+				continue;
 
-			if(a.rb->CheckCollision(b.rb)) {
-				// notify both objects
-				a.owner->OnCollision(b.owner);
-				b.owner->OnCollision(a.owner);
-			}
+			a.owner->OnCollision(b.owner);
+			b.owner->OnCollision(a.owner);
 		}
 	}
 }

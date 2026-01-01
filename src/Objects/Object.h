@@ -17,8 +17,6 @@ public:
 		rbComp = new RigidBody(transform);
 	}
 	virtual ~Object() {
-		CollisionManager::Instance().Unregister(this);
-
 		delete transform;
 		delete renderer;
 		delete rbComp;
