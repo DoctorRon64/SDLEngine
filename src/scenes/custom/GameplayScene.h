@@ -18,6 +18,7 @@
 #include <Objects/custom/Explosion.h>
 #include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <Objects/custom/BackgroundDecorator.h>
+#include <Managers/XMLReader.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -52,11 +53,7 @@ public:
 		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", BACKGROUND_SPEED, -1000);
 		//SpawnManager::Instance().SpawnObject(bg);
 
-		Wave wave1;
-		wave1.AddSpawn(0.0f, []() { SpawnManager::Instance().SpawnObject(new BubbleEnemy({ 1400.f, 200.f })); });
-		wave1.AddSpawn(0.5f, []() { SpawnManager::Instance().SpawnObject(new MedusaEnemy({ 1400.f, 400.f })); });
-		wave1.AddSpawn(0.5f, []() { SpawnManager::Instance().SpawnObject(new KillerWhaleEnemy({ 1400.f, 600.f })); });
-		wave1.AddSpawn(1.0f, []() { SpawnManager::Instance().SpawnObject(new CirclerEnemy({ 1200.f, 300.f })); });
+		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
 		WaveManager::GetInstance()->AddWave(std::move(wave1));
 		WaveManager::GetInstance()->Start();
 
