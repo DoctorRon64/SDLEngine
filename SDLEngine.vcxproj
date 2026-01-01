@@ -145,7 +145,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;$(SolutionDir)\dep\inc\xml\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Managers\EnemyFactory.cpp" />
     <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration1.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration2.cpp" />
@@ -260,8 +261,14 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\managers\WaveManager.cpp" />
     <ClCompile Include="src\wave\Wave.cpp" />
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
+    <ClCompile Include="src\Managers\XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dep\inc\xml\rapidxml.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_iterators.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_print.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_utils.hpp" />
+    <ClInclude Include="src\Managers\EnemyFactory.h" />
     <ClInclude Include="src\scenes\custom\LevelSelectScene.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration1.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration2.h" />
@@ -322,10 +329,14 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\WaveManager.h" />
     <ClInclude Include="src\wave\Wave.h" />
     <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
+    <ClInclude Include="src\Managers\XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
     <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\level_1.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

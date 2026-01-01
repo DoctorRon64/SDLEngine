@@ -52,3 +52,8 @@
 #include "managers/ScoreManager.h"
 #include "managers/SpawnManager.h"
 #include "managers/WaveManager.h"
+
+#include "rapidxml.hpp"
+#include "rapidxml_iterators.hpp"
+#include "rapidxml_print.hpp"
+#include "rapidxml_utils.hpp"

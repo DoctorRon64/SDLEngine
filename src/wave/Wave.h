@@ -29,6 +29,8 @@ public:
 
 	void Stop() { active = false; }
 
+	int SpawnCount() { return spawns.size(); }
+
 private:
 	std::vector<EnemySpawn> spawns;
 	size_t spawnsSpawned;
