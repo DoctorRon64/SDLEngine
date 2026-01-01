@@ -32,16 +32,20 @@ private:
 	Player* player = Player::GetInstance();
 
 	//Score UI
-	Text* scoreText = new Text("Score");
-	Text* scoreNumberText = new Text("000000");
+	Text* scoreText;
+	Text* scoreNumberText;
 
 	//Score set UI
-	Text* setScoreText = new Text("Enter Name: ");
-	Text* setScoreNameText = new Text(" ");
+	Text* setScoreText;
+	Text* setScoreNameText;
+
+	unsigned int level;
 
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
+		std::cout << level << std::endl;
+
 		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", BACKGROUND_SPEED, -1000);
 		//SpawnManager::Instance().SpawnObject(bg);
 
@@ -152,6 +156,9 @@ public:
 	}
 
 	void Render() override { Scene::Render(); }
+
+	unsigned int GetLevel() { return level; }
+	void SetLevel(unsigned int _level) { level = _level; }
 
 private:
 	void SetPauseMenuVisibility(bool visible) {

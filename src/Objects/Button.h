@@ -42,6 +42,7 @@ public:
 
 		if(isHovered && InputManager::GetInstance()->GetLeftClick()) {
 			OnClicked();
+			InputManager::GetInstance()->LeftClickProcessed();
 		}
 
 		Object::Update();

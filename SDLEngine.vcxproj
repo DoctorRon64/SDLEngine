@@ -191,6 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration1.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration2.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration3.cpp" />
@@ -261,6 +262,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\scenes\custom\LevelSelectScene.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration1.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration2.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration3.h" />

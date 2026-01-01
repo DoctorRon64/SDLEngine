@@ -192,6 +192,9 @@
     <ClCompile Include="src\Objects\Decorations\Decoration3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\math\Vector2.h">
@@ -369,6 +372,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Objects\Decorations\Decoration3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scenes\custom\LevelSelectScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
