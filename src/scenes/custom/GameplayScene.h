@@ -49,7 +49,7 @@ public:
 		std::cout << level << std::endl;
 
 		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", BACKGROUND_SPEED, -1000);
-		//SpawnManager::Instance().SpawnObject(bg);
+		SpawnManager::Instance().SpawnObject(bg);
 
 		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
 		WaveManager::GetInstance()->AddWave(std::move(wave1));
