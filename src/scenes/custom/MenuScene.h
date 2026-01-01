@@ -22,7 +22,7 @@ public:
 		playLabel->GetTransform()->scale = { 2.f, 2.f };
 		
 		Button* playBtn = new Button([]() {
-			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
+			SceneManager::GetInstance()->SetNextScene(SceneState::LEVEL_SELECT);
 		}, playLabel);
 		playBtn->GetTransform()->position = { startX, startY };
 		ui.push_back(playBtn);

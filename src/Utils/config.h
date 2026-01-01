@@ -20,3 +20,5 @@ constexpr float BACKGROUND_SPEED = 200.0f;
 
 constexpr unsigned int DECORATION_MIN_TIME = 1;
 constexpr unsigned int DECORATION_MAX_TIME = 3;
+
+constexpr unsigned int LEVEL_COUNT = 1;
