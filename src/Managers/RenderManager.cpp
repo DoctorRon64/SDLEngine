@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "RenderManager.h"
 
 RenderManager::~RenderManager() {
@@ -24,9 +24,23 @@ void RenderManager::InitSDL() {
 }
 
 void RenderManager::CreateWindowAndRender() {
-	if(!SDL_CreateWindowAndRenderer(WINDOW_TITLE.c_str(), WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+	if(!SDL_CreateWindowAndRenderer(
+		WINDOW_TITLE.c_str(),
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT,
+		SDL_WINDOW_RESIZABLE,
+		&window,
+		&renderer
+	)) {
 		throw SDL_GetError();
 	}
+
+	SDL_SetRenderLogicalPresentation(
+		renderer,
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT,
+		SDL_LOGICAL_PRESENTATION_LETTERBOX
+	);
 }
 
 void RenderManager::Terminate() {
@@ -58,7 +72,7 @@ void RenderManager::Init(int _width, int _height, std::string _title) {
 		return;
 	}
 
-	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 0xff);
+	SDL_SetRenderDrawColor(renderer, 133, 0, 216, 0xff);
 }
 
 void RenderManager::LoadTexture(const std::string& path) {
