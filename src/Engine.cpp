@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "Engine.h"
 #include "scenes/custom/GameplayScene.h"
-#include "scenes/custom/MenuScene.h"
-#include "scenes/custom/SplashScreenScene.h"
-#include "scenes/custom/RankingScene.h"
 #include "scenes/custom/LevelSelectScene.h"
+#include "scenes/custom/MenuScene.h"
+#include "scenes/custom/RankingScene.h"
+#include "scenes/custom/SplashScreenScene.h"
 
 Engine::Engine() {
 	isRunning = false;

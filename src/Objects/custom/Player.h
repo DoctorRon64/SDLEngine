@@ -9,22 +9,21 @@ enum class Powerup : int {
 	COUNT = 3
 };
 
-class Player : public Actor {
+class Player : public Actor, public Collidable {
 private:
 	int lives = PLAYER_LIVES;
 	float speed = BASE_PLAYER_SPEED;
 
 public:
 	Player(std::string _path = "res/man.png") :
-		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542)) {
-
-
+		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542)), Collidable(this, rbComp) {
 		health = PLAYER_HEALTH;
 		maxHealth = PLAYER_HEALTH;
 
 		transform->position = Vector2(0.f, 0.f);
 		transform->scale = Vector2(.1f, .1f);
 
+		rbComp->AddCollider(new AABB(transform->position, transform->GetSize()));
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
 

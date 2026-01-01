@@ -5,10 +5,13 @@
 #include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
 #include <Objects/Button.h>
+#include <Objects/custom/Explosion.h>
+#include <Objects/custom/TestAnimation.h>
 #include <objects/Enemies/BubbleEnemy.h>
 #include <objects/Enemies/CirclerEnemy.h>
 #include <objects/Enemies/KillerWhaleEnemy.h>
 #include <objects/Enemies/MedusaEnemy.h>
+#include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
 #include <Objects/custom/TestAnimation.h>
@@ -166,7 +169,7 @@ private:
 				SetPauseMenuVisibility(false);
 				SetState(GameplayState::GAMEPLAY);
 			}, resumeText);
-			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 344.8f/2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 136.9f / 2 };
+			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 344.8f / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 136.9f / 2 };
 			ui.push_back(resumeBtn);
 			ui.push_back(resumeText);
 		}
