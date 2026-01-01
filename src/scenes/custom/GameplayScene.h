@@ -4,7 +4,9 @@
 #include "objects/custom/Player.h"
 #include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
+#include <Managers/XMLReader.h>
 #include <Objects/Button.h>
+#include <Objects/custom/BackgroundDecorator.h>
 #include <Objects/custom/Explosion.h>
 #include <Objects/custom/TestAnimation.h>
 #include <objects/Enemies/BubbleEnemy.h>
@@ -14,11 +16,6 @@
 #include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <objects/Text.h>
 #include <wave/Wave.h>
-#include <Objects/custom/TestAnimation.h>
-#include <Objects/custom/Explosion.h>
-#include <Objects/PowerUps/CannonEnergyPowerUp.h>
-#include <Objects/custom/BackgroundDecorator.h>
-#include <Managers/XMLReader.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -37,6 +34,7 @@ private:
 
 	//Score UI
 	Text* scoreText;
+	Text* livesText;
 	Text* scoreNumberText;
 
 	//Score set UI
@@ -66,6 +64,14 @@ public:
 		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
 		scoreNumberText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 200 };
 		ui.push_back(scoreNumberText);
+
+		livesText = new Text("Lives: " + std::to_string(player->GetLives()));
+		player->OnLivesChanged = [this](int current, int max) {
+			livesText->SetText("Lives: " + std::to_string(player->GetLives()));
+		};
+		livesText->GetTransform()->scale = { 2.f, 2.f };
+		livesText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 260 };
+		ui.push_back(livesText);
 
 		setScoreText = new Text("Enter Name: ");
 		setScoreText->GetTransform()->scale = { 2.0f, 2.0f };

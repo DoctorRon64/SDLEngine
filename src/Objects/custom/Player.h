@@ -9,14 +9,14 @@ enum class Powerup : int {
 	COUNT = 3
 };
 
-class Player : public Actor, public Collidable {
+class Player : public Actor {
 private:
 	int lives = PLAYER_LIVES;
 	float speed = BASE_PLAYER_SPEED;
 
 public:
 	Player(std::string _path = "res/man.png") :
-		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542)), Collidable(this, rbComp) {
+		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542)) {
 		health = PLAYER_HEALTH;
 		maxHealth = PLAYER_HEALTH;
 
@@ -41,10 +41,23 @@ public:
 		TimeManager::GetInstance()->SubscribeEvent(1.0f / BULLETS_PER_SECOND, [this]() { RefreshShooting(); });
 	}
 
+	std::function<void(int current, int max)> OnLivesChanged;
 	int GetLives() { return lives; }
-	void SetLives(int _lives) { lives = _lives; }
-	void IncrementLives(int amount) { lives += amount; }
-	void DecrementLives(int amount) { lives -= amount; }
+	void SetLives(int _lives) {
+		lives = _lives;
+		OnLivesChangedEvent();
+	}
+	void IncrementLives(int amount) {
+		lives += amount;
+		OnLivesChangedEvent();
+	}
+	void DecrementLives(int amount) {
+		lives -= amount;
+		OnLivesChangedEvent();
+	}
+	void OnLivesChangedEvent() {
+		if(OnLivesChanged) 	OnLivesChanged(health, maxHealth);
+	}
 
 	float GetSpeed() { return speed; }
 	void SetSpeed(float _speed) { speed = _speed; }

@@ -1,5 +1,5 @@
 #pragma once
-#include "../components/Rigidbody.h"
+#include "Rigidbody.h"
 
 class RigidBody;
 class Object;

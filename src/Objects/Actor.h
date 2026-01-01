@@ -1,7 +1,8 @@
 #pragma once
+#include "../components/Collidable.h"
 #include "Objects/Image.h"
 
-class Actor : public Image {
+class Actor : public Image, public Collidable {
 protected:
 	int maxHealth;
 	int health;
@@ -16,12 +17,26 @@ public:
 	)
 		: Image(_texturePath, _sourceOffset, _sourceSize),
 		maxHealth(_maxHealth),
-		health(_health) {}
+		health(_health), Collidable(this, rbComp) {}
 
 	virtual ~Actor() = default;
 
-	void Damage(int amount) { health -= amount; }
-	void Heal(int amount) { health += amount; }
-	void HealToMax() { health = maxHealth; }
+	std::function<void(int current, int max)> OnHealthChanged;
+	void Damage(int amount) {
+		health -= amount;
+		OnHealthChangedEvent();
+	}
+	void Heal(int amount) {
+		health += amount;
+		OnHealthChangedEvent();
+	}
+	void HealToMax() {
+		health = maxHealth;
+		OnHealthChangedEvent();
+	}
+	void OnHealthChangedEvent() {
+		if(OnHealthChanged) OnHealthChanged(health, maxHealth);
+	}
+
 	bool IsDead() const { return health <= 0; }
 };

@@ -192,6 +192,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Managers\EnemyFactory.cpp" />
+    <ClCompile Include="src\components\Collidable.cpp" />
     <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration1.cpp" />
     <ClCompile Include="src\Objects\Decorations\Decoration2.cpp" />
@@ -269,6 +270,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="dep\inc\xml\rapidxml_print.hpp" />
     <ClInclude Include="dep\inc\xml\rapidxml_utils.hpp" />
     <ClInclude Include="src\Managers\EnemyFactory.h" />
+    <ClInclude Include="src\components\Collidable.h" />
     <ClInclude Include="src\scenes\custom\LevelSelectScene.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration1.h" />
     <ClInclude Include="src\Objects\Decorations\Decoration2.h" />

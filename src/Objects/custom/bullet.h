@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../Collidable.h"
+#include "../../components/Collidable.h"
 #include "Enemy.h"
 #include "Player.h"
 
