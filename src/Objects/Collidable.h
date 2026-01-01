@@ -1,4 +1,8 @@
 #pragma once
+#include "../components/Rigidbody.h"
+
+class RigidBody;
+class Object;
 
 class Collidable {
 protected:
