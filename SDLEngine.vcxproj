@@ -191,7 +191,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Collidable.cpp" />
+    <ClCompile Include="src\objects\Collidable.cpp" />
     <ClCompile Include="src\Objects\custom\Explosion.cpp" />
     <ClCompile Include="src\scenes\custom\RankingScene.cpp" />
     <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
@@ -257,7 +257,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collidable.h" />
+    <ClInclude Include="src\objects\Collidable.h" />
     <ClInclude Include="src\Objects\custom\Explosion.h" />
     <ClInclude Include="src\scenes\custom\RankingScene.h" />
     <ClInclude Include="src\Renderers\ButtonRenderer.h" />

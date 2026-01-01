@@ -11,7 +11,7 @@ void CollisionManager::Unregister(Object* owner) {
 		std::remove_if(
 			collidables.begin(),
 			collidables.end(),
-			[owner](const Collidable& c) {
+			[owner](const CollidableEntry& c) {
 		return c.owner == owner;
 	}
 		),

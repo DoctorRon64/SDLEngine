@@ -20,10 +20,10 @@ private:
 	CollisionManager(const CollisionManager&) = delete;
 	CollisionManager& operator=(const CollisionManager&) = delete;
 
-	struct Collidable {
+	struct CollidableEntry {
 		RigidBody* rb;
 		Object* owner;
 	};
 
-	std::vector<Collidable> collidables;
+	std::vector<CollidableEntry> collidables;
 };
