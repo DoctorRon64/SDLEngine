@@ -42,8 +42,11 @@ public:
 			}
 		}
 
-		shouldHaltAudio = false;
-		threadsDone.clear();
+		// FOR EACH SCENE CHANGE
+		// BUT WE DONT WANT THAT BECAUSE WE CAN JUST SAY
+		// FOR WHICH SCENE WE WNAT
+		//shouldHaltAudio = false;
+		//threadsDone.clear();
 	}
 
 	bool LoadSoundData(const std::string& filePath) {
