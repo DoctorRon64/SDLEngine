@@ -41,6 +41,9 @@ public:
 				i++;
 			}
 		}
+
+		shouldHaltAudio = false;
+		threadsDone.clear();
 	}
 
 	bool LoadSoundData(const std::string& filePath) {
