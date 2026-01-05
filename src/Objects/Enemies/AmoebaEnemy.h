@@ -1,0 +1,26 @@
+#pragma once
+#include "../custom/Enemy.h"
+
+class AmoebaEnemy : public Enemy {
+	enum State { MOVE_IN, SPLIT, ORBIT, RECOMBINE };
+	State state = MOVE_IN;
+	float angle = 0.f;
+	int orbits = 0;
+
+	void UpdateState(float dt) override {
+		const float PI = 3.14f;
+		Vector2 center = GetTransform()->position / 2;
+
+		switch(state) {
+			case MOVE_IN:
+			MoveTowards(transform, { RenderManager::GetInstance()->WINDOW_WIDTH / 2, RenderManager::GetInstance()->WINDOW_HEIGHT / 2 }, speed, dt);
+			if(stateTimer > 1.5f) state = SPLIT;
+			break;
+
+			case ORBIT:
+			Orbit(transform, center, 80.f, angle, 3.f, dt);
+			if(angle > 2 * PI * 2) state = RECOMBINE;
+			break;
+		}
+	}
+};

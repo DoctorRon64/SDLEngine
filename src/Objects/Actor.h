@@ -7,6 +7,20 @@ protected:
 	int maxHealth;
 	int health;
 
+	virtual	void MoveTowards(Transform* t, Vector2 target, float speed, float dt) {
+		Vector2 dir = target - t->position;
+		dir.Normalize();
+		t->position += dir * speed * dt;
+	}
+
+	virtual void Orbit(Transform* t, Vector2 center, float radius, float& angle, float angularSpeed, float dt) {
+		angle += angularSpeed * dt;
+		t->position = {
+			center.x + cos(angle) * radius,
+			center.y + sin(angle) * radius
+		};
+	}
+
 public:
 	Actor(
 		std::string _texturePath,
