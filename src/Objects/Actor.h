@@ -36,9 +36,14 @@ public:
 	virtual ~Actor() = default;
 
 	std::function<void(int current, int max)> OnHealthChanged;
+	std::function<void()> OnDeath;
 	void Damage(int amount) {
 		health -= amount;
 		OnHealthChangedEvent();
+
+		if(health <= 0) {
+			OnDeath();
+		}
 	}
 	void Heal(int amount) {
 		health += amount;
@@ -48,9 +53,8 @@ public:
 		health = maxHealth;
 		OnHealthChangedEvent();
 	}
+
 	void OnHealthChangedEvent() {
 		if(OnHealthChanged) OnHealthChanged(health, maxHealth);
 	}
-
-	bool IsDead() const { return health <= 0; }
 };

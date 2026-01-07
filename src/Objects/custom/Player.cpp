@@ -46,7 +46,7 @@ void Player::HandleShooting() {
 }
 
 void Player::Shoot() {
-	auto* bullet = new Bullet();
+	auto* bullet = new Bullet(true);
 	bullet->SetLayer(20);
 	Vector2 pos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
 	bullet->GetTransform()->position = pos;

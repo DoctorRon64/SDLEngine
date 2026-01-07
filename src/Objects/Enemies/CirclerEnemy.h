@@ -38,7 +38,7 @@ protected:
 							  sin(angle * 3.14159265f / 180.0f));
 		Vector2 size = dir * 200;
 
-		Bullet* b = new Bullet("res/bullet.png", transform->position, size, false);
+		Bullet* b = new Bullet(false, "res/bullet.png", transform->position, size);
 		SpawnManager::Instance().SpawnObject(b);
 	}
 };

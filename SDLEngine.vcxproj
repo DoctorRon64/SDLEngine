@@ -191,6 +191,10 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\custom\Boss.cpp" />
+    <ClCompile Include="src\objects\enemies\AmoebaEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\ChomperEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BeholderEnemy.cpp" />
     <ClCompile Include="src\Managers\EnemyFactory.cpp" />
     <ClCompile Include="src\components\Collidable.cpp" />
     <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp" />
@@ -263,8 +267,14 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\wave\Wave.cpp" />
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
     <ClCompile Include="src\Managers\XMLReader.cpp" />
+    <ClCompile Include="src\objects\enemies\VerticleMedusaEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\objects\custom\Boss.h" />
+    <ClInclude Include="src\objects\enemies\AmoebaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\ChomperEnemy.h" />
+    <ClInclude Include="src\math\Random.h" />
+    <ClInclude Include="src\objects\enemies\BeholderEnemy.h" />
     <ClInclude Include="dep\inc\xml\rapidxml.hpp" />
     <ClInclude Include="dep\inc\xml\rapidxml_iterators.hpp" />
     <ClInclude Include="dep\inc\xml\rapidxml_print.hpp" />
@@ -332,6 +342,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\wave\Wave.h" />
     <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
     <ClInclude Include="src\Managers\XMLReader.h" />
+    <ClInclude Include="src\objects\enemies\VerticleMedusaEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />

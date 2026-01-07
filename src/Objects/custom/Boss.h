@@ -13,7 +13,7 @@ public:
 		Vector2 size,
 		int maxHp
 	)
-		: Enemy(texture, spawnPos, size, maxHp) {}
+		: Enemy(texture, spawnPos, size) {}
 
 	virtual void Update() override {
 		UpdatePhase();

@@ -82,6 +82,9 @@ public:
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
+		player->OnDeath = [this]() {
+			SetState(GameplayState::DEATH);
+		};
 
 		Explosion* testAnim = new Explosion();
 		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
@@ -103,10 +106,6 @@ public:
 			if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
 				SetPauseMenuVisibility(true);
 				SetState(GameplayState::PAUSED);
-			}
-
-			if(player->IsDead()) {
-				SetState(GameplayState::DEATH);
 			}
 
 			if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&

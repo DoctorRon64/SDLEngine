@@ -36,7 +36,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "math/Random.h"
-#include "Math/Vector2.h"
+#include "math/Vector2.h"
 
 #include "managers/RenderManager.h"
 

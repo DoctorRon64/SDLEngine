@@ -42,6 +42,7 @@ public:
 	}
 
 	std::function<void(int current, int max)> OnLivesChanged;
+
 	int GetLives() { return lives; }
 	void SetLives(int _lives) {
 		lives = _lives;

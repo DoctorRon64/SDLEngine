@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Bullet.h"
 
-Bullet::Bullet(std::string _name, Vector2 _pos, Vector2 _size, bool _isPlayer)
+Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
 	: Image(_name, _pos, _size),
 	Collidable(this, rbComp),
 	isPlayerBullet(_isPlayer) {
