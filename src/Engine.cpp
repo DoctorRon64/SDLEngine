@@ -52,7 +52,7 @@ void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadTexture("res/enemies/whale_sprite.png");
 
 	RenderManager::GetInstance()->LoadTexture("res/bg.png");
-	RenderManager::GetInstance()->LoadTexture("res/man.png");
+	RenderManager::GetInstance()->LoadTexture("res/player_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/bullet.png");
 	RenderManager::GetInstance()->LoadTexture("res/btn.png");
 	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");

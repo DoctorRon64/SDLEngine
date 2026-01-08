@@ -15,10 +15,13 @@ private:
 	float speed = BASE_PLAYER_SPEED;
 
 public:
-	Player(std::string _path = "res/man.png") :
-		Actor(_path, Vector2(0.f, 0.f), Vector2(992, 1542), PLAYER_HEALTH, PLAYER_HEALTH) {
+	Player(std::string _path = "res/player_sprite.png") :
+		Actor(_path, Vector2(0.f, 0.f), Vector2(32, 32)) {
+		health = PLAYER_HEALTH;
+		maxHealth = PLAYER_HEALTH;
+
 		transform->position = Vector2(0.f, 0.f);
-		transform->scale = Vector2(.1f, .1f);
+		transform->scale = Vector2(2.f, 2.f);
 
 		rbComp->SetAngularDrag(0.5f);
 		rbComp->SetLinearDrag(0.5f);
@@ -36,6 +39,10 @@ public:
 		canShoot = true;
 		TimeManager::GetInstance()->SubscribeEvent(1.0f / BULLETS_PER_SECOND, [this]() { RefreshShooting(); });
 	}
+
+	virtual bool IsPersistent() const override { return true; }
+
+	std::function<void(int current, int max)> OnLivesChanged;
 
 	int GetLives() { return lives; }
 	void SetLives(int _lives) { lives = _lives; }
