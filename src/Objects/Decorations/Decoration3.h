@@ -1,11 +1,9 @@
 #pragma once
 #include "Decoration.h"
 class Decoration3 :
-    public Decoration
-{
+	public Decoration {
 public:
-    Decoration3() : Decoration("res/minecraft_poppy.png", { 0,0 }, { 120, 188 }) {
-        transform->scale = { .2f, .2f };
-    }
+	Decoration3() : Decoration("res/decoration_flower.png", { 0,0 }, { 32, 32 }) {
+		transform->scale = { 2.f, 2.f };
+	}
 };
-
