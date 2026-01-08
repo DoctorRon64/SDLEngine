@@ -5,7 +5,9 @@ void Scene::OnExit() {
 	SpawnManager::Instance().ClearSpanwer();
 
 	for(Object* o : objects) {
-		delete o;
+		if(!o->IsPersistent()) {
+			delete o;
+		}
 	}
 	objects.clear();
 

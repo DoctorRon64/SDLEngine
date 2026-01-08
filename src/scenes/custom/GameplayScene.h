@@ -52,7 +52,19 @@ public:
 		SpawnManager::Instance().SpawnObject(bg);
 
 		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
+		Wave wave2 = XMLReader::Instance().FetchWave(level, 1);
+		Wave wave3 = XMLReader::Instance().FetchWave(level, 1);
+		Wave wave4 = XMLReader::Instance().FetchWave(level, 1);
+		Wave wave5 = XMLReader::Instance().FetchWave(level, 1);
+		Wave wave6 = XMLReader::Instance().FetchWave(level, 1);
+		Wave wave7 = XMLReader::Instance().FetchWave(level, 1);
 		WaveManager::GetInstance()->AddWave(std::move(wave1));
+		WaveManager::GetInstance()->AddWave(std::move(wave2));
+		WaveManager::GetInstance()->AddWave(std::move(wave3));
+		WaveManager::GetInstance()->AddWave(std::move(wave4));
+		WaveManager::GetInstance()->AddWave(std::move(wave5));
+		WaveManager::GetInstance()->AddWave(std::move(wave6));
+		WaveManager::GetInstance()->AddWave(std::move(wave7));
 		WaveManager::GetInstance()->Start();
 
 		scoreText = new Text("Score");
@@ -92,9 +104,15 @@ public:
 		SpawnManager::Instance().SpawnObject(testAnim);
 
 		BackgroundDecorator* decorator = new BackgroundDecorator();
+		SpawnManager::Instance().SpawnObject(decorator);
 	}
 
-	void OnExit() override { Scene::OnExit(); }
+	void OnExit() override {
+		TimeManager::GetInstance()->ClearAllEvents();
+		player->OnLivesChanged = nullptr;
+
+		Scene::OnExit();
+	}
 
 	void OnUpdate() override {
 		bool stateChanged = stateJustChanged;

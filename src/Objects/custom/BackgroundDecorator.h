@@ -7,8 +7,7 @@
 #define DECORATION_COUNT 3
 
 class BackgroundDecorator :
-    public Object
-{
+	public Object {
 	enum class DecorationPlace {
 		TOP,
 		BOTTOM
@@ -39,7 +38,7 @@ public:
 		rbComp = nullptr;
 	}
 	virtual void Update() {}
-	virtual void Render() { renderer->Render(); }
+	//virtual void Render() { renderer->Render(); }
 
 	void TopSpawnEvent() {
 		int randomSpawn = std::rand() % DECORATION_COUNT;
@@ -61,13 +60,13 @@ public:
 	void SpawnDecoration(DecorationPlace place) {
 		Decoration* decoration;
 		assert(decoration = dynamic_cast<Decoration*>(new T()));
-		switch (place) {
-		case DecorationPlace::TOP:
+		switch(place) {
+			case DecorationPlace::TOP:
 			decoration->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH, 0 };
 			decoration->GetTransform()->rotation = 180.0f;
 			break;
-		case DecorationPlace::BOTTOM:
-			decoration->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH, 
+			case DecorationPlace::BOTTOM:
+			decoration->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH,
 				(float)RenderManager::GetInstance()->WINDOW_HEIGHT - decoration->GetTransform()->GetSize().y };
 			break;
 		}
@@ -75,4 +74,3 @@ public:
 		SpawnManager::Instance().SpawnObject(decoration);
 	}
 };
-

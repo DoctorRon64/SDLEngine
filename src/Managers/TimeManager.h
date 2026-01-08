@@ -71,4 +71,10 @@ public:
 			timeToExecution + (float)elapsedTime, event
 		));
 	}
+
+	void ClearAllEvents() {
+		while(!timedEvents.empty()) {
+			timedEvents.pop();
+		}
+	}
 };
