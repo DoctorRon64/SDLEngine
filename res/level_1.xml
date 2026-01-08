@@ -2,6 +2,11 @@
 <level>
 	<wave>
 		<spawned_enemy_id>1</spawned_enemy_id>
+		<spawned_enemy_id>2</spawned_enemy_id>
+		<spawned_enemy_id>3</spawned_enemy_id>
+		<spawned_enemy_id>4</spawned_enemy_id>
+		<spawned_enemy_id>5</spawned_enemy_id>
+		<spawned_enemy_id>6</spawned_enemy_id>
 		<amount>5</amount>
 	</wave>
 	<wave>
@@ -21,5 +26,3 @@
 		<amount>3</amount>
 	</wave>
 </level>
-
-
