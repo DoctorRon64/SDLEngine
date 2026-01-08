@@ -2,8 +2,11 @@
 #include "Player.h"
 
 void Player::Update() {
+	float dt = TimeManager::GetInstance()->GetDeltaTime();
+
 	HandleMovement();
-	HandleShooting();
+	HandleShooting(dt);
+
 	Image::Update();
 
 	ClampToScreen();
@@ -31,17 +34,24 @@ void Player::HandleMovement() {
 	rbComp->AddForce(move * 300.f);
 }
 
-void Player::HandleShooting() {
-	{
-		bool fireInput = InputManager::GetInstance()->GetEvent(SDLK_SPACE, DOWN) ||
-			InputManager::GetInstance()->GetLeftClick() ||
-			InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_SOUTH) ||
-			InputManager::GetInstance()->GetArrowInput(UP);
+void Player::HandleShooting(float dt) {
+	bool fireHeld =
+		InputManager::GetInstance()->GetEvent(SDLK_SPACE, HOLD) ||
+		InputManager::GetInstance()->GetLeftClick() ||
+		InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_SOUTH) ||
+		InputManager::GetInstance()->GetArrowInput(UP);
 
-		if(fireInput && canShoot) {
-			Shoot();
-			canShoot = false;
-		}
+	if(!fireHeld) {
+		shootTimer = 0.0f; // instant response on re-press
+		return;
+	}
+
+	shootTimer -= dt;
+
+	if(shootTimer <= 0.0f) {
+		Shoot();
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
+		shootTimer = shootCooldown;
 	}
 }
 
@@ -52,7 +62,6 @@ void Player::Shoot() {
 	bullet->GetTransform()->position = pos;
 
 	SpawnManager::Instance().SpawnObject(bullet);
-	AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
 
 	if(powerUpFlags[(int)Powerup::LASER]) {
 		Bullet* laserBullet = new Bullet();

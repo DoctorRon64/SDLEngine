@@ -33,14 +33,17 @@ public:
 	Player& operator=(const Player&) = delete;
 
 	virtual void Update() override;
+
 	void HandleMovement();
-	void HandleShooting();
+	void HandleShooting(float dt);
 	void Shoot();
 	void RefreshShooting() {
-		canShoot = true;
 		TimeManager::GetInstance()->SubscribeEvent(1.0f / BULLETS_PER_SECOND, [this]() { RefreshShooting(); });
 	}
 
+	void OnSceneEnter() {
+		RefreshShooting();
+	}
 	virtual bool IsPersistent() const override { return true; }
 
 	std::function<void(int current, int max)> OnLivesChanged;
@@ -77,8 +80,10 @@ public:
 private:
 	void ClampToScreen();
 
-	bool canShoot;
 	bool powerUpFlags[(int)Powerup::COUNT] = {};
 	int shields = 100;
 	bool invulnerable = false;
+
+	float shootCooldown = 0.2f; // 5 shots/sec
+	float shootTimer = 0.0f;
 };
