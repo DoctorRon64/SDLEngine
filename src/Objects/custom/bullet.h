@@ -7,10 +7,10 @@
 class Bullet : public Image, public Collidable {
 public:
 	Bullet(
+		bool _isPlayer = true,
 		std::string _name = "res/bullet.png",
 		Vector2 _pos = Vector2(0.f, 0.f),
-		Vector2 _size = Vector2(400.f, 400.f),
-		bool _isPlayer = true
+		Vector2 _size = Vector2(400.f, 400.f)
 	);
 
 	~Bullet() override = default;

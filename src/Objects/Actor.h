@@ -7,6 +7,20 @@ protected:
 	int maxHealth;
 	int health;
 
+	virtual	void MoveTowards(Transform* t, Vector2 target, float speed, float dt) {
+		Vector2 dir = target - t->position;
+		dir.Normalize();
+		t->position += dir * speed * dt;
+	}
+
+	virtual void Orbit(Transform* t, Vector2 center, float radius, float& angle, float angularSpeed, float dt) {
+		angle += angularSpeed * dt;
+		t->position = {
+			center.x + cos(angle) * radius,
+			center.y + sin(angle) * radius
+		};
+	}
+
 public:
 	Actor(
 		std::string _texturePath,
@@ -22,9 +36,14 @@ public:
 	virtual ~Actor() = default;
 
 	std::function<void(int current, int max)> OnHealthChanged;
+	std::function<void()> OnDeath;
 	void Damage(int amount) {
 		health -= amount;
 		OnHealthChangedEvent();
+
+		if(health <= 0) {
+			OnDeath();
+		}
 	}
 	void Heal(int amount) {
 		health += amount;
@@ -34,9 +53,8 @@ public:
 		health = maxHealth;
 		OnHealthChangedEvent();
 	}
+
 	void OnHealthChangedEvent() {
 		if(OnHealthChanged) OnHealthChanged(health, maxHealth);
 	}
-
-	bool IsDead() const { return health <= 0; }
 };

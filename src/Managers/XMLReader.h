@@ -1,9 +1,8 @@
 #pragma once
-#include "FileManager.h"
 #include "EnemyFactory.h"
+#include "FileManager.h"
 class XMLReader :
-    public FileManager
-{
+	public FileManager {
 private:
 	XMLReader() : FileManager() {}
 	~XMLReader() = default;
@@ -23,15 +22,15 @@ public:
 
 		rapidxml::xml_node<>* pRoot = doc.first_node();
 		rapidxml::xml_node<>* pNode;
-		for (pNode = pRoot->first_node("wave"); pNode; pNode = pNode->next_sibling()) {
-			if (waveNum == 0) break;
+		for(pNode = pRoot->first_node("wave"); pNode; pNode = pNode->next_sibling()) {
+			if(waveNum == 0) break;
 			waveNum--;
 		}
 
 		Wave wave;
 		int enemyId = std::stoi(pNode->first_node("spawned_enemy_id")->value());
 		int enemyAmount = std::stoi(pNode->first_node("amount")->value());
-		while (enemyAmount) {
+		while(enemyAmount) {
 			enemyAmount--;
 			wave.AddSpawn(0.f, EnemyFactory::Instance().spawnFunctions[enemyId]);
 		}
@@ -39,4 +38,3 @@ public:
 		return wave;
 	}
 };
-

@@ -48,9 +48,13 @@ void Engine::Init() {
 void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
 
+	RenderManager::GetInstance()->LoadTexture("res/enemies/amoeba_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/beholder_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/enemies/bubble_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/chomper_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/enemies/circler_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/enemies/medusa_sprite.png");
+	RenderManager::GetInstance()->LoadTexture("res/enemies/vertical_medusa_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/enemies/whale_sprite.png");
 
 	RenderManager::GetInstance()->LoadTexture("res/bg.png");

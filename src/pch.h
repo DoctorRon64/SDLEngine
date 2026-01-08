@@ -35,7 +35,8 @@
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
-#include "Math/Vector2.h"
+#include "math/Random.h"
+#include "math/Vector2.h"
 
 #include "managers/RenderManager.h"
 
