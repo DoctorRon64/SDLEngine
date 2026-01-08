@@ -97,6 +97,7 @@ public:
 		player->OnDeath = [this]() {
 			SetState(GameplayState::DEATH);
 		};
+		player->OnSceneEnter();
 
 		Explosion* testAnim = new Explosion();
 		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
@@ -119,54 +120,16 @@ public:
 
 		switch(state) {
 			case GameplayState::GAMEPLAY:
-			Scene::OnUpdate();
-
-			if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
-				SetPauseMenuVisibility(true);
-				SetState(GameplayState::PAUSED);
-			}
-
-			if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
-				!AreEnemiesRemaining()) {
-				SetState(GameplayState::FINISH_STAGE);
-			}
-
+			UpdateGameplay();
 			break;
-
 			case GameplayState::PAUSED:
-			for(int i = ui.size() - 1; i >= 0; i--) {
-				if(ui[i]->IsPendingDestroy()) {
-					delete ui[i];
-					ui.erase(ui.begin() + i);
-				}
-			}
-
-			for(Object* u : ui) {
-				u->Update();
-			}
-
-			if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
-				SetPauseMenuVisibility(false);
-				SetState(GameplayState::GAMEPLAY);
-			}
+			UpdatePaused();
 			break;
-
 			case GameplayState::FINISH_STAGE:
-			if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
-				RecordHighScore();
-			}
-			else {
-				//TODO: Finish Stage Transition
-				WaveManager::GetInstance()->StartNextWave();
-				SetState(GameplayState::GAMEPLAY);
-			}
+			UpdateFinishStage();
 			break;
-
 			case GameplayState::DEATH:
-			if(stateJustChanged)
-				TimeManager::GetInstance()->SubscribeEvent(
-					1.0f, [this]() { ShowDeathScreen(); }
-				);
+			UpdateDeath();
 			break;
 		}
 
@@ -178,7 +141,45 @@ public:
 		}
 	}
 
-	void Render() override { Scene::Render(); }
+	void UpdateGameplay() {
+		Scene::OnUpdate();
+
+		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
+			SetPauseMenuVisibility(true);
+			SetState(GameplayState::PAUSED);
+		}
+
+		if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
+			!AreEnemiesRemaining()) {
+			SetState(GameplayState::FINISH_STAGE);
+		}
+	}
+
+	void UpdatePaused() {
+		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
+			SetPauseMenuVisibility(false);
+			SetState(GameplayState::GAMEPLAY);
+		}
+	}
+
+	void UpdateDeath() {
+		if(stateJustChanged) {
+			TimeManager::GetInstance()->SubscribeEvent(
+				1.0f, [this]() { ShowDeathScreen(); }
+			);
+		}
+	}
+
+	void UpdateFinishStage() {
+		if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
+			RecordHighScore();
+		}
+		else {
+			//TODO: Finish Stage Transition
+			WaveManager::GetInstance()->StartNextWave();
+			SetState(GameplayState::GAMEPLAY);
+		}
+	}
 
 	unsigned int GetLevel() { return level; }
 	void SetLevel(unsigned int _level) { level = _level; }
@@ -261,17 +262,6 @@ private:
 		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN)) {
 			//TODO: Hook up to file manager
 			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-		}
-
-		for(int i = ui.size() - 1; i >= 0; i--) {
-			if(ui[i]->IsPendingDestroy()) {
-				delete ui[i];
-				ui.erase(ui.begin() + i);
-			}
-		}
-
-		for(Object* u : ui) {
-			u->Update();
 		}
 	}
 };
