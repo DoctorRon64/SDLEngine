@@ -5,12 +5,11 @@
 #include <Objects/Button.h>
 #include <Utils/config.h>
 class LevelSelectScene :
-    public Scene
-{
+	public Scene {
 public:
 	LevelSelectScene() = default;
 	void OnEnter() override {
-		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_title.wav");
+		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_subtune_2.wav");
 
 		Text* title = new Text("[LEVEL SELECT]");
 		title->GetTransform()->scale = { 2.f, 2.f };
@@ -21,14 +20,14 @@ public:
 		float startY = 180.0f;
 		float spacing = 130.0f;
 
-		for (int i = 0; i < LEVEL_COUNT; ++i) {
+		for(int i = 0; i < LEVEL_COUNT; ++i) {
 			Text* levelLabel = new Text("Level " + std::to_string(i + 1));
 			levelLabel->GetTransform()->scale = { 2.f, 2.f };
 
 			Button* levelBtn = new Button([i]() {
 				dynamic_cast<GameplayScene*>(SceneManager::GetInstance()->GetScene(SceneState::GAMEPLAY))->SetLevel(i);
 				SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
-				}, levelLabel);
+			}, levelLabel);
 			levelBtn->GetTransform()->position = { startX, startY + i * spacing };
 			ui.push_back(levelBtn);
 			ui.push_back(levelLabel);
@@ -41,10 +40,9 @@ public:
 
 		Button* menuBtn = new Button([]() {
 			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-			}, menuLabel);
+		}, menuLabel);
 		menuBtn->GetTransform()->position = { startX, startY + spacing * 3 };
 		ui.push_back(menuBtn);
 		ui.push_back(menuLabel);
 	}
 };
-

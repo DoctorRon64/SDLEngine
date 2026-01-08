@@ -2,12 +2,6 @@
 #include "../audio/AtomicWrapper.h"
 #include "../audio/AudioStream.h"
 
-//Para controlar cuando hay que terminar los threads
-static std::atomic<bool> shouldHaltAudio = false;
-static std::atomic<bool> soundEffectsHalt = false;
-static std::vector<AtomicWrapper<bool>> threadsDone;
-static std::vector<AtomicWrapper<bool>> activeLoops;
-
 class AudioManager {
 public:
 	static AudioManager* GetInstance() {
@@ -32,21 +26,26 @@ public:
 		}
 	};
 
-	void HaltAudio() {
-		shouldHaltAudio = true;
+	//void HaltAudio() {
+	//	shouldHaltAudio = true;
 
-		int size = threadsDone.size();
-		for(int i = 0; i < size; ) {
-			if(threadsDone.at(i).value) {
-				i++;
-			}
-		}
+	//	int size = threadsDone.size();
+	//	for(int i = 0; i < size; ) {
+	//		if(threadsDone.at(i).value) {
+	//			i++;
+	//		}
+	//	}
 
-		// FOR EACH SCENE CHANGE
-		// BUT WE DONT WANT THAT BECAUSE WE CAN JUST SAY
-		// FOR WHICH SCENE WE WNAT
-		//shouldHaltAudio = false;
-		//threadsDone.clear();
+	//	// FOR EACH SCENE CHANGE
+	//	// BUT WE DONT WANT THAT BECAUSE WE CAN JUST SAY
+	//	// FOR WHICH SCENE WE WNAT
+	//	//shouldHaltAudio = false;
+	//	//threadsDone.clear();
+	//}
+
+	void StopAllAudio() {
+		StopAllSoundEffects();
+		StopMusic();
 	}
 
 	bool LoadSoundData(const std::string& filePath) {
@@ -76,34 +75,45 @@ public:
 	void PlaySound(const std::string& filePath) {
 		if(soundsData.find(filePath) == soundsData.end()) return;
 
-		threadsDone.push_back(AtomicWrapper<bool>(false));
-		int index = threadsDone.size() - 1;
+		auto soundThread = std::make_unique<SoundThread>();
 
-		std::thread([this, filePath, index]() {
+		soundThread->thread = std::thread([this, filePath, st = soundThread.get()]() {
 			AudioStream stream(soundsData[filePath]->spec, audioDevice);
-			stream.CheckPlayBack(soundsData[filePath], threadsDone[index].value);
-			threadsDone[index].value = true;
-		}).detach();
+			stream.CheckPlayBack(soundsData[filePath], st->done);
+			st->done = true;
+		});
+
+		soundThreads.push_back(std::move(soundThread));
 	}
 
 	void PlaySoundLooping(const std::string& filePath) {
 		if(soundsData.find(filePath) == soundsData.end()) return;
 
-		// Stop previous music if any
+		// Stop previous music ONLY if changing tracks
+		StopMusic();
+
+		musicThreadDone.value = false;
+
+		musicThread = std::thread([this, filePath]() {
+			AudioStream stream(soundsData[filePath]->spec, audioDevice);
+			stream.CheckPlayBackLooping(soundsData[filePath], musicThreadDone.value);
+		});
+	}
+
+	void StopAllSoundEffects() {
+		for(auto& st : soundThreads) {
+			st->done = true;
+			if(st->thread.joinable())
+				st->thread.join();
+		}
+		soundThreads.clear();
+	}
+
+	void StopMusic() {
 		if(musicThread.joinable()) {
 			musicThreadDone.value = true;
 			musicThread.join();
 		}
-
-		// Reset flag for new music
-		musicThreadDone.value = false;
-
-		// Start new music thread
-		musicThread = std::thread([this, filePath]() {
-			AudioStream stream(soundsData[filePath]->spec, audioDevice);
-			stream.CheckPlayBackLooping(soundsData[filePath], musicThreadDone.value);
-			musicThreadDone.value = true; // done
-		});
 	}
 
 	void Mute() {
@@ -131,18 +141,41 @@ public:
 		return soundsData[filePath];
 	};
 
+	struct SoundThread {
+		std::thread thread;
+		std::atomic<bool> done{ false };
+	};
+
+	std::vector<std::unique_ptr<SoundThread>> soundThreads;
+
 private:
 	AudioManager() = default;
 	AudioManager(AudioManager&) = delete;
 	AudioManager& operator=(const AudioManager&) = delete;
 	~AudioManager() {
-		for(std::map<std::string, SoundData*>::iterator it = soundsData.begin(); it != soundsData.end(); ++it) {
-			SDL_free(it->second->wavData);
-			delete it->second;
-			it->second = nullptr;
+		// Stop all sound threads
+		for(auto& st : soundThreads) {
+			st->done = true;
+			if(st->thread.joinable())
+				st->thread.join();
+		}
+
+		// Stop music thread
+		if(musicThread.joinable()) {
+			musicThreadDone.value = true;
+			musicThread.join();
+		}
+
+		// Free audio data
+		for(auto& [_, data] : soundsData) {
+			SDL_free(data->wavData);
+			delete data;
 		}
 
 		soundsData.clear();
+
+		SDL_CloseAudioDevice(audioDevice);
+		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}
 
 	void PlaySoundCallback(const std::string& filePath, int threadIndex, bool looping) {

@@ -15,9 +15,12 @@ Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
 void Bullet::Update() {
 	Image::Update();
 
-	if(transform->position.x > RenderManager::GetInstance()->WINDOW_WIDTH ||
-		transform->position.x < -50.f) {
+	float x = transform->position.x;
+	float w = RenderManager::GetInstance()->WINDOW_WIDTH;
+
+	if(x > w || x < -transform->GetSize().x) {
 		Destroy();
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/hurt_bullet.wav");
 	}
 }
 

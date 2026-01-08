@@ -64,9 +64,9 @@ void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
 	RenderManager::GetInstance()->LoadTexture("res/splash_screen.png");
 	RenderManager::GetInstance()->LoadTexture("res/explosion.png");
-	RenderManager::GetInstance()->LoadTexture("res/minecraft_tall_grass.png");
-	RenderManager::GetInstance()->LoadTexture("res/minecraft_rose_bush.png");
-	RenderManager::GetInstance()->LoadTexture("res/minecraft_poppy.png");
+	RenderManager::GetInstance()->LoadTexture("res/decoration_grass.png");
+	RenderManager::GetInstance()->LoadTexture("res/decoration_bush.png");
+	RenderManager::GetInstance()->LoadTexture("res/decoration_flower.png");
 
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_subtune_2.wav");
 	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_title.wav");
@@ -74,6 +74,9 @@ void Engine::LoadAssets() {
 	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/laserShoot.wav");
 	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_select.wav");
 	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_hover.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/hurt_bullet.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/hurt_enemy.wav");
+	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/hurt_player.wav");
 }
 
 void Engine::HandleEvents() {
