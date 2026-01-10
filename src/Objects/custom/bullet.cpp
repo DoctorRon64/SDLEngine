@@ -8,8 +8,7 @@ Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
 	rbComp->AddCollider(new AABB(_pos, _size));
 	rbComp->SetVelocity(isPlayerBullet ? Vector2(bulletSpeed, 0.f) : Vector2(-bulletSpeed, 0.f));
 
-	transform->scale = { 0.1f, 0.1f };
-	transform->rotation = isPlayerBullet ? 90.f : -90.f;
+	transform->scale = { 1.f, 1.f };
 }
 
 void Bullet::Update() {

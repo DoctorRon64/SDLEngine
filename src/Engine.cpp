@@ -59,7 +59,7 @@ void Engine::LoadAssets() {
 
 	RenderManager::GetInstance()->LoadTexture("res/bg.png");
 	RenderManager::GetInstance()->LoadTexture("res/player_sprite.png");
-	RenderManager::GetInstance()->LoadTexture("res/bullet.png");
+	RenderManager::GetInstance()->LoadTexture("res/bullet_sprite.png");
 	RenderManager::GetInstance()->LoadTexture("res/btn.png");
 	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
 	RenderManager::GetInstance()->LoadTexture("res/splash_screen.png");
