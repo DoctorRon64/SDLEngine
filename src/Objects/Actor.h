@@ -21,6 +21,18 @@ protected:
 		};
 	}
 
+	void InitHp(int _hp) {
+		health = _hp;
+		maxHealth = _hp;
+	}
+
+	virtual void OnDeath() {
+		if(OnDeathEvent) {
+			OnDeathEvent();
+		}
+
+		Destroy();
+	}
 public:
 	Actor(
 		std::string _texturePath,
@@ -36,8 +48,10 @@ public:
 	virtual ~Actor() = default;
 
 	std::function<void(int current, int max)> OnHealthChanged;
-	std::function<void()> OnDeath;
-	void Damage(int amount) {
+	std::function<void()> OnDeathEvent;
+	virtual void TakeDamage(int amount) {
+		if(health <= 0) return; // already dead
+
 		health -= amount;
 		OnHealthChangedEvent();
 
@@ -45,6 +59,7 @@ public:
 			OnDeath();
 		}
 	}
+
 	void Heal(int amount) {
 		health += amount;
 		OnHealthChangedEvent();

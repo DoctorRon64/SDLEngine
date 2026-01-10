@@ -15,6 +15,7 @@ public:
 		: Enemy("res/enemies/circler_sprite.png", spawn, { 32, 32 }) {
 		state = EnemyState::CIRCLE_MOVE;
 		circleCenter = spawn;
+		InitHp(6);
 	}
 
 protected:

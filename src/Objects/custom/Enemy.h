@@ -13,11 +13,16 @@ protected:
 	EnemyState state = EnemyState::STAY;
 	float stateTimer = 0.f;
 
-	int hp = 1;
 	int scoreValue = 100;
 	float speed = 50.f;
 
 	Vector2 velocity = { 0, 0 };
+
+	virtual void OnDeath() override {
+		Actor::OnDeath();
+		ScoreManager::GetInstance()->AddScore(scoreValue);
+		AudioManager::GetInstance()->PlaySound("res/audio/sfx/hurt_enemy.wav");
+	}
 
 public:
 	Enemy(
@@ -28,8 +33,9 @@ public:
 		transform->position = spawnPos;
 		transform->scale = { 2.f, 2.f };
 
-		rbComp->AddCollider(new AABB(transform->position, transform->GetSize()));
+		rbComp->AddCollider(new AABB(transform->position * 2, transform->GetSize()));
 		rbComp->SetLinearDrag(0.0f);
+		InitHp(1);
 	}
 
 	virtual void Update() override {
@@ -38,18 +44,6 @@ public:
 
 		UpdateState(dt);
 		Image::Update();
-	}
-
-	virtual void TakeDamage(int dmg) {
-		hp -= dmg;
-		if(hp <= 0) {
-			OnDeath();
-		}
-	}
-
-	virtual void OnDeath() {
-		ScoreManager::GetInstance()->AddScore(scoreValue);
-		Destroy();
 	}
 
 protected:

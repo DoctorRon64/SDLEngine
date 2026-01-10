@@ -11,6 +11,7 @@ public:
 		: Enemy("res/enemies/bubble_sprite.png", spawn, { 32, 32 }) {
 		state = EnemyState::SIMPLE_MOVE;
 		velocity = { -speed, 0 };
+		InitHp(2);
 	}
 
 protected:
