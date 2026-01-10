@@ -22,7 +22,7 @@
 		<amount>2</amount>
 	</wave>
 	<wave>
-		<spawned_enemy_id>3</spawned_enemy_id>
+		<spawned_enemy_id>4</spawned_enemy_id>
 		<amount>3</amount>
 	</wave>
 </level>

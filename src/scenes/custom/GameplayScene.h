@@ -94,7 +94,7 @@ public:
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
-		player->OnDeath = [this]() {
+		player->OnDeathEvent = [this]() {
 			SetState(GameplayState::DEATH);
 		};
 		player->OnSceneEnter();
@@ -156,6 +156,8 @@ public:
 	}
 
 	void UpdatePaused() {
+		UpdateUI();
+
 		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
 			SetPauseMenuVisibility(false);
 			SetState(GameplayState::GAMEPLAY);
@@ -165,12 +167,16 @@ public:
 	void UpdateDeath() {
 		if(stateJustChanged) {
 			TimeManager::GetInstance()->SubscribeEvent(
-				1.0f, [this]() { ShowDeathScreen(); }
+				1.0f, [this]() {
+				ShowDeathScreen();
+			}
 			);
 		}
 	}
 
 	void UpdateFinishStage() {
+		//if(!stateJustChanged) return;
+
 		if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
 			RecordHighScore();
 		}

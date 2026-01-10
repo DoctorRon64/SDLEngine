@@ -17,6 +17,19 @@ void Scene::OnExit() {
 	ui.clear();
 }
 
+void Scene::UpdateUI() {
+	for(Object* u : ui) {
+		u->Update();
+	}
+
+	for(int i = ui.size() - 1; i >= 0; i--) {
+		if(ui[i]->IsPendingDestroy()) {
+			delete ui[i];
+			ui.erase(ui.begin() + i);
+		}
+	}
+}
+
 void Scene::OnUpdate() {
 	while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
 		objects.push_back(SpawnManager::Instance().GetSpawnedObject());

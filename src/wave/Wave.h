@@ -16,9 +16,9 @@ public:
 
 		spawnsSpawned = 0;
 
-		for (EnemySpawn eSpawn : spawns) 
+		for(EnemySpawn eSpawn : spawns)
 			TimeManager::GetInstance()->SubscribeEvent(
-				eSpawn.delay, 
+				eSpawn.delay,
 				[this, eSpawn]() { eSpawn.create(); spawnsSpawned++; }
 			);
 	}
