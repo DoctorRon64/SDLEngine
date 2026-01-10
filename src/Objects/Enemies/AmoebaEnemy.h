@@ -11,7 +11,7 @@ public:
 	AmoebaEnemy(Vector2 spawn)
 		: Enemy("res/enemies/amoeba_sprite.png", spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
-		hp = 1;
+		InitHp(5);
 	}
 
 	void UpdateState(float dt) override {

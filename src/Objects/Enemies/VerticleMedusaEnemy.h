@@ -9,6 +9,7 @@ class VerticalMedusaEnemy : public Enemy {
 	VerticalMedusaEnemy(Vector2 spawn)
 		: Enemy("res/enemies/vertical_medusa_sprite.png", spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
+		InitHp(2);
 	}
 
 	void UpdateState(float dt) override {

@@ -8,6 +8,7 @@ public:
 		float dir = (rand() % 2 == 0) ? -1.f : 1.f;
 		speed = RandomRange(10.f, 50.f);
 		velocity = { dir * speed, 0 };
+		InitHp(2);
 	}
 
 	float RandomRange(float min, float max) {

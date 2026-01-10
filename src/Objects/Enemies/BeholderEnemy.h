@@ -9,6 +9,8 @@ public:
 	BeholderEnemy(Vector2 spawn)
 		: Enemy("res/enemies/beholder_sprite.png", spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
+
+		InitHp(3);
 	}
 
 	void PickNewTarget() {
