@@ -35,6 +35,17 @@
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
+//Rapidxml
+#include "rapidxml.hpp"
+#include "rapidxml_iterators.hpp"
+#include "rapidxml_print.hpp"
+#include "rapidxml_utils.hpp"
+
+//Utils
+#include "Utils/assets.h"
+#include "Utils/config.h"
+
+//Math
 #include "math/Random.h"
 #include "math/Vector2.h"
 
@@ -48,13 +59,9 @@
 #include "managers/InputManager.h"
 
 #include "managers/CollisionManager.h"
+#include "managers/EnemyFactory.h"
 #include "managers/FileManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScoreManager.h"
 #include "managers/SpawnManager.h"
 #include "managers/WaveManager.h"
-
-#include "rapidxml.hpp"
-#include "rapidxml_iterators.hpp"
-#include "rapidxml_print.hpp"
-#include "rapidxml_utils.hpp"
