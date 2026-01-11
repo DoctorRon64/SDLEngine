@@ -59,9 +59,10 @@
 #include "managers/InputManager.h"
 
 #include "managers/CollisionManager.h"
-#include "managers/EnemyFactory.h"
 #include "managers/FileManager.h"
 #include "managers/SceneManager.h"
 #include "managers/ScoreManager.h"
 #include "managers/SpawnManager.h"
 #include "managers/WaveManager.h"
+
+#include "managers/EnemyFactory.h"

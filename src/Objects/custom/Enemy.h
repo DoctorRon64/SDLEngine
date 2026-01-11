@@ -19,6 +19,8 @@ protected:
 	Vector2 velocity = { 0, 0 };
 
 	virtual void OnDeath() override {
+		WaveManager::GetInstance()->UnregisterEnemy();
+
 		Actor::OnDeath();
 		ScoreManager::GetInstance()->AddScore(scoreValue);
 		AudioManager::GetInstance()->PlaySound("res/audio/sfx/hurt_enemy.wav");
@@ -36,6 +38,8 @@ public:
 		rbComp->AddCollider(new AABB(transform->position * 2, transform->GetSize()));
 		rbComp->SetLinearDrag(0.0f);
 		InitHp(1);
+
+		WaveManager::GetInstance()->RegisterEnemy();
 	}
 
 	virtual void Update() override {

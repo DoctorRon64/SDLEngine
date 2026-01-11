@@ -15,6 +15,24 @@ public:
 	}
 
 protected:
+
+	//virtual void Update() override {
+	//	if(!reachedThird) {
+	//		if(transform->position.x <= WINDOW_WIDTH * 0.66f) {
+	//			reachedThird = true;
+	//			startAngle = currentAngle;
+	//		}
+	//		transform->position.x -= speed * dt;
+	//	}
+	//	else if(angleTravelled < 300.f) {
+	//		angleTravelled += angularSpeed * dt;
+	//		transform->position = center + CircleOffset(angleTravelled);
+	//	}
+	//	else {
+	//		transform->position += straightDir * speed * dt;
+	//	}
+	//}
+
 	void UpdateState(float dt) override {
 		switch(state) {
 			case EnemyState::SIMPLE_MOVE: MoveStraight(dt); break;

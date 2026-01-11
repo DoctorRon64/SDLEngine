@@ -51,18 +51,12 @@ public:
 		std::cout << level << std::endl;
 
 		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
-		wave1.OnWaveStarted = [this]() {
-			OnWaveStarted(0);
-		};
-		wave1.OnWaveFinishedSpawning = [this]() {
-			std::cout << "Wave finished spawning\n";
-		};
-		WaveManager::GetInstance()->AddWave(std::move(wave1));
+		wave1.OnWaveStarted = [this]() { OnWaveStarted(0); };
+		wave1.OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
 
-		WaveManager::GetInstance()->OnWaveCleared =
-			[this](int waveIndex) {
-			SetState(GameplayState::FINISH_STAGE);
-		};
+		WaveManager::GetInstance()->AddWave(std::move(wave1));
+		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) { SetState(GameplayState::FINISH_STAGE); };
+		WaveManager::GetInstance()->Start();
 
 		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
