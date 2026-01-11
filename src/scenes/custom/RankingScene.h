@@ -1,10 +1,9 @@
 #pragma once
 #include "../Scene.h"
-#include <Objects/Text.h>
 #include <Objects/Button.h>
+#include <Objects/Text.h>
 class RankingScene :
-    public Scene
-{
+	public Scene {
 public:
 	RankingScene() = default;
 	void OnEnter() override {
@@ -19,7 +18,7 @@ public:
 		float startY = 180.0f;
 		float spacing = 130.0f;
 
-		for (int i = 0; i < highScores.size(); ++i) {
+		for(int i = 0; i < highScores.size(); ++i) {
 			std::string scoreAsText = ScoreManager::GetInstance()->MakeScoreAsText(highScores[i].score);
 			std::string scoreName = highScores[i].name;
 			Text* score = new Text(scoreName + " " + scoreAsText);
@@ -33,7 +32,7 @@ public:
 
 		Button* returnBtn = new Button([]() {
 			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-			}, returnLabel);
+		}, returnLabel);
 		returnBtn->GetTransform()->position = {
 			(float)RenderManager::GetInstance()->WINDOW_WIDTH / 2 - 150,
 			(float)RenderManager::GetInstance()->WINDOW_HEIGHT - 150
@@ -42,4 +41,3 @@ public:
 		ui.push_back(returnLabel);
 	}
 };
-

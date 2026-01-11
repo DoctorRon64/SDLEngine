@@ -41,6 +41,8 @@ private:
 	Text* setScoreText;
 	Text* setScoreNameText;
 
+	ScrollingBackground* currentBackground;
+
 	unsigned int level;
 
 public:
@@ -48,24 +50,19 @@ public:
 	void OnEnter() override {
 		std::cout << level << std::endl;
 
-		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", BACKGROUND_SPEED, -1000);
-		SpawnManager::Instance().SpawnObject(bg);
-
 		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
-		Wave wave2 = XMLReader::Instance().FetchWave(level, 1);
-		Wave wave3 = XMLReader::Instance().FetchWave(level, 1);
-		Wave wave4 = XMLReader::Instance().FetchWave(level, 1);
-		Wave wave5 = XMLReader::Instance().FetchWave(level, 1);
-		Wave wave6 = XMLReader::Instance().FetchWave(level, 1);
-		Wave wave7 = XMLReader::Instance().FetchWave(level, 1);
+		wave1.OnWaveStarted = [this]() {
+			OnWaveStarted(0);
+		};
+		wave1.OnWaveFinishedSpawning = [this]() {
+			std::cout << "Wave finished spawning\n";
+		};
 		WaveManager::GetInstance()->AddWave(std::move(wave1));
-		WaveManager::GetInstance()->AddWave(std::move(wave2));
-		WaveManager::GetInstance()->AddWave(std::move(wave3));
-		WaveManager::GetInstance()->AddWave(std::move(wave4));
-		WaveManager::GetInstance()->AddWave(std::move(wave5));
-		WaveManager::GetInstance()->AddWave(std::move(wave6));
-		WaveManager::GetInstance()->AddWave(std::move(wave7));
-		WaveManager::GetInstance()->Start();
+
+		WaveManager::GetInstance()->OnWaveCleared =
+			[this](int waveIndex) {
+			SetState(GameplayState::FINISH_STAGE);
+		};
 
 		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
@@ -149,15 +146,13 @@ public:
 			SetState(GameplayState::PAUSED);
 		}
 
-		if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
-			!AreEnemiesRemaining()) {
-			SetState(GameplayState::FINISH_STAGE);
-		}
+		//if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
+		//	!AreEnemiesRemaining()) {
+		//	SetState(GameplayState::FINISH_STAGE);
+		//}
 	}
 
 	void UpdatePaused() {
-		UpdateUI();
-
 		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
 			SetPauseMenuVisibility(false);
 			SetState(GameplayState::GAMEPLAY);
@@ -207,6 +202,21 @@ private:
 			ui.back()->Destroy();
 			ui[ui.size() - 2]->Destroy();
 		}
+	}
+
+	void OnWaveStarted(int waveIndex) {
+		if(currentBackground)
+			currentBackground->Destroy();
+
+		std::string bgTexture;
+		switch(waveIndex) {
+			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
+			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+		}
+		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
+
+		SpawnManager::Instance().SpawnObject(currentBackground);
 	}
 
 	void ShowDeathScreen() {
