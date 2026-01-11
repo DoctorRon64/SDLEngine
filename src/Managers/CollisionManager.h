@@ -1,7 +1,7 @@
 #pragma once
 
 class RigidBody;
-class Object;
+class Collidable;
 
 class CollisionManager {
 public:
@@ -10,10 +10,9 @@ public:
 		return instance;
 	}
 
-	void Register(RigidBody* rb, Object* owner);
-	void Unregister(Object* owner);
-
 	void CheckCollisions();
+	void Register(RigidBody* rb, Collidable* c);
+	void Unregister(Collidable* c);
 
 private:
 	CollisionManager() = default;
@@ -22,7 +21,7 @@ private:
 
 	struct CollidableEntry {
 		RigidBody* rb;
-		Object* owner;
+		Collidable* collidable;
 	};
 
 	std::vector<CollidableEntry> collidables;

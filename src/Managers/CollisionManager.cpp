@@ -2,23 +2,6 @@
 #include "Components/RigidBody.h"
 #include "Objects/Object.h"
 
-void CollisionManager::Register(RigidBody* rb, Object* owner) {
-	collidables.push_back({ rb, owner });
-}
-
-void CollisionManager::Unregister(Object* owner) {
-	collidables.erase(
-		std::remove_if(
-			collidables.begin(),
-			collidables.end(),
-			[owner](const CollidableEntry& c) {
-		return c.owner == owner;
-	}
-		),
-		collidables.end()
-	);
-}
-
 void CollisionManager::CheckCollisions() {
 	for(size_t i = 0; i < collidables.size(); i++) {
 		for(size_t j = i + 1; j < collidables.size(); j++) {
@@ -28,8 +11,25 @@ void CollisionManager::CheckCollisions() {
 			if(!a.rb->CheckCollision(b.rb))
 				continue;
 
-			a.owner->OnCollision(b.owner);
-			b.owner->OnCollision(a.owner);
+			a.collidable->OnCollision(b.collidable);
+			b.collidable->OnCollision(a.collidable);
 		}
 	}
+}
+
+void CollisionManager::Register(RigidBody* rb, Collidable* c) {
+	collidables.push_back({ rb, c });
+}
+
+void CollisionManager::Unregister(Collidable* c) {
+	collidables.erase(
+		std::remove_if(
+			collidables.begin(),
+			collidables.end(),
+			[c](const CollidableEntry& e) {
+		return e.collidable == c;
+	}
+		),
+		collidables.end()
+	);
 }

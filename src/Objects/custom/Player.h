@@ -1,5 +1,6 @@
 #pragma once
 #include "../Actor.h"
+#include "./Turret.h"
 #include "Bullet.h"
 
 enum class Powerup : int {
@@ -13,6 +14,9 @@ class Player : public Actor {
 private:
 	int lives = PLAYER_LIVES;
 	float speed = BASE_PLAYER_SPEED;
+
+	Turret* turretLeft = nullptr;
+	Turret* turretRight = nullptr;
 
 public:
 	Player(std::string _path = PLAYER_SPRITE_PATH) :
@@ -76,6 +80,10 @@ public:
 
 	bool GetPowerupFlag(Powerup powerup) { return powerUpFlags[(int)powerup]; }
 	void SetPowerupFlag(Powerup powerup, bool state) { powerUpFlags[(int)powerup] = state; }
+	void ActivateTurrets();
+
+	void RefillCannon() { cannonEnergy = MAX_CANNON_ENERGY; }
+	void RefillLaser() { laserEnergy = MAX_LASER_ENERGY; }
 
 private:
 	void ClampToScreen();
@@ -86,4 +94,7 @@ private:
 
 	float shootCooldown = 0.2f; // 5 shots/sec
 	float shootTimer = 0.0f;
+
+	int cannonEnergy = MAX_CANNON_ENERGY;
+	int laserEnergy = MAX_LASER_ENERGY;
 };

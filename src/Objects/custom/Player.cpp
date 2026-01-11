@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Turret.h"
 
 void Player::Update() {
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
@@ -8,6 +9,9 @@ void Player::Update() {
 	HandleShooting(dt);
 
 	Image::Update();
+
+	if(turretLeft) turretLeft->GetTransform()->position = transform->position + Vector2(-20, 0);
+	if(turretRight) turretRight->GetTransform()->position = transform->position + Vector2(20, 0);
 
 	ClampToScreen();
 }
@@ -55,30 +59,36 @@ void Player::HandleShooting(float dt) {
 	}
 }
 
-void Player::Shoot() {
-	Vector2 mainGunPos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
+void Player::ActivateTurrets() {
+	if(!turretLeft && !turretRight) {
+		turretLeft = new Turret(transform->position + Vector2(-20, 0));
+		turretRight = new Turret(transform->position + Vector2(20, 0));
+		SpawnManager::Instance().SpawnObject(turretLeft);
+		SpawnManager::Instance().SpawnObject(turretRight);
+	}
+}
 
-	// Main bullet
+void Player::Shoot() {
+	// Main gun
+	Vector2 mainGunPos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
 	Bullet* mainBullet = new Bullet(true);
 	mainBullet->SetLayer(20);
 	mainBullet->GetTransform()->position = mainGunPos;
 	SpawnManager::Instance().SpawnObject(mainBullet);
 
-	// Extra bullets from power-ups
+	// LASER power-up bullets
 	if(powerUpFlags[(int)Powerup::LASER]) {
-		Vector2 laserPos = Vector2(transform->position.x + transform->GetSize().x / 2,
-								   transform->position.y + transform->GetSize().y);
+		Vector2 laserPos = Vector2(transform->position.x + transform->GetSize().x / 2, transform->position.y + transform->GetSize().y);
 		Bullet* laserBullet = new Bullet();
 		laserBullet->SetLayer(20);
 		laserBullet->GetTransform()->position = laserPos;
 		SpawnManager::Instance().SpawnObject(laserBullet);
 	}
 
+	// CANNONS power-up bullets
 	if(powerUpFlags[(int)Powerup::CANNONS]) {
-		Vector2 cannonPos1 = Vector2(transform->position.x + transform->GetSize().x,
-									 transform->position.y + transform->GetSize().y);
-		Vector2 cannonPos2 = Vector2(transform->position.x,
-									 transform->position.y + transform->GetSize().y);
+		Vector2 cannonPos1 = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y);
+		Vector2 cannonPos2 = Vector2(transform->position.x, transform->position.y + transform->GetSize().y);
 		Bullet* cannonBullet1 = new Bullet();
 		cannonBullet1->SetLayer(20);
 		cannonBullet1->GetTransform()->position = cannonPos1;
@@ -90,13 +100,13 @@ void Player::Shoot() {
 		SpawnManager::Instance().SpawnObject(cannonBullet2);
 	}
 
+	// TURRETS shooting
 	if(powerUpFlags[(int)Powerup::TURRETS]) {
-		// If you have turret objects attached to the player
 		if(turretLeft) turretLeft->Shoot();
 		if(turretRight) turretRight->Shoot();
 	}
 
-	// Play shoot sound once
+	// Play sound once per shoot
 	AudioManager::GetInstance()->PlaySound(SFX_LASER_SHOOT_PATH);
 }
 

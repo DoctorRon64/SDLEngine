@@ -16,8 +16,8 @@ public:
 	~Bullet() override = default;
 	void Update() override;
 
-protected:
-	void OnCollision(Object* other) override;
+	virtual void OnCollision(Collidable* other) override;
+	Object* GetOwner() { return this; }
 
 private:
 	bool isPlayerBullet = true;

@@ -8,6 +8,9 @@ constexpr unsigned int PLAYER_HEALTH = 100;
 constexpr unsigned int PLAYER_LIVES = 3;
 constexpr float BASE_PLAYER_SPEED = 1.0f;
 
+constexpr unsigned int MAX_CANNON_ENERGY = 20;
+constexpr unsigned int MAX_LASER_ENERGY = 20;
+
 constexpr unsigned int SCORE_TEXT_DIGITS = 6;
 constexpr unsigned int MAX_STORED_SCORES = 10;
 
