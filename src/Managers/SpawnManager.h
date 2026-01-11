@@ -8,36 +8,12 @@ public:
 		return spawner;
 	}
 
-	void SpawnObject(Object* obj) {
-		spawnedObjs.push(obj);
-	}
+	void SpawnObject(Object* obj);
+	bool AreObjectsPendingSpawn();
+	void ClearSpanwer();
 
-	bool AreObjectsPendingSpawn() {
-		return !spawnedObjs.empty();
-	}
-
-	void ClearSpanwer() {
-		while(AreObjectsPendingSpawn()) {
-			delete spawnedObjs.front();
-			spawnedObjs.pop();
-		}
-	}
-
-	std::queue<Object*> GetSpawnedObjects() const {
-		return spawnedObjs;
-	}
-
-	Object* GetSpawnedObject() {
-		if(!AreObjectsPendingSpawn()) {
-			return nullptr;
-		}
-
-		Object* temp = spawnedObjs.front();
-		spawnedObjs.pop();
-		return temp;
-	}
-
-	std::queue<Object*> GetSpawnedObjects() { return spawnedObjs; }
+	Object* GetSpawnedObject();
+	std::queue<Object*> GetSpawnedObjects() const { return spawnedObjs; }
 
 private:
 	SpawnManager() = default;

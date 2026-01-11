@@ -68,3 +68,12 @@ void Scene::Render() {
 		u->Render();
 	}
 }
+
+template<typename T>
+void Scene::DestroyAllOfType() {
+	for(Object* obj : objects) {
+		if(dynamic_cast<T*>(obj)) {
+			obj->Destroy();
+		}
+	}
+}

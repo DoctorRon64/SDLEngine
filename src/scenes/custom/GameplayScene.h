@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "objects/custom/Bullet.h"
 #include "objects/custom/Enemy.h"
 #include "objects/custom/Player.h"
@@ -28,6 +28,7 @@ class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
+	float finishStageTimer = 0.f;
 
 	//Player
 	Player* player = Player::GetInstance();
@@ -40,6 +41,8 @@ private:
 	//Score set UI
 	Text* setScoreText;
 	Text* setScoreNameText;
+
+	Text* stageText;
 
 	ScrollingBackground* currentBackground;
 
@@ -164,16 +167,36 @@ public:
 	}
 
 	void UpdateFinishStage() {
-		//if(!stateJustChanged) return;
+		finishStageTimer += TimeManager::GetInstance()->GetDeltaTime();
+		if(finishStageTimer < 0.5f) return;
 
+		// Draw UI
+		stageText = new Text("STAGE CLEARED\nPress ENTER to continue");
+		stageText->GetTransform()->scale = { 2.f, 2.f };
+		stageText->GetTransform()->position = { Vector2(
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
+				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
+		) };
+		ui.push_back(stageText);
+
+		bool confirm = InputManager::GetInstance()->GetEvent(SDLK_RETURN, HOLD) ||
+			InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START);
+
+		if(confirm) {
+			GoToNextWaveOrEnd();
+		}
+	}
+
+	void GoToNextWaveOrEnd() {
 		if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
+			// All waves done → score entry
+			SetState(GameplayState::DEATH); // or a new GAME_COMPLETE state
 			RecordHighScore();
+			return;
 		}
-		else {
-			//TODO: Finish Stage Transition
-			WaveManager::GetInstance()->StartNextWave();
-			SetState(GameplayState::GAMEPLAY);
-		}
+
+		WaveManager::GetInstance()->StartNextWave();
+		SetState(GameplayState::GAMEPLAY);
 	}
 
 	unsigned int GetLevel() { return level; }
@@ -244,6 +267,10 @@ private:
 	void SetState(GameplayState _state) {
 		state = _state;
 		stateJustChanged = true;
+
+		if(state == GameplayState::FINISH_STAGE) {
+			DestroyAllOfType<Bullet>();
+		}
 	}
 
 	bool AreEnemiesRemaining() {
