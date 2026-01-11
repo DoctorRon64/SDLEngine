@@ -23,7 +23,7 @@ protected:
 
 		Actor::OnDeath();
 		ScoreManager::GetInstance()->AddScore(scoreValue);
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/hurt_enemy.wav");
+		AudioManager::GetInstance()->PlaySound(SFX_HURT_ENEMY_PATH);
 	}
 
 public:

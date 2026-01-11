@@ -7,7 +7,7 @@ private:
 
 public:
 	KillerWhaleEnemy(Vector2 spawn)
-		: Enemy("res/enemies/whale_sprite.png", spawn, { 32,32 }) {
+		: Enemy(ENEMY_WHALE_SPRITE_PATH, spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
 		InitHp(3);
 	}

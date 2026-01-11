@@ -12,7 +12,7 @@ private:
 
 public:
 	CirclerEnemy(Vector2 spawn)
-		: Enemy("res/enemies/circler_sprite.png", spawn, { 32, 32 }) {
+		: Enemy(ENEMY_CIRCLER_SPRITE_PATH, spawn, { 32, 32 }) {
 		state = EnemyState::CIRCLE_MOVE;
 		circleCenter = spawn;
 		InitHp(6);
@@ -39,7 +39,7 @@ protected:
 							  sin(angle * 3.14159265f / 180.0f));
 		Vector2 size = dir * 200;
 
-		Bullet* b = new Bullet(false, "res/bullet.png", transform->position, size);
+		Bullet* b = new Bullet(false, BULLET_SPRITE_PATH, transform->position, size);
 		SpawnManager::Instance().SpawnObject(b);
 	}
 };

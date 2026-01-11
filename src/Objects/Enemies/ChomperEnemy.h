@@ -8,7 +8,7 @@ private:
 
 public:
 	ChomperEnemy(Vector2 spawn)
-		: Enemy("res/enemies/chomper_sprite.png", spawn, { 32,32 }) {
+		: Enemy(ENEMY_CHOMPER_SPRITE_PATH, spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
 		InitHp(4);
 	}
