@@ -14,6 +14,9 @@ private:
 	int lives = PLAYER_LIVES;
 	float speed = BASE_PLAYER_SPEED;
 
+	Turret* turretLeft = nullptr;
+	Turret* turretRight = nullptr;
+
 public:
 	Player(std::string _path = PLAYER_SPRITE_PATH) :
 		Actor(_path, Vector2(0.f, 0.f), Vector2(32, 32)) {
@@ -76,7 +79,7 @@ public:
 
 	bool GetPowerupFlag(Powerup powerup) { return powerUpFlags[(int)powerup]; }
 	void SetPowerupFlag(Powerup powerup, bool state) { powerUpFlags[(int)powerup] = state; }
-
+	void ActivateTurrets();
 private:
 	void ClampToScreen();
 
