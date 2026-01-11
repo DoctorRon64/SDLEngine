@@ -72,4 +72,6 @@ public:
 	void OnHealthChangedEvent() {
 		if(OnHealthChanged) OnHealthChanged(health, maxHealth);
 	}
+
+	virtual void OnCollision(Collidable* other) override {}
 };

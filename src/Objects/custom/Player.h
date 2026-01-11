@@ -78,8 +78,6 @@ public:
 		return &instance;
 	}
 
-	virtual void OnCollision(Collidable* other) override {}
-
 	bool GetPowerupFlag(Powerup powerup) { return powerUpFlags[(int)powerup]; }
 	void SetPowerupFlag(Powerup powerup, bool state) { powerUpFlags[(int)powerup] = state; }
 	void ActivateTurrets();

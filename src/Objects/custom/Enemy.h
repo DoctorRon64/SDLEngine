@@ -27,7 +27,6 @@ public:
 		Vector2 size
 	);
 	virtual void Update() override;
-	virtual void OnCollision(Collidable* other) override {}
 
 protected:
 	float shootCooldown = 1.f;
