@@ -1,6 +1,8 @@
 #pragma once
 #include <wave/Wave.h>
 
+class Wave;
+
 class WaveManager {
 public:
 	static WaveManager* GetInstance() {
@@ -13,27 +15,64 @@ public:
 	}
 
 	void Start() {
-		currentWave = 0;
-		waves[currentWave].Start();
+		currentWaveIndex = 0;
+		aliveEnemies = 0;
+
+		if(OnWaveStarted) {
+			OnWaveStarted(currentWaveIndex);
+		}
+
+		waves[currentWaveIndex].Start();
 	}
 
 	void StartNextWave() {
-		currentWave++;
-		assert(currentWave < waves.size());
-		waves[currentWave].Start();
+		currentWaveIndex++;
+		assert(currentWaveIndex < waves.size());
+
+		aliveEnemies = 0;
+
+		if(OnWaveStarted)
+			OnWaveStarted(currentWaveIndex);
+
+		waves[currentWaveIndex].Start();
 	}
 
 	void RestartWave() {
-		if(currentWave >= waves.size()) return;
+		if(currentWaveIndex >= waves.size()) return;
 
-		waves[currentWave].Start();
+		waves[currentWaveIndex].Start();
 	}
 
-	bool IsCurrentWaveFinishedSpawning() { return waves[currentWave].IsFinishedSpawning(); }
-	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() - 1 && IsCurrentWaveFinishedSpawning(); }
+	void CheckWaveCleared() {
+		if(currentWaveIndex >= waves.size()) return;
+
+		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
+			if(waves[currentWaveIndex].OnWaveCleared)
+				waves[currentWaveIndex].OnWaveCleared();
+
+			if(OnWaveCleared)
+				OnWaveCleared(currentWaveIndex);
+		}
+	}
+
+	bool IsCurrentWaveFinishedSpawning() { return waves[currentWaveIndex].IsFinishedSpawning(); }
+	bool AreAllWavesFinishedSpawning() { return currentWaveIndex >= waves.size() - 1 && IsCurrentWaveFinishedSpawning(); }
+
+	void RegisterEnemy() {
+		aliveEnemies++;
+	}
+
+	void UnregisterEnemy() {
+		aliveEnemies--;
+		CheckWaveCleared();
+	}
+
+	std::function<void(int waveIndex)> OnWaveStarted;
+	std::function<void(int waveIndex)> OnWaveCleared;
 
 private:
 	std::vector<Wave> waves;
-	size_t currentWave = 0;
+	size_t currentWaveIndex = 0;
 	std::vector<bool> currentWaveSpawns = std::vector<bool>();
+	int aliveEnemies = 0;
 };

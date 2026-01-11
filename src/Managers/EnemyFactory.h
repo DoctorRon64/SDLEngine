@@ -8,6 +8,10 @@
 #include "../Objects/Enemies/KillerWhaleEnemy.h"
 #include "../Objects/Enemies/MedusaEnemy.h"
 #include "../Objects/Enemies/VerticleMedusaEnemy.h"
+
+class Enemy;
+class SpawnManager;
+
 class EnemyFactory {
 	using SpawnFunction = std::function<void()>;
 private:

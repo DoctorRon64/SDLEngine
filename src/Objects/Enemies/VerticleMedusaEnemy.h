@@ -7,7 +7,7 @@ class VerticalMedusaEnemy : public Enemy {
 	bool moving = true;
 
 	VerticalMedusaEnemy(Vector2 spawn)
-		: Enemy("res/enemies/vertical_medusa_sprite.png", spawn, { 32,32 }) {
+		: Enemy(ENEMY_VERTICAL_MEDUSA_SPRITE_PATH, spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
 		InitHp(2);
 	}

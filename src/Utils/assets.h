@@ -15,7 +15,8 @@ const std::string ENEMY_VERTICAL_MEDUSA_SPRITE_PATH = "res/enemies/vertical_medu
 const std::string ENEMY_WHALE_SPRITE_PATH = "res/enemies/whale_sprite.png";
 
 // Other textures / UI
-const std::string BACKGROUND_SPRITE_PATH = "res/bg.png";
+const std::string BACKGROUND_SPRITE_LVL1_PATH = "res/bg.png";
+const std::string BACKGROUND_SPRITE_LVL2_PATH = "res/bg2.png";
 const std::string PLAYER_SPRITE_PATH = "res/player_sprite.png";
 const std::string BULLET_SPRITE_PATH = "res/bullet_sprite.png";
 const std::string BUTTON_SPRITE_PATH = "res/btn.png";

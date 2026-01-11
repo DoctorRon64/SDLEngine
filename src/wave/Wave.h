@@ -1,39 +1,27 @@
 #pragma once
+
 struct EnemySpawn {
 	float delay;
 	std::function<void()> create;
 };
 
+struct SpawnInstruction {
+	int enemyId;
+	int amount;
+	float delayBetweenSpawns;
+};
+
 class Wave {
 public:
-	void AddSpawn(float delay, std::function<void()> factory) {
-		spawns.push_back({ delay, factory });
-	}
+	std::function<void()> OnWaveStarted;
+	std::function<void()> OnWaveFinishedSpawning;
+	std::function<void()> OnWaveCleared;
 
-	void Start() {
-		timer = 0.f;
-		active = true;
-
-		spawnsSpawned = 0;
-
-		for(EnemySpawn eSpawn : spawns)
-			TimeManager::GetInstance()->SubscribeEvent(
-				eSpawn.delay,
-				[this, eSpawn]() { eSpawn.create(); spawnsSpawned++; }
-			);
-	}
-
-	bool IsFinishedSpawning() const {
-		return spawnsSpawned >= spawns.size();
-	}
-
-	void Stop() { active = false; }
-
-	int SpawnCount() { return spawns.size(); }
+	void AddSpawn(float delay, std::function<void()> factory);
+	void Start();
+	bool IsFinishedSpawning() const;
 
 private:
 	std::vector<EnemySpawn> spawns;
-	size_t spawnsSpawned;
-	float timer = 0.f;
-	bool active = false;
+	size_t spawnsSpawned = 0;
 };

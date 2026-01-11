@@ -7,7 +7,7 @@ class MenuScene : public Scene {
 public:
 	MenuScene() = default;
 	void OnEnter() override {
-		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_title.wav");
+		AudioManager::GetInstance()->PlaySoundLooping(MUSIC_MENACE_TITLE_PATH);
 
 		Text* title = new Text("[MENACE ARCADE GAME]");
 		title->GetTransform()->scale = { 2.f, 2.f };
@@ -20,7 +20,7 @@ public:
 
 		Text* playLabel = new Text("Play");
 		playLabel->GetTransform()->scale = { 2.f, 2.f };
-		
+
 		Button* playBtn = new Button([]() {
 			SceneManager::GetInstance()->SetNextScene(SceneState::LEVEL_SELECT);
 		}, playLabel);

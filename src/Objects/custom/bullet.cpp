@@ -19,7 +19,7 @@ void Bullet::Update() {
 
 	if(x > w || x < -transform->GetSize().x) {
 		Destroy();
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/hurt_bullet.wav");
+		AudioManager::GetInstance()->PlaySound(SFX_HURT_BULLET_PATH);
 	}
 }
 

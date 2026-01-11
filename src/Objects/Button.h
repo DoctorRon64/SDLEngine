@@ -8,9 +8,8 @@ public:
 	using OnClick = std::function<void()>;
 
 	Button(OnClick _onClick, Text* _label = new Text(" "))
-		: Image("res/btn.png", { 0, 0 }, { 3448.f, 1369.f }), onClick(_onClick), label(_label) {
-
-		renderer = new ButtonRenderer(transform, "res/btn.png", { 0, 0 }, { 3448.f, 1369.f });
+		: Image(BUTTON_SPRITE_PATH, { 0, 0 }, { 3448.f, 1369.f }), onClick(_onClick), label(_label) {
+		renderer = new ButtonRenderer(transform, BUTTON_SPRITE_PATH, { 0, 0 }, { 3448.f, 1369.f });
 
 		transform->scale = Vector2(.1f, .1f);
 
@@ -23,7 +22,6 @@ public:
 	}
 
 	void Update() override {
-
 		label->GetTransform()->position = transform->position + transform->GetSize() / 4;
 
 		Vector2 mousePos = {
@@ -60,7 +58,7 @@ private:
 		transform->scale = transform->scale * hoverScaleFactor;
 		label->GetTransform()->scale = label->GetTransform()->scale * hoverScaleFactor;
 		//SetScaleCentered(transform->scale * hoverScaleFactor);
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/ui_hover.wav");
+		AudioManager::GetInstance()->PlaySound(SFX_UI_HOVER_PATH);
 
 		isHovered = true;
 	}
@@ -72,7 +70,7 @@ private:
 	}
 
 	void OnClicked() {
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/ui_select.wav");
+		AudioManager::GetInstance()->PlaySound(SFX_UI_SELECT_PATH);
 		onClick();
 	}
 };

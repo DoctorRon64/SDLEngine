@@ -50,42 +50,54 @@ void Player::HandleShooting(float dt) {
 
 	if(shootTimer <= 0.0f) {
 		Shoot();
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
+		AudioManager::GetInstance()->PlaySound(SFX_LASER_SHOOT_PATH);
 		shootTimer = shootCooldown;
 	}
 }
 
 void Player::Shoot() {
-	auto* bullet = new Bullet(true);
-	bullet->SetLayer(20);
-	Vector2 pos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
-	bullet->GetTransform()->position = pos;
+	Vector2 mainGunPos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
 
-	SpawnManager::Instance().SpawnObject(bullet);
+	// Main bullet
+	Bullet* mainBullet = new Bullet(true);
+	mainBullet->SetLayer(20);
+	mainBullet->GetTransform()->position = mainGunPos;
+	SpawnManager::Instance().SpawnObject(mainBullet);
 
+	// Extra bullets from power-ups
 	if(powerUpFlags[(int)Powerup::LASER]) {
+		Vector2 laserPos = Vector2(transform->position.x + transform->GetSize().x / 2,
+								   transform->position.y + transform->GetSize().y);
 		Bullet* laserBullet = new Bullet();
 		laserBullet->SetLayer(20);
-		Vector2 pos1 = Vector2(transform->position.x + transform->GetSize().x / 2, transform->position.y + transform->GetSize().y);
-		laserBullet->GetTransform()->position = pos1;
+		laserBullet->GetTransform()->position = laserPos;
 		SpawnManager::Instance().SpawnObject(laserBullet);
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
 	}
-	else if(powerUpFlags[(int)Powerup::CANNONS]) {
-		Bullet* cannonsBullet1 = new Bullet();
-		cannonsBullet1->SetLayer(20);
-		Vector2 pos1 = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y);
-		cannonsBullet1->GetTransform()->position = pos1;
-		SpawnManager::Instance().SpawnObject(cannonsBullet1);
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
 
-		Bullet* cannonsBullet2 = new Bullet();
-		cannonsBullet2->SetLayer(20);
-		Vector2 pos2 = Vector2(transform->position.x, transform->position.y + transform->GetSize().y);
-		cannonsBullet2->GetTransform()->position = pos2;
-		SpawnManager::Instance().SpawnObject(cannonsBullet2);
-		AudioManager::GetInstance()->PlaySound("res/audio/sfx/laserShoot.wav");
+	if(powerUpFlags[(int)Powerup::CANNONS]) {
+		Vector2 cannonPos1 = Vector2(transform->position.x + transform->GetSize().x,
+									 transform->position.y + transform->GetSize().y);
+		Vector2 cannonPos2 = Vector2(transform->position.x,
+									 transform->position.y + transform->GetSize().y);
+		Bullet* cannonBullet1 = new Bullet();
+		cannonBullet1->SetLayer(20);
+		cannonBullet1->GetTransform()->position = cannonPos1;
+		SpawnManager::Instance().SpawnObject(cannonBullet1);
+
+		Bullet* cannonBullet2 = new Bullet();
+		cannonBullet2->SetLayer(20);
+		cannonBullet2->GetTransform()->position = cannonPos2;
+		SpawnManager::Instance().SpawnObject(cannonBullet2);
 	}
+
+	if(powerUpFlags[(int)Powerup::TURRETS]) {
+		// If you have turret objects attached to the player
+		if(turretLeft) turretLeft->Shoot();
+		if(turretRight) turretRight->Shoot();
+	}
+
+	// Play shoot sound once
+	AudioManager::GetInstance()->PlaySound(SFX_LASER_SHOOT_PATH);
 }
 
 void Player::ClampToScreen() {

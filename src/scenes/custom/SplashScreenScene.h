@@ -6,7 +6,7 @@ class SplashScreenScene :
 public:
 	SplashScreenScene() = default;
 	void OnEnter() override {
-		Image* bg = new Image("res/splash_screen.png", { 0, 0 }, { 320, 200 });
+		Image* bg = new Image(SPLASH_SCREEN_SPRITE_PATH, { 0, 0 }, { 320, 200 });
 		bg->GetTransform()->position = { 0,0 };
 		bg->GetTransform()->scale = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 320.0f, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 200.0f };
 		bg->SetLayer(20);

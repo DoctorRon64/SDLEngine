@@ -9,7 +9,7 @@ class LevelSelectScene :
 public:
 	LevelSelectScene() = default;
 	void OnEnter() override {
-		AudioManager::GetInstance()->PlaySoundLooping("res/audio/music/menace_subtune_2.wav");
+		AudioManager::GetInstance()->PlaySoundLooping(MUSIC_MENACE_SUBTUNE_2_PATH);
 
 		Text* title = new Text("[LEVEL SELECT]");
 		title->GetTransform()->scale = { 2.f, 2.f };

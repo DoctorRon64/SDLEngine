@@ -1,6 +1,7 @@
 #pragma once
-#include "EnemyFactory.h"
-#include "FileManager.h"
+
+class EnemyFactory;
+
 class XMLReader :
 	public FileManager {
 private:
@@ -27,14 +28,23 @@ public:
 			waveNum--;
 		}
 
+		SpawnInstruction instr;
+		instr.enemyId = std::stoi(pNode->first_node("spawned_enemy_id")->value());
+		instr.amount = std::stoi(pNode->first_node("amount")->value());
+		instr.delayBetweenSpawns = std::stof(pNode->first_node("delay_between_spawns")->value());
+
 		Wave wave;
-		int enemyId = std::stoi(pNode->first_node("spawned_enemy_id")->value());
-		int enemyAmount = std::stoi(pNode->first_node("amount")->value());
-		while(enemyAmount) {
-			enemyAmount--;
-			wave.AddSpawn(0.f, EnemyFactory::Instance().spawnFunctions[enemyId]);
-		}
+		BuildWaveFromInstruction(wave, instr);
 
 		return wave;
+	}
+
+	void BuildWaveFromInstruction(Wave& wave, const SpawnInstruction& instr) {
+		for(int i = 0; i < instr.amount; ++i) {
+			wave.AddSpawn(
+				i * instr.delayBetweenSpawns,
+				EnemyFactory::Instance().spawnFunctions[instr.enemyId]
+			);
+		}
 	}
 };

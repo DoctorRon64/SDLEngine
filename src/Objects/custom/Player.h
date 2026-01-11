@@ -15,7 +15,7 @@ private:
 	float speed = BASE_PLAYER_SPEED;
 
 public:
-	Player(std::string _path = "res/player_sprite.png") :
+	Player(std::string _path = PLAYER_SPRITE_PATH) :
 		Actor(_path, Vector2(0.f, 0.f), Vector2(32, 32)) {
 		health = PLAYER_HEALTH;
 		maxHealth = PLAYER_HEALTH;

@@ -9,7 +9,7 @@ public:
 	int orbits = 0;
 
 	AmoebaEnemy(Vector2 spawn)
-		: Enemy("res/enemies/amoeba_sprite.png", spawn, { 32,32 }) {
+		: Enemy(ENEMY_AMOEBA_SPRITE_PATH, spawn, { 32,32 }) {
 		velocity = { -speed, 0 };
 		InitHp(5);
 	}

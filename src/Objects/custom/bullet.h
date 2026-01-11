@@ -8,7 +8,7 @@ class Bullet : public Image, public Collidable {
 public:
 	Bullet(
 		bool _isPlayer = true,
-		std::string _name = "res/bullet_sprite.png",
+		std::string _name = BULLET_SPRITE_PATH,
 		Vector2 _pos = Vector2(0.f, 0.f),
 		Vector2 _size = Vector2(32.f, 32.f)
 	);
