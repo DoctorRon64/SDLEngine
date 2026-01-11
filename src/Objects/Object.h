@@ -48,6 +48,5 @@ public:
 	RigidBody* GetRigidBody() const { return rbComp; }
 	short GetLayer() const { return layer; }
 	Renderer* GetRenderer() const { return renderer; }
-	virtual void OnCollision(Object* other) {}
 	virtual bool IsPersistent() const { return false; }
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Actor.h"
+#include "./Turret.h"
 #include "Bullet.h"
 
 enum class Powerup : int {
@@ -77,9 +78,15 @@ public:
 		return &instance;
 	}
 
+	virtual void OnCollision(Collidable* other) override {}
+
 	bool GetPowerupFlag(Powerup powerup) { return powerUpFlags[(int)powerup]; }
 	void SetPowerupFlag(Powerup powerup, bool state) { powerUpFlags[(int)powerup] = state; }
 	void ActivateTurrets();
+
+	void RefillCannon() { cannonEnergy = MAX_CANNON_ENERGY; }
+	void RefillLaser() { laserEnergy = MAX_LASER_ENERGY; }
+
 private:
 	void ClampToScreen();
 
@@ -89,4 +96,7 @@ private:
 
 	float shootCooldown = 0.2f; // 5 shots/sec
 	float shootTimer = 0.0f;
+
+	int cannonEnergy = MAX_CANNON_ENERGY;
+	int laserEnergy = MAX_LASER_ENERGY;
 };

@@ -1,7 +1,10 @@
 #pragma once
+#include "../Actor.h"
+#include "./bullet.h"
+
 class Turret : public Actor {
 public:
-	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, spawnPos, Vector2(16, 16)) {}
+	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, spawnPos, Vector2(32, 32)) {}
 
 	void Shoot() {
 		Bullet* b = new Bullet(true);
@@ -9,4 +12,6 @@ public:
 		b->GetTransform()->position = transform->position;
 		SpawnManager::Instance().SpawnObject(b);
 	}
+
+	virtual void OnCollision(Collidable* other) override {}
 };

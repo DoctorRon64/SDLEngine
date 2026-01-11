@@ -1,4 +1,5 @@
 #pragma once
+#include <objects/PowerUps/PowerUpFactory.h>
 #include <wave/Wave.h>
 
 class Wave;
@@ -47,6 +48,8 @@ public:
 		if(currentWaveIndex >= waves.size()) return;
 
 		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
+			SpawnPowerUp();
+
 			if(waves[currentWaveIndex].OnWaveCleared)
 				waves[currentWaveIndex].OnWaveCleared();
 
@@ -71,6 +74,16 @@ public:
 	std::function<void(int waveIndex)> OnWaveCleared;
 
 private:
+	void SpawnPowerUp() {
+		int minId = 1;
+		int maxId = (int)PowerupId::TWIN_TURRETS;
+		PowerupId id = (PowerupId)Randomness::Range(minId, maxId);
+		PowerUp* pu = PowerUpFactory().Create(id);
+
+		pu->GetTransform()->position = Vector2(RenderManager::GetInstance()->WINDOW_WIDTH / 2.f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f);
+		SpawnManager::Instance().SpawnObject(pu);
+	}
+
 	std::vector<Wave> waves;
 	size_t currentWaveIndex = 0;
 	std::vector<bool> currentWaveSpawns = std::vector<bool>();

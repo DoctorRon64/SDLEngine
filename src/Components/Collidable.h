@@ -2,20 +2,20 @@
 #include "Rigidbody.h"
 
 class RigidBody;
-class Object;
 
 class Collidable {
 protected:
 	RigidBody* rb = nullptr;
-	Object* owner = nullptr;
 
 public:
-	Collidable(Object* _owner, RigidBody* _rb)
-		: owner(_owner), rb(_rb) {
-		CollisionManager::Instance().Register(rb, owner);
+	explicit Collidable(RigidBody* _rb)
+		: rb(_rb) {
+		CollisionManager::Instance().Register(rb, this);
 	}
 
 	virtual ~Collidable() {
-		CollisionManager::Instance().Unregister(owner);
+		CollisionManager::Instance().Unregister(this);
 	}
+
+	virtual void OnCollision(Collidable* other) = 0;
 };

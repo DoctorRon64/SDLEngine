@@ -6,14 +6,9 @@ public:
 	MedusaEnemy(Vector2 spawn)
 		: Enemy(ENEMY_MEDUSA_SPRITE_PATH, spawn, { 32, 32 }) {
 		float dir = (rand() % 2 == 0) ? -1.f : 1.f;
-		speed = RandomRange(10.f, 50.f);
+		speed = Randomness::Range(10.f, 50.f);
 		velocity = { dir * speed, 0 };
 		InitHp(2);
-	}
-
-	float RandomRange(float min, float max) {
-		float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-		return min + r * (max - min);
 	}
 
 protected:

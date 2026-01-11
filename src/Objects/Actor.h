@@ -43,7 +43,7 @@ public:
 	)
 		: Image(_texturePath, _sourceOffset, _sourceSize),
 		maxHealth(_maxHealth),
-		health(_health), Collidable(this, rbComp) {}
+		health(_health), Collidable(rbComp) {}
 
 	virtual ~Actor() = default;
 
