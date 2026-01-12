@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level>
+	<wave>
+		<spawned_enemy_id>1</spawned_enemy_id>
+		<amount>5</amount>
+		<delay_between_spawns>4</delay_between_spawns>
+	</wave>
+	<wave>
+		<spawned_enemy_id>3</spawned_enemy_id>
+		<amount>2</amount>
+		<delay_between_spawns>2</delay_between_spawns>
+	</wave>
+</level>

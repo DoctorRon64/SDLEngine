@@ -2,17 +2,17 @@
 #include "SpawnManager.h"
 
 void SpawnManager::SpawnObject(Object* obj) {
-	spawnedObjs.push(obj);
+	spawnedObjects.push(obj);
 }
 
 bool SpawnManager::AreObjectsPendingSpawn() {
-	return !spawnedObjs.empty();
+	return !spawnedObjects.empty();
 }
 
 void SpawnManager::ClearSpanwer() {
 	while(AreObjectsPendingSpawn()) {
-		delete spawnedObjs.front();
-		spawnedObjs.pop();
+		delete spawnedObjects.front();
+		spawnedObjects.pop();
 	}
 }
 
@@ -21,7 +21,7 @@ Object* SpawnManager::GetSpawnedObject() {
 		return nullptr;
 	}
 
-	Object* temp = spawnedObjs.front();
-	spawnedObjs.pop();
+	Object* temp = spawnedObjects.front();
+	spawnedObjects.pop();
 	return temp;
 }

@@ -24,8 +24,8 @@ constexpr float BACKGROUND_SPEED = 200.0f;
 constexpr unsigned int DECORATION_MIN_TIME = 1;
 constexpr unsigned int DECORATION_MAX_TIME = 3;
 
-constexpr unsigned int LEVEL_COUNT = 1;
+constexpr unsigned int LEVEL_COUNT = 2;
 
-constexpr const char* levelPaths[LEVEL_COUNT] = { "res/level_1.xml" };
+constexpr const char* levelPaths[LEVEL_COUNT] = { "res/levels/level_1.xml", "res/levels/level_2.xml" };
 
 constexpr unsigned int ENEMY_ID_COUNT = 6;

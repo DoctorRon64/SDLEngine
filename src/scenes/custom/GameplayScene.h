@@ -53,12 +53,21 @@ public:
 	void OnEnter() override {
 		std::cout << level << std::endl;
 
-		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
-		wave1.OnWaveStarted = [this]() { OnWaveStarted(0); };
-		wave1.OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
+		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
+		WaveManager::GetInstance()->Clear();
 
-		WaveManager::GetInstance()->AddWave(std::move(wave1));
-		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) { SetState(GameplayState::FINISH_STAGE); };
+		for(int i = 0; i < waves.size(); ++i) {
+			waves[i].OnWaveStarted = [this, i]() { OnWaveStarted(i); };
+			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
+			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
+		}
+
+		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				SetState(GameplayState::FINISH_STAGE);
+			}
+		};
+
 		WaveManager::GetInstance()->Start();
 
 		scoreText = new Text("Score");
@@ -167,36 +176,31 @@ public:
 	}
 
 	void UpdateFinishStage() {
-		finishStageTimer += TimeManager::GetInstance()->GetDeltaTime();
-		if(finishStageTimer < 0.5f) return;
-
-		// Draw UI
-		stageText = new Text("STAGE CLEARED\nPress ENTER to continue");
-		stageText->GetTransform()->scale = { 2.f, 2.f };
-		stageText->GetTransform()->position = { Vector2(
+		if(stateJustChanged) {
+			stageText = new Text("STAGE CLEARED\nPress ENTER to continue");
+			stageText->GetTransform()->scale = { 2.f, 2.f };
+			stageText->GetTransform()->position = {
 				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
 				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
-		) };
-		ui.push_back(stageText);
-
-		bool confirm = InputManager::GetInstance()->GetEvent(SDLK_RETURN, HOLD) ||
-			InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START);
-
-		if(confirm) {
-			GoToNextWaveOrEnd();
-		}
-	}
-
-	void GoToNextWaveOrEnd() {
-		if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
-			// All waves done → score entry
-			SetState(GameplayState::DEATH); // or a new GAME_COMPLETE state
-			RecordHighScore();
+			};
+			ui.push_back(stageText);
 			return;
 		}
 
-		WaveManager::GetInstance()->StartNextWave();
-		SetState(GameplayState::GAMEPLAY);
+		// Wait for confirm
+		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
+		   InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START)) {
+			stageText->Destroy();
+			stageText = nullptr;
+
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				RecordHighScore();
+			}
+			else {
+				WaveManager::GetInstance()->StartNextWave();
+				SetState(GameplayState::GAMEPLAY);
+			}
+		}
 	}
 
 	unsigned int GetLevel() { return level; }
@@ -269,7 +273,7 @@ private:
 		stateJustChanged = true;
 
 		if(state == GameplayState::FINISH_STAGE) {
-			DestroyAllOfType<Bullet>();
+			SpawnManager::Instance().DestroyAllOfType<Bullet>();
 		}
 	}
 

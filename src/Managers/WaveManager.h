@@ -27,9 +27,10 @@ public:
 	}
 
 	void StartNextWave() {
-		currentWaveIndex++;
-		assert(currentWaveIndex < waves.size());
+		if(currentWaveIndex + 1 >= waves.size())
+			return;
 
+		currentWaveIndex++;
 		aliveEnemies = 0;
 
 		if(OnWaveStarted)
@@ -56,6 +57,22 @@ public:
 			if(OnWaveCleared)
 				OnWaveCleared(currentWaveIndex);
 		}
+	}
+
+	bool AreAllWavesFinished() const {
+		if(waves.empty()) return true;
+
+		bool isLastWave = (currentWaveIndex == waves.size() - 1);
+		bool lastWaveDoneSpawning = waves[currentWaveIndex].IsFinishedSpawning();
+		bool noEnemiesAlive = (aliveEnemies == 0);
+
+		return isLastWave && lastWaveDoneSpawning && noEnemiesAlive;
+	}
+
+	void Clear() {
+		waves.clear();
+		currentWaveIndex = 0;
+		aliveEnemies = 0;
 	}
 
 	bool IsCurrentWaveFinishedSpawning() { return waves[currentWaveIndex].IsFinishedSpawning(); }

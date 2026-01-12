@@ -13,7 +13,4 @@ public:
 	virtual void OnExit();
 	virtual void OnUpdate();
 	virtual void Render();
-
-	template<typename T>
-	void DestroyAllOfType();
 };

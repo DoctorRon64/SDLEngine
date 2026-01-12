@@ -352,7 +352,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="res\level_1.xml" />
+    <Xml Include="res\levels\level_1.xml" />
+    <Xml Include="res\levels\level_2.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

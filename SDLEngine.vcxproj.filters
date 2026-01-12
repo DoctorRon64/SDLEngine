@@ -219,6 +219,9 @@
     <ClCompile Include="src\objects\enemies\VerticleMedusaEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\custom\Turret.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\math\Vector2.h">
@@ -443,12 +446,16 @@
     <ClInclude Include="src\Utils\assets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\custom\Turret.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
     <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="res\level_1.xml" />
+    <Xml Include="res\levels\level_1.xml" />
+    <Xml Include="res\levels\level_2.xml" />
   </ItemGroup>
 </Project>
