@@ -1,5 +1,6 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/LinearMoveState.h"
 
 class BubbleEnemy : public Enemy {
 private:
@@ -9,29 +10,11 @@ private:
 public:
 	BubbleEnemy(Vector2 spawn)
 		: Enemy(ENEMY_BUBBLE_SPRITE_PATH, spawn, { 32, 32 }) {
-		state = EnemyState::SIMPLE_MOVE;
-		velocity = { -speed, 0 };
+		stateManager.SetState(new LinearMoveState(transform, { -speed, 0 }));
 		InitHp(2);
 	}
 
 protected:
-
-	//virtual void Update() override {
-	//	if(!reachedThird) {
-	//		if(transform->position.x <= WINDOW_WIDTH * 0.66f) {
-	//			reachedThird = true;
-	//			startAngle = currentAngle;
-	//		}
-	//		transform->position.x -= speed * dt;
-	//	}
-	//	else if(angleTravelled < 300.f) {
-	//		angleTravelled += angularSpeed * dt;
-	//		transform->position = center + CircleOffset(angleTravelled);
-	//	}
-	//	else {
-	//		transform->position += straightDir * speed * dt;
-	//	}
-	//}
 
 	void UpdateState(float dt) override {
 		switch(state) {

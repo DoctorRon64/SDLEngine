@@ -1,5 +1,6 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/WaveMoveState.h"
 
 class KillerWhaleEnemy : public Enemy {
 private:
@@ -8,7 +9,7 @@ private:
 public:
 	KillerWhaleEnemy(Vector2 spawn)
 		: Enemy(ENEMY_WHALE_SPRITE_PATH, spawn, { 32,32 }) {
-		velocity = { -speed, 0 };
+		stateManager.SetState(new WaveMoveState(transform));
 		InitHp(3);
 	}
 

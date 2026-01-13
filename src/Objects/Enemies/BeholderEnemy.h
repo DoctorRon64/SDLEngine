@@ -1,5 +1,6 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/MoveToTargetState.h"
 
 class BeholderEnemy : public Enemy {
 private:
@@ -8,8 +9,7 @@ private:
 public:
 	BeholderEnemy(Vector2 spawn)
 		: Enemy(ENEMY_BEHOLDER_SPRITE_PATH, spawn, { 32,32 }) {
-		velocity = { -speed, 0 };
-
+		stateManager.SetState(new MoveToTargetState(transform));
 		InitHp(3);
 	}
 
