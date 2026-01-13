@@ -1,4 +1,5 @@
-#pragma once
+﻿#pragma once
+#include <objects/PowerUps/PowerUpFactory.h>
 #include <wave/Wave.h>
 
 class Wave;
@@ -26,9 +27,10 @@ public:
 	}
 
 	void StartNextWave() {
-		currentWaveIndex++;
-		assert(currentWaveIndex < waves.size());
+		if(currentWaveIndex + 1 >= waves.size())
+			return;
 
+		currentWaveIndex++;
 		aliveEnemies = 0;
 
 		if(OnWaveStarted)
@@ -47,12 +49,36 @@ public:
 		if(currentWaveIndex >= waves.size()) return;
 
 		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
-			if(waves[currentWaveIndex].OnWaveCleared)
-				waves[currentWaveIndex].OnWaveCleared();
+			SpawnPowerUp();
 
-			if(OnWaveCleared)
-				OnWaveCleared(currentWaveIndex);
+			if(currentWaveIndex + 1 < waves.size()) {
+				StartNextWave();
+			}
+			else {
+				//if(waves[currentWaveIndex].OnWaveCleared)
+				//	waves[currentWaveIndex].OnWaveCleared();
+
+				// ALL WAVES DONE → Finish Stage
+				if(OnWaveCleared)
+					OnWaveCleared(currentWaveIndex);
+			}
 		}
+	}
+
+	bool AreAllWavesFinished() const {
+		if(waves.empty()) return true;
+
+		bool isLastWave = (currentWaveIndex == waves.size() - 1);
+		bool lastWaveDoneSpawning = waves[currentWaveIndex].IsFinishedSpawning();
+		bool noEnemiesAlive = (aliveEnemies == 0);
+
+		return isLastWave && lastWaveDoneSpawning && noEnemiesAlive;
+	}
+
+	void Clear() {
+		waves.clear();
+		currentWaveIndex = 0;
+		aliveEnemies = 0;
 	}
 
 	bool IsCurrentWaveFinishedSpawning() { return waves[currentWaveIndex].IsFinishedSpawning(); }
@@ -71,6 +97,16 @@ public:
 	std::function<void(int waveIndex)> OnWaveCleared;
 
 private:
+	void SpawnPowerUp() {
+		int minId = 1;
+		int maxId = (int)PowerupId::TWIN_TURRETS;
+		PowerupId id = (PowerupId)Randomness::Range(minId, maxId);
+		PowerUp* pu = PowerUpFactory().Create(id);
+
+		pu->GetTransform()->position = Vector2(RenderManager::GetInstance()->WINDOW_WIDTH / 2.f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f);
+		SpawnManager::Instance().SpawnObject(pu);
+	}
+
 	std::vector<Wave> waves;
 	size_t currentWaveIndex = 0;
 	std::vector<bool> currentWaveSpawns = std::vector<bool>();

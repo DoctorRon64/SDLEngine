@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "objects/custom/Bullet.h"
 #include "objects/custom/Enemy.h"
 #include "objects/custom/Player.h"
@@ -28,6 +28,7 @@ class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
+	float finishStageTimer = 0.f;
 
 	//Player
 	Player* player = Player::GetInstance();
@@ -41,6 +42,8 @@ private:
 	Text* setScoreText;
 	Text* setScoreNameText;
 
+	Text* stageText;
+
 	ScrollingBackground* currentBackground;
 
 	unsigned int level;
@@ -50,12 +53,26 @@ public:
 	void OnEnter() override {
 		std::cout << level << std::endl;
 
-		Wave wave1 = XMLReader::Instance().FetchWave(level, 0);
-		wave1.OnWaveStarted = [this]() { OnWaveStarted(0); };
-		wave1.OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
+		std::string bgTexture;
+		switch(level) {
+			case 1: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+			case 2: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
+			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+		}
+		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
+		SpawnManager::Instance().SpawnObject(currentBackground);
 
-		WaveManager::GetInstance()->AddWave(std::move(wave1));
-		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) { SetState(GameplayState::FINISH_STAGE); };
+		WaveManager::GetInstance()->Clear();
+		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
+		for(int i = 0; i < waves.size(); ++i) {
+			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
+			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
+		}
+		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				SetState(GameplayState::FINISH_STAGE);
+			}
+		};
 		WaveManager::GetInstance()->Start();
 
 		scoreText = new Text("Score");
@@ -164,15 +181,30 @@ public:
 	}
 
 	void UpdateFinishStage() {
-		//if(!stateJustChanged) return;
-
-		if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
-			RecordHighScore();
+		if(stateJustChanged) {
+			stageText = new Text("STAGE CLEARED\nPress ENTER to continue");
+			stageText->GetTransform()->scale = { 2.f, 2.f };
+			stageText->GetTransform()->position = {
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
+				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
+			};
+			ui.push_back(stageText);
+			return;
 		}
-		else {
-			//TODO: Finish Stage Transition
-			WaveManager::GetInstance()->StartNextWave();
-			SetState(GameplayState::GAMEPLAY);
+
+		// Wait for confirm
+		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
+		   InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START)) {
+			stageText->Destroy();
+			stageText = nullptr;
+
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				RecordHighScore();
+			}
+			else {
+				WaveManager::GetInstance()->StartNextWave();
+				SetState(GameplayState::GAMEPLAY);
+			}
 		}
 	}
 
@@ -196,21 +228,6 @@ private:
 			ui.back()->Destroy();
 			ui[ui.size() - 2]->Destroy();
 		}
-	}
-
-	void OnWaveStarted(int waveIndex) {
-		if(currentBackground)
-			currentBackground->Destroy();
-
-		std::string bgTexture;
-		switch(waveIndex) {
-			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
-			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
-			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
-		}
-		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
-
-		SpawnManager::Instance().SpawnObject(currentBackground);
 	}
 
 	void ShowDeathScreen() {
@@ -244,6 +261,10 @@ private:
 	void SetState(GameplayState _state) {
 		state = _state;
 		stateJustChanged = true;
+
+		if(state == GameplayState::FINISH_STAGE) {
+			SpawnManager::Instance().DestroyAllOfType<Bullet>();
+		}
 	}
 
 	bool AreEnemiesRemaining() {

@@ -1,28 +1,43 @@
-<?xml version ="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <level>
 	<wave>
-		<spawned_enemy_id>1</spawned_enemy_id>
-		<amount>5</amount>
-		<delay_between_spawns>4</delay_between_spawns>
+		<enemy type="AMOEBA" amount="3" />
+		<enemy type="BUBBLE" amount="2" />
+		<enemy type="CHOMPER" amount="1" />
+		<delay_between_spawns>1.2</delay_between_spawns>
 	</wave>
+
 	<wave>
-		<spawned_enemy_id>3</spawned_enemy_id>
-		<amount>2</amount>
-		<delay_between_spawns>2</delay_between_spawns>
+		<enemy type="BEHOLDER" amount="3" />
+		<enemy type="CIRCLER" amount="2" />
+		<enemy type="AMOEBA" amount="2" />
+		<delay_between_spawns>1.0</delay_between_spawns>
 	</wave>
+
 	<wave>
-		<spawned_enemy_id>5</spawned_enemy_id>
-		<amount>1</amount>
-		<delay_between_spawns>1</delay_between_spawns>
+		<enemy type="KILLER_WHALE" amount="1" />
+		<enemy type="CHOMPER" amount="3" />
+		<enemy type="BUBBLE" amount="2" />
+		<delay_between_spawns>1.5</delay_between_spawns>
 	</wave>
+
 	<wave>
-		<spawned_enemy_id>2</spawned_enemy_id>
-		<amount>2</amount>
-		<delay_between_spawns>4</delay_between_spawns>
+		<enemy type="KILLER_WHALE" amount="1" />
+		<enemy type="AMOEBA" amount="3" />
+		<enemy type="BEHOLDER" amount="2" />
+		<enemy type="BUBBLE" amount="3" />
+		<enemy type="CHOMPER" amount="2" />
+		<enemy type="CIRCLER" amount="2" />
+		<delay_between_spawns>1.0</delay_between_spawns>
 	</wave>
+
 	<wave>
-		<spawned_enemy_id>4</spawned_enemy_id>
-		<amount>3</amount>
-		<delay_between_spawns>4</delay_between_spawns>
+		<enemy type="KILLER_WHALE" amount="2" />
+		<enemy type="AMOEBA" amount="2" />
+		<enemy type="BEHOLDER" amount="3" />
+		<enemy type="BUBBLE" amount="2" />
+		<enemy type="CHOMPER" amount="3" />
+		<enemy type="CIRCLER" amount="3" />
+		<delay_between_spawns>0.8</delay_between_spawns>
 	</wave>
 </level>
