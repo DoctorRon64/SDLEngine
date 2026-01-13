@@ -1,0 +1,23 @@
+#pragma once
+#include <stdexcept>
+
+enum class EnemyId {
+	KILLER_WHALE,
+	AMOEBA,
+	BEHOLDER,
+	BUBBLE,
+	CHOMPER,
+	CIRCLER,
+	COUNT
+};
+
+inline EnemyId EnemyIdFromString(const std::string& s) {
+	if(s == "KILLER_WHALE") return EnemyId::KILLER_WHALE;
+	if(s == "AMOEBA") return EnemyId::AMOEBA;
+	if(s == "BEHOLDER") return EnemyId::BEHOLDER;
+	if(s == "BUBBLE") return EnemyId::BUBBLE;
+	if(s == "CHOMPER") return EnemyId::CHOMPER;
+	if(s == "CIRCLER") return EnemyId::CIRCLER;
+
+	throw std::runtime_error("Unknown enemy type: " + s);
+}

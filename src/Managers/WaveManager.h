@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <objects/PowerUps/PowerUpFactory.h>
 #include <wave/Wave.h>
 
@@ -51,11 +51,17 @@ public:
 		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
 			SpawnPowerUp();
 
-			if(waves[currentWaveIndex].OnWaveCleared)
-				waves[currentWaveIndex].OnWaveCleared();
+			if(currentWaveIndex + 1 < waves.size()) {
+				StartNextWave();
+			}
+			else {
+				//if(waves[currentWaveIndex].OnWaveCleared)
+				//	waves[currentWaveIndex].OnWaveCleared();
 
-			if(OnWaveCleared)
-				OnWaveCleared(currentWaveIndex);
+				// ALL WAVES DONE → Finish Stage
+				if(OnWaveCleared)
+					OnWaveCleared(currentWaveIndex);
+			}
 		}
 	}
 

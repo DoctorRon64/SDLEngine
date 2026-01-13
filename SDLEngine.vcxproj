@@ -341,6 +341,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\audio\AudioStream.h" />
     <ClInclude Include="src\objects\custom\TestAnimation.h" />
     <ClInclude Include="src\managers\WaveManager.h" />
+    <ClInclude Include="src\Utils\enemyId.h" />
     <ClInclude Include="src\wave\Wave.h" />
     <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
     <ClInclude Include="src\Managers\XMLReader.h" />

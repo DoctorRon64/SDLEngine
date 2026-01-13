@@ -2,6 +2,7 @@
 
 // Standard Library Includes
 #include <algorithm>
+#include <array>
 #include <atomic>
 #include <cassert>
 #include <cmath>

@@ -12,7 +12,7 @@ protected:
 		Vector2 _size = Vector2(32.f, 32.f)
 	) : Image(_name, _pos, _size), Collidable(rbComp) {
 		rbComp->AddCollider(new AABB(_pos, _size));
-		transform->scale = { 10.f, 10.f };
+		transform->scale = { 2.f, 2.f };
 	}
 
 	virtual void OnCollect() = 0;
