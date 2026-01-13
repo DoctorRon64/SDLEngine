@@ -191,6 +191,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\managers\EnemyStateManager.cpp" />
+    <ClCompile Include="src\objects\enemies\EnemyState.cpp" />
     <ClCompile Include="src\objects\custom\Boss.cpp" />
     <ClCompile Include="src\objects\enemies\AmoebaEnemy.cpp" />
     <ClCompile Include="src\objects\enemies\ChomperEnemy.cpp" />
@@ -271,6 +273,8 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\custom\Turret.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\managers\EnemyStateManager.h" />
+    <ClInclude Include="src\objects\enemies\EnemyState.h" />
     <ClInclude Include="src\objects\custom\Boss.h" />
     <ClInclude Include="src\objects\enemies\AmoebaEnemy.h" />
     <ClInclude Include="src\objects\enemies\ChomperEnemy.h" />

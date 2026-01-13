@@ -23,7 +23,9 @@ void Enemy::Update() {
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
 	stateTimer += dt;
 
+	stateManager.Update(dt);
 	UpdateState(dt);
+	ClampToScreen();
 	Image::Update();
 }
 
