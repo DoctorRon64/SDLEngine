@@ -36,3 +36,11 @@ void Enemy::UpdateShooting(float dt) {
 		shootTimer = shootCooldown;
 	}
 }
+
+void Enemy::ClampToScreen() {
+	auto* rm = RenderManager::GetInstance();
+	Vector2 size = transform->GetSize();
+
+	transform->position.x = std::clamp(transform->position.x, 0.f, rm->WINDOW_WIDTH - size.x);
+	transform->position.y = std::clamp(transform->position.y, 0.f, rm->WINDOW_HEIGHT - size.y);
+}

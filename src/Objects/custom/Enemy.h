@@ -1,16 +1,9 @@
 #pragma once
+#include "../../managers/EnemyStateManager.h"
 #include "../Actor.h"
-
-enum class EnemyState {
-	STAY,
-	SIMPLE_MOVE,
-	CIRCLE_MOVE,
-	CHASE
-};
 
 class Enemy : public Actor {
 protected:
-	EnemyState state = EnemyState::STAY;
 	float stateTimer = 0.f;
 
 	int scoreValue = 100;
@@ -39,20 +32,5 @@ protected:
 	virtual void Shoot() {}
 	virtual void UpdateState(float dt) = 0;
 
-	void ClampToScreen() {
-		auto* rm = RenderManager::GetInstance();
-		Vector2 size = transform->GetSize();
-
-		transform->position.x = std::clamp(
-			transform->position.x,
-			0.0f,
-			rm->WINDOW_WIDTH - size.x
-		);
-
-		transform->position.y = std::clamp(
-			transform->position.y,
-			0.0f,
-			rm->WINDOW_HEIGHT - size.y
-		);
-	}
+	void ClampToScreen();
 };
