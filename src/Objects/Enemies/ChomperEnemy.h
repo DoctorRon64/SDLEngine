@@ -1,20 +1,15 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/CircleMoveState.h"
+#include "states/LinearMoveState.h"
 
 class ChomperEnemy : public Enemy {
-private:
-	float angle = 0.f;
-	Vector2 center;
-
 public:
-	ChomperEnemy(Vector2 spawn)
-		: Enemy(ENEMY_CHOMPER_SPRITE_PATH, spawn, { 32,32 }) {
-		velocity = { -speed, 0 };
-		InitHp(4);
-	}
+	ChomperEnemy(Vector2 spawn) : Enemy(ENEMY_CHOMPER_SPRITE_PATH, spawn, { 32, 32 }) {
+		Vector2 leftTarget = spawn + Vector2(-200.f, 0.f);
 
-	void UpdateState(float dt) override {
-		center.x -= speed * 0.3f * dt;
-		Orbit(transform, center, 50.f, angle, 2.f, dt);
+		stateManager.AddState(new LinearMoveState(&transform->position, spawn, leftTarget, 50.f));
+		stateManager.AddState(new CircleMoveState(&transform->position, leftTarget, 50.f, 90.f, 2));
+		InitHp(4);
 	}
 };

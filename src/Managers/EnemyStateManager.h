@@ -3,24 +3,28 @@
 
 class EnemyStateManager {
 private:
-	EnemyState* current = nullptr;
+	std::vector<EnemyState*> states;
+	size_t currentIndex = 0;
 
 public:
-	~EnemyStateManager() { delete current; }
-
-	void SetState(EnemyState* state) {
-		delete current;
-		current = state;
+	EnemyStateManager() = default;
+	~EnemyStateManager() {
+		for(auto* s : states) delete s;
 	}
 
+	void AddState(EnemyState* state) { states.push_back(state); }
+
 	void Update(float dt) {
-		if(!current) return;
+		if(currentIndex >= states.size()) return;
 
-		current->Update(dt);
+		EnemyState* state = states[currentIndex];
+		state->Update(dt);
+		if(state->IsFinished()) currentIndex++;
+	}
 
-		if(current->IsFinished()) {
-			EnemyState* next = current->NextState();
-			SetState(next);
-		}
+	bool IsFinished() const { return currentIndex >= states.size(); }
+
+	EnemyState* GetCurrentState() {
+		return currentIndex < states.size() ? states[currentIndex] : nullptr;
 	}
 };

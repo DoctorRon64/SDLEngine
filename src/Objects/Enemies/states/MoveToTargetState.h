@@ -21,6 +21,6 @@ public:
 	}
 
 	EnemyState* NextState() override {
-		return new IdleState(0.5f);
+		return new IdleState(transform, 0.5f);
 	}
 };

@@ -8,7 +8,7 @@ void Enemy::OnDeath() {
 	Actor::OnDeath();
 }
 
-Enemy::Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size) : Actor(texture, { 0,0 }, size) {
+Enemy::Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size) : Actor(texture, spawnPos, size), stateManager(&transform->position) {
 	transform->position = spawnPos;
 	transform->scale = { 2.f, 2.f };
 
@@ -25,8 +25,9 @@ void Enemy::Update() {
 
 	stateManager.Update(dt);
 	UpdateState(dt);
+	Actor::Update();
+
 	ClampToScreen();
-	Image::Update();
 }
 
 void Enemy::UpdateShooting(float dt) {

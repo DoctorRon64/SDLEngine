@@ -4,14 +4,23 @@
 
 class Enemy : public Actor {
 protected:
-	float stateTimer = 0.f;
+	EnemyStateManager stateManager;
 
+	float stateTimer = 0.f;
 	int scoreValue = 100;
 	float speed = 50.f;
+	float shootCooldown = 1.f;
+	float shootTimer = 0.f;
 
 	Vector2 velocity = { 0, 0 };
 
 	virtual void OnDeath() override;
+
+	void UpdateShooting(float dt);
+	virtual void UpdateState(float dt) = 0;
+	virtual void Shoot() {}
+
+	void ClampToScreen();
 
 public:
 	Enemy(
@@ -20,17 +29,4 @@ public:
 		Vector2 size
 	);
 	virtual void Update() override;
-
-protected:
-	EnemyStateManager stateManager;
-
-	float shootCooldown = 1.f;
-	float shootTimer = 0.f;
-
-	void UpdateShooting(float dt);
-
-	virtual void Shoot() {}
-	virtual void UpdateState(float dt) = 0;
-
-	void ClampToScreen();
 };
