@@ -12,4 +12,8 @@ public:
 		stateManager.AddState(new CircleMoveState(&transform->position, leftTarget, 50.f, 90.f, 2));
 		InitHp(4);
 	}
+
+	virtual void Update() override {
+		Enemy::Update();
+	}
 };

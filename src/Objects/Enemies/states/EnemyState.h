@@ -5,7 +5,7 @@ class Transform;
 
 class EnemyState {
 protected:
-	Vector2* transformPos; // pointer to enemy position
+	Vector2* transformPos;
 	bool finished = false;
 
 public:
@@ -13,7 +13,6 @@ public:
 	virtual ~EnemyState() = default;
 
 	virtual void Update(float dt) = 0;
-
-	bool IsFinished() const { return finished; }
+	virtual bool IsFinished() const { return finished; }
 	virtual EnemyState* NextState() { return nullptr; }
 };

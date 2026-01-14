@@ -1,13 +1,15 @@
 #pragma once
 #include "EnemyState.h"
 #include "IdleState.h"
+#include <math/MoveTowards.h>
 
 class MoveToTargetState : public EnemyState {
 	Transform* transform;
 	Vector2 target;
 
 public:
-	MoveToTargetState(Transform* t) : transform(t) {
+	MoveToTargetState(Transform* t)
+		: EnemyState(&t->position), transform(t) {
 		target.x = Randomness::Range(0, RenderManager::GetInstance()->WINDOW_WIDTH);
 		target.y = Randomness::Range(0, RenderManager::GetInstance()->WINDOW_HEIGHT);
 	}
@@ -21,6 +23,6 @@ public:
 	}
 
 	EnemyState* NextState() override {
-		return new IdleState(transform, 0.5f);
+		return new IdleState(&transform->position, 0.5f);
 	}
 };

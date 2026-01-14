@@ -279,6 +279,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\enemies\states\WaveMoveState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\math\MoveTowards.h" />
     <ClInclude Include="src\objects\enemies\states\MoveToTargetState.h" />
     <ClInclude Include="src\objects\enemies\states\BubbleEnterState.h" />
     <ClInclude Include="src\objects\enemies\states\IdleState.h" />

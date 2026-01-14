@@ -56,6 +56,7 @@ void Engine::LoadAssets() {
 	RenderManager::GetInstance()->LoadTexture(ENEMY_MEDUSA_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(ENEMY_VERTICAL_MEDUSA_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(ENEMY_WHALE_SPRITE_PATH);
+
 	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL1_PATH);
 	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL2_PATH);
 	RenderManager::GetInstance()->LoadTexture(PLAYER_SPRITE_PATH);

@@ -13,4 +13,8 @@ public:
 		stateManager.AddState(new LinearMoveState(&transform->position, spawn, endPos, randomSpeed));
 		InitHp(2);
 	}
+
+	virtual void Update() override {
+		Enemy::Update();
+	}
 };

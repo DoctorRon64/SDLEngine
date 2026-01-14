@@ -19,7 +19,16 @@ public:
 
 		EnemyState* state = states[currentIndex];
 		state->Update(dt);
-		if(state->IsFinished()) currentIndex++;
+
+		if(state->IsFinished()) {
+			if(EnemyState* next = state->NextState()) {
+				delete state;
+				states[currentIndex] = next;
+			}
+			else {
+				currentIndex++;
+			}
+		}
 	}
 
 	bool IsFinished() const { return currentIndex >= states.size(); }

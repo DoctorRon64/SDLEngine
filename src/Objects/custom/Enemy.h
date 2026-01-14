@@ -17,16 +17,11 @@ protected:
 	virtual void OnDeath() override;
 
 	void UpdateShooting(float dt);
-	virtual void UpdateState(float dt) = 0;
 	virtual void Shoot() {}
+	virtual void Update() override;
 
 	void ClampToScreen();
 
 public:
-	Enemy(
-		const std::string& texture,
-		Vector2 spawnPos,
-		Vector2 size
-	);
-	virtual void Update() override;
+	Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size);
 };

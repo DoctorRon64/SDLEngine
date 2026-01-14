@@ -16,17 +16,13 @@ public:
 
 	void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
-		stateManager.Update(dt);
-		Actor::Update();
+		Enemy::Update();
 
-		// Shooting bullets every 0.3 sec while moving
 		shootTimer += dt;
 		if(shootTimer >= 0.3f) {
 			ShootBullet();
 			shootTimer = 0.f;
 		}
-
-		ClampToScreen();
 	}
 
 	void ShootBullet() {

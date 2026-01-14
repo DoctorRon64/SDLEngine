@@ -15,12 +15,3 @@ public:
 		transformPos->y += sin(time * 5.f) * 50.f * dt; // vertical sine wave
 	}
 };
-
-class KillerWhaleEnemy : public Enemy {
-public:
-	KillerWhaleEnemy(Vector2 spawn)
-		: Enemy(ENEMY_WHALE_SPRITE_PATH, spawn) {
-		stateManager.AddState(new WaveMoveState(&transform->position));
-		InitHp(3);
-	}
-};

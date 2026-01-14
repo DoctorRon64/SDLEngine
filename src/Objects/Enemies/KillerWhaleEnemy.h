@@ -9,4 +9,8 @@ public:
 		stateManager.AddState(new WaveMoveState(&transform->position));
 		InitHp(3);
 	}
+
+	virtual void Update() override {
+		Enemy::Update();
+	}
 };
