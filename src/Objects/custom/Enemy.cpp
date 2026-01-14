@@ -8,7 +8,7 @@ void Enemy::OnDeath() {
 	Actor::OnDeath();
 }
 
-Enemy::Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size) : Actor(texture, { 0,0 }, size) {
+Enemy::Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size) : Actor(texture, spawnPos, size) {
 	transform->position = spawnPos;
 	transform->scale = { 2.f, 2.f };
 
@@ -23,8 +23,11 @@ void Enemy::Update() {
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
 	stateTimer += dt;
 
-	UpdateState(dt);
-	Image::Update();
+	stateManager.Update(dt);
+	UpdateShooting(dt);
+
+	Actor::Update();
+	ClampToScreen();
 }
 
 void Enemy::UpdateShooting(float dt) {
@@ -33,4 +36,12 @@ void Enemy::UpdateShooting(float dt) {
 		Shoot();
 		shootTimer = shootCooldown;
 	}
+}
+
+void Enemy::ClampToScreen() {
+	auto* rm = RenderManager::GetInstance();
+	Vector2 size = transform->GetSize();
+
+	transform->position.x = std::clamp(transform->position.x, 0.f, rm->WINDOW_WIDTH - size.x);
+	transform->position.y = std::clamp(transform->position.y, 0.f, rm->WINDOW_HEIGHT - size.y);
 }

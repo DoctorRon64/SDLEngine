@@ -1,32 +1,23 @@
 #pragma once
-#pragma once
 #include "../custom/Bullet.h"
 #include "../custom/Enemy.h"
+#include "states/CircleMoveState.h"
 
 class CirclerEnemy : public Enemy {
 private:
-	float angle = 0.f;
-	Vector2 circleCenter;
-	float radius = 100.f;
 	float shootTimer = 0.f;
 
 public:
 	CirclerEnemy(Vector2 spawn)
 		: Enemy(ENEMY_CIRCLER_SPRITE_PATH, spawn, { 32, 32 }) {
-		state = EnemyState::CIRCLE_MOVE;
-		circleCenter = spawn;
+		stateManager.AddState(new CircleMoveState(&transform->position, spawn, 100.f, 90.f, 3));
 		InitHp(6);
 	}
 
-protected:
-	void UpdateState(float dt) override {
-		angle += 90.f * dt; // 90 degrees per second
-		const float DEG2RAD = 3.14159265f / 180.0f;
+	void Update() override {
+		float dt = TimeManager::GetInstance()->GetDeltaTime();
+		Enemy::Update();
 
-		transform->position.x = circleCenter.x + cos(angle * DEG2RAD) * radius;
-		transform->position.y = circleCenter.y + sin(angle * DEG2RAD) * radius;
-
-		// Shoot bullets every 0.3 seconds
 		shootTimer += dt;
 		if(shootTimer >= 0.3f) {
 			ShootBullet();
@@ -35,11 +26,8 @@ protected:
 	}
 
 	void ShootBullet() {
-		Vector2 dir = Vector2(cos(angle * 3.14159265f / 180.0f),
-							  sin(angle * 3.14159265f / 180.0f));
-		Vector2 size = dir * 200;
-
-		Bullet* b = new Bullet(false, BULLET_SPRITE_PATH, transform->position, size);
+		Vector2 dir(1.f, 0.f);
+		Bullet* b = new Bullet(false, BULLET_SPRITE_PATH, transform->position, dir * 200.f);
 		SpawnManager::Instance().SpawnObject(b);
 	}
 };
