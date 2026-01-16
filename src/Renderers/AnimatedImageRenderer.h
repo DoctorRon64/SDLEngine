@@ -20,9 +20,6 @@ public:
 		frameWidth(_frameWidth), frameHeight(_frameHeight), frameTime(_frameTime),
 		looping(_looping) {
 		sourceRect = SDL_FRect{ _sourceOffset.x, _sourceOffset.y, _frameWidth, _frameHeight };
-		TimeManager::GetInstance()->SubscribeEvent(
-			TimeManager::GetInstance()->GetTimeFrame() * frameTime, [this]() { NextFrame(); }
-		);
 	}
 
 	virtual void Update(float _deltaTime) override {
@@ -33,26 +30,9 @@ public:
 		ImageRenderer::Render();
 	}
 
-private:
+public:
 	void NextFrame() {
-		currentFrame = (looping) 
-			? (currentFrame + 1) % numberOfFrames 
-			: std::min(currentFrame + 1, numberOfFrames - 1);
-
-		if (currentFrame == numberOfFrames) {
-			if (looping) {
-				currentFrame = 0;
-				TimeManager::GetInstance()->SubscribeEvent(
-					TimeManager::GetInstance()->GetTimeFrame() * frameTime, [this]() { NextFrame(); }
-				);
-			}
-			else currentFrame--;
-		}
-		else {
-			TimeManager::GetInstance()->SubscribeEvent(
-				TimeManager::GetInstance()->GetTimeFrame() * frameTime, [this]() { NextFrame(); }
-			);
-		}
+		currentFrame = (currentFrame + 1) % numberOfFrames;
 
 		int currentRow = currentFrame % numberOfRows;
 		int currentColumn = currentFrame / numberOfRows;
