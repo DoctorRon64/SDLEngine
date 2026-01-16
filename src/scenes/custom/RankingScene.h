@@ -15,8 +15,8 @@ public:
 		ui.push_back(title);
 
 		float startX = 500.f;
-		float startY = 180.0f;
-		float spacing = 130.0f;
+		float startY = 100.0f;
+		float spacing = 60.0f;
 
 		for(int i = 0; i < highScores.size(); ++i) {
 			std::string scoreAsText = ScoreManager::GetInstance()->MakeScoreAsText(highScores[i].score);
