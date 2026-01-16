@@ -30,3 +30,5 @@ constexpr const char* levelPaths[LEVEL_COUNT] = { "res/levels/level_1.xml", "res
 
 constexpr unsigned int ENEMY_ID_COUNT = 7;
 constexpr size_t ENEMY_COUNT = 7;
+
+constexpr unsigned int MAX_USER_LENGTH = 5;

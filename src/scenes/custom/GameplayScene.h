@@ -15,6 +15,7 @@
 #include <objects/Enemies/MedusaEnemy.h>
 #include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <objects/Text.h>
+#include <objects/InputText.h>
 #include <wave/Wave.h>
 
 enum class GameplayState {
@@ -40,9 +41,7 @@ private:
 
 	//Score set UI
 	Text* setScoreText;
-	Text* setScoreNameText;
-
-	Text* stageText;
+	Text* userInputText;
 
 	ScrollingBackground* currentBackground;
 
@@ -73,13 +72,6 @@ public:
 		livesText->GetTransform()->scale = { 2.f, 2.f };
 		livesText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 260 };
 		ui.push_back(livesText);
-
-		setScoreText = new Text("Enter Name: ");
-		setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
-		setScoreText->GetTransform()->position = { RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f };
-		setScoreNameText = new Text(" ");
-		setScoreNameText->GetTransform()->scale = { 2.0f, 2.0f };
-		setScoreNameText->GetTransform()->position = { RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f + 300.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f };
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
@@ -164,13 +156,20 @@ public:
 
 	void UpdateFinishStage() {
 		if(stateJustChanged) {
-			stageText = new Text("STAGE CLEARED\nPress ENTER to continue");
-			stageText->GetTransform()->scale = { 2.f, 2.f };
-			stageText->GetTransform()->position = {
-				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
+			userInputText = new InputText(" ");
+			userInputText->GetTransform()->scale = { 2.f, 2.f };
+			userInputText->GetTransform()->position = {
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 100,
 				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
 			};
-			ui.push_back(stageText);
+			setScoreText = new Text("Enter Name to set score: ");
+			setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
+			setScoreText->GetTransform()->position = { 
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200, 
+				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 100
+			};
+			ui.push_back(userInputText);
+			ui.push_back(setScoreText);
 			return;
 		}
 
@@ -179,16 +178,12 @@ public:
 		// Wait for confirm
 		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
 		   InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START)) {
-			stageText->Destroy();
-			stageText = nullptr;
+			userInputText->Destroy();
+			userInputText = nullptr;
+			setScoreText->Destroy();
+			setScoreText = nullptr;
 
-			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
-				RecordHighScore();
-			}
-			else {
-				WaveManager::GetInstance()->StartNextWave();
-				SetState(GameplayState::GAMEPLAY);
-			}
+			RecordHighScore();
 		}
 	}
 
@@ -238,7 +233,7 @@ private:
 			this->SetState(GameplayState::GAMEPLAY);
 		}
 		else {
-			RecordHighScore();
+			this->SetState(GameplayState::FINISH_STAGE);
 		}
 	}
 
@@ -287,20 +282,6 @@ private:
 	}
 
 	void RecordHighScore() {
-		if(stateJustChanged) {
-			ui.push_back(setScoreText);
-			ui.push_back(setScoreNameText);
-			std::cout << "Set Score";
-		}
-		for(Sint32 key = SDLK_A; key < SDLK_Z; ++key) {
-			if(InputManager::GetInstance()->GetEvent(key, DOWN)) {
-				std::string name = setScoreNameText->GetText();
-				char letter = key - SDLK_A + 'A';
-				name += letter;
-				setScoreNameText->SetText(name);
-				break;
-			}
-		}
 		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN)) {
 			//TODO: Hook up to file manager
 			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
