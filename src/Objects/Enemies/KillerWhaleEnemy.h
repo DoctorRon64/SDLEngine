@@ -1,21 +1,22 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/LinearMoveState.h"
+#include "states/WaveMoveState.h"
 
 class KillerWhaleEnemy : public Enemy {
-private:
-	float waveTime = 0.f;
-
 public:
 	KillerWhaleEnemy(Vector2 spawn)
-		: Enemy("res/enemies/whale_sprite.png", spawn, { 32,32 }) {
-		velocity = { -speed, 0 };
-	}
+		: Enemy(ENEMY_WHALE_SPRITE_PATH, spawn, { 32, 32 }) {
+		float h = (float)RenderManager::GetInstance()->WINDOW_HEIGHT;
+		float heightOffset = transform->GetSize().y;
+		bool fromTop = Randomness::Range(0, 1) == 0;
 
-protected:
-	void UpdateState(float dt) override {
-		waveTime += dt;
+		Vector2 start = { spawn.x, fromTop ? 0.f : (h - heightOffset) };
+		Vector2 detachTarget = start + Vector2(0.f, fromTop ? 80.f : -80.f);
+		transform->position = start;
 
-		transform->position.x += velocity.x * dt;
-		transform->position.y += sin(waveTime * 5.f) * 50.f * dt; // amplitude 50, speed factor 5
+		stateManager.AddState(new LinearMoveState(&transform->position, start, detachTarget, 80.f));
+		stateManager.AddState(new WaveMoveState(&transform->position));
+		InitHp(30);
 	}
 };

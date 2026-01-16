@@ -15,7 +15,6 @@ public:
 		height = texSize.y;
 
 		bgA->GetTransform()->position = { 0, 0 };
-		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
 
 		SpawnManager::Instance().SpawnObject(bgA);
@@ -24,10 +23,8 @@ public:
 		SpawnManager::Instance().SpawnObject(bgB);
 	}
 
-	~ScrollingBackground() {
-		delete bgA;
-		delete bgB;
-	}
+	~ScrollingBackground() = default;
+	void Render() override {}
 
 	virtual void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
@@ -37,11 +34,6 @@ public:
 
 		Wrap(bgA, bgB);
 		Wrap(bgB, bgA);
-	}
-
-	virtual void Render() override {
-		bgA->Render();
-		bgB->Render();
 	}
 
 private:

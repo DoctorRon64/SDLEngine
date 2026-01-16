@@ -1,9 +1,7 @@
 #pragma once
-#include "../components/Rigidbody.h"
-#include "../objects/Object.h"
 
-class Enemy;
-class Player;
+class RigidBody;
+class Collidable;
 
 class CollisionManager {
 public:
@@ -12,15 +10,19 @@ public:
 		return instance;
 	}
 
-	void Register(RigidBody* rb, Object* owner, bool isPlayer);
-	void Unregister(Object* owner);
 	void CheckCollisions();
+	void Register(RigidBody* rb, Collidable* c);
+	void Unregister(Collidable* c);
 
 private:
-	struct Collidable {
+	CollisionManager() = default;
+	CollisionManager(const CollisionManager&) = delete;
+	CollisionManager& operator=(const CollisionManager&) = delete;
+
+	struct CollidableEntry {
 		RigidBody* rb;
-		Object* owner;
-		bool isPlayer;
+		Collidable* collidable;
 	};
-	std::vector<Collidable> collidables;
+
+	std::vector<CollidableEntry> collidables;
 };

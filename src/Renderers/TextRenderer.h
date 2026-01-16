@@ -1,7 +1,5 @@
 #pragma once
 
-#define FONT_PATH "res/fonts/PixelifySans-VariableFont_wght.ttf"
-
 class TextRenderer : public Renderer {
 public:
 	TextRenderer(Transform* _transform, std::string _text) : Renderer(_transform, FONT_PATH) {
