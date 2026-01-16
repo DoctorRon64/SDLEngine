@@ -10,12 +10,10 @@ Engine::Engine() {
 	isRunning = false;
 	window = nullptr;
 	renderer = nullptr;
-	auto highScores = ScoreManager::GetInstance()->Load();
+	ScoreManager::GetInstance()->Init();
 }
 
 Engine::~Engine() {
-	ScoreManager::GetInstance()->Save("Player");
-
 	if(renderer) {
 		SDL_DestroyRenderer(renderer);
 		renderer = nullptr;

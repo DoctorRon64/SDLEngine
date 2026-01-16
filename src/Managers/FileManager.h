@@ -34,7 +34,7 @@ public:
 
 	template<typename T>
 	std::vector<T> ReadBinary(const char* path) {
-		std::vector<T> result;
+		std::vector<T> result = {};
 		SDL_IOStream* file = SDL_IOFromFile(path, "rb");
 		if(!file) {
 			SDL_Log("Failed to open file: %s", SDL_GetError());

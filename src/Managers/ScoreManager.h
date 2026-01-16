@@ -2,7 +2,7 @@
 #include <utils/config.h>
 
 struct HighScore {
-	const char* name;
+	char name[MAX_USER_LENGTH];
 	int score;
 
 	bool operator> (HighScore other) {
@@ -37,7 +37,7 @@ public:
 	const std::vector<HighScore> GetScores() const { return highScores; }
 
 	const std::string GetScoreAsText() const {
-		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) : 1;
+		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) + (score % 10 == 0) : 1;
 		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
 		std::string result = "";
 		for(int i = 0; i < zeroCount; ++i) result += "0";
@@ -46,7 +46,7 @@ public:
 	}
 
 	const std::string MakeScoreAsText(int score) {
-		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) : 1;
+		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) + (score % 10 == 0) : 1;
 		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
 		std::string result = "";
 		for(int i = 0; i < zeroCount; ++i) result += "0";
@@ -60,7 +60,8 @@ public:
 	}
 
 	void Save(const std::string& name) {
-		HighScore entry{ name.c_str(), score };
+		HighScore entry{ {}, score };
+		for (int i = 0; i < MAX_USER_LENGTH; ++i) entry.name[i] = name[i];
 
 		highScores.push_back(entry);
 		std::sort(
@@ -69,7 +70,8 @@ public:
 		);
 		while(highScores.size() > MAX_STORED_SCORES) highScores.pop_back();
 
-		FileManager::Instance().WriteBinary("ranking.bin", entry);
+		FileManager::Instance().WriteBinary("ranking.bin", highScores[0], false);
+		for(int i = 1; i < highScores.size(); ++i) FileManager::Instance().WriteBinary("ranking.bin", highScores[i]);
 	}
 
 	std::vector<HighScore> Load() {
