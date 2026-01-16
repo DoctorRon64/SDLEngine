@@ -5,6 +5,7 @@
 #include "../Objects/Enemies/ChomperEnemy.h"
 #include "../Objects/Enemies/CirclerEnemy.h"
 #include "../Objects/Enemies/KillerWhaleEnemy.h"
+#include "../Objects/Enemies/BioTitanEnemy.h"
 
 class EnemyFactory {
 public:
@@ -17,8 +18,12 @@ private:
 			[this]() { SpawnManager::Instance().SpawnObject(new AmoebaEnemy(GetRandomSpawnPos())); },
 			[this]() { SpawnManager::Instance().SpawnObject(new BeholderEnemy(GetRandomSpawnPos())); },
 			[this]() { SpawnManager::Instance().SpawnObject(new BubbleEnemy(GetRandomSpawnPos())); },
-			[this]() { SpawnManager::Instance().SpawnObject(new ChomperEnemy(GetRandomSpawnPos())); },
-			[this]() { SpawnManager::Instance().SpawnObject(new CirclerEnemy(GetRandomSpawnPos())); }
+			[this]() {
+				Vector2 pos = GetRandomSpawnPos();
+				ChomperEnemy::SpawnLine(pos.x);
+			},
+			[this]() { SpawnManager::Instance().SpawnObject(new CirclerEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new BioTitanEnemy(GetRandomSpawnPos())); }
 		} };
 	}
 

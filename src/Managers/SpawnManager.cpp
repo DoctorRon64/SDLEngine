@@ -2,6 +2,8 @@
 #include "SpawnManager.h"
 
 void SpawnManager::SpawnObject(Object* obj) {
+	std::cout << "[SpawnManager] queued: " << typeid(*obj).name() << "\n";
+
 	spawnedObjects.push(obj);
 }
 

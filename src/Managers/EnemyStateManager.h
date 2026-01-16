@@ -17,16 +17,15 @@ public:
 	void Update(float dt) {
 		if(currentIndex >= states.size()) return;
 
-		EnemyState* state = states[currentIndex];
-		state->Update(dt);
+		EnemyState* s = states[currentIndex];
+		s->Update(dt);
 
-		if(state->IsFinished()) {
-			if(EnemyState* next = state->NextState()) {
-				delete state;
-				states[currentIndex] = next;
-			}
-			else {
-				currentIndex++;
+		if(s->IsFinished()) {
+			EnemyState* next = s->NextState();
+			currentIndex++;
+
+			if(next) {
+				states.insert(states.begin() + currentIndex, next);
 			}
 		}
 	}

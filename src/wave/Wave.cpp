@@ -16,6 +16,7 @@ void Wave::Start() {
 		TimeManager::GetInstance()->SubscribeEvent(
 			e.delay,
 			[this, e]() {
+			std::cout << "[Wave] spawning enemy at= " << e.delay << "\n";
 			e.create();
 			spawnsSpawned++;
 

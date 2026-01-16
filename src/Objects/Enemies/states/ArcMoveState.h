@@ -1,24 +1,22 @@
 #pragma once
 #include "EnemyState.h"
 
-class CircleMoveState : public EnemyState {
+class ArcMoveState : public EnemyState {
 private:
 	Vector2 center;
 	float radius;
 	float degreesPerSec;
 	float angle = 0.f;
 	float endAngle = 0.f;
-	int rotations;
 
 public:
-	CircleMoveState(Vector2* pos, Vector2 c, float r, float degPerSec, int rot = 1, float startAngle = 0.f)
+	ArcMoveState(Vector2* pos, Vector2 c, float r, float degPerSec, float arcDegrees, float startAngle = 0.f)
 		: EnemyState(pos),
 		center(c),
 		radius(r),
 		degreesPerSec(degPerSec),
-		angle(startAngle),
-		rotations(rot) {
-		endAngle = startAngle + (360.f * rotations);
+		angle(startAngle) {
+		endAngle = startAngle + arcDegrees;
 	}
 
 	void Update(float dt) override {

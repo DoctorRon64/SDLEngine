@@ -20,7 +20,7 @@ protected:
 	virtual void Shoot() {}
 	virtual void Update() override;
 
-	void ClampToScreen();
+	void DespawnIfOutOfScreen();
 
 public:
 	Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size);
