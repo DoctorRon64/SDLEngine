@@ -141,14 +141,11 @@ public:
 		while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
 			objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 		}
-
-		//if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
-		//	!AreEnemiesRemaining()) {
-		//	SetState(GameplayState::FINISH_STAGE);
-		//}
 	}
 
 	void UpdatePaused() {
+		UpdateUI();
+
 		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
 			SetPauseMenuVisibility(false);
 			SetState(GameplayState::GAMEPLAY);
@@ -176,6 +173,8 @@ public:
 			ui.push_back(stageText);
 			return;
 		}
+
+		UpdateUI();
 
 		// Wait for confirm
 		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
