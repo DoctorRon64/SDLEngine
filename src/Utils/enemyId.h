@@ -8,6 +8,7 @@ enum class EnemyId {
 	BUBBLE,
 	CHOMPER,
 	CIRCLER,
+	BIO_TITAN,
 	COUNT
 };
 
@@ -18,6 +19,7 @@ inline EnemyId EnemyIdFromString(const std::string& s) {
 	if(s == "BUBBLE") return EnemyId::BUBBLE;
 	if(s == "CHOMPER") return EnemyId::CHOMPER;
 	if(s == "CIRCLER") return EnemyId::CIRCLER;
+	if(s == "BIO_TITAN") return EnemyId::BIO_TITAN;
 
 	throw std::runtime_error("Unknown enemy type: " + s);
 }

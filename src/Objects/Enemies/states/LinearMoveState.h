@@ -9,9 +9,7 @@ private:
 
 public:
 	LinearMoveState(Vector2* pos, Vector2 s, Vector2 e, float pixelsPerSec)
-		: EnemyState(pos), start(s), end(e), speed(pixelsPerSec) {
-		*transformPos = start;
-	}
+		: EnemyState(pos), start(s), end(e), speed(pixelsPerSec) {}
 
 	void Update(float dt) override {
 		Vector2 dir = end - *transformPos;

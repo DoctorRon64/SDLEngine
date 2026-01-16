@@ -192,6 +192,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\objects\enemies\states\MoveToTargetState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\AmoebaSplitState.cpp" />
     <ClCompile Include="src\objects\enemies\states\BubbleEnterState.cpp" />
     <ClCompile Include="src\objects\enemies\states\IdleState.cpp" />
     <ClCompile Include="src\objects\enemies\states\CircleMoveState.cpp" />
@@ -200,6 +201,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\objects\enemies\states\EnemyState.cpp" />
     <ClCompile Include="src\objects\custom\Boss.cpp" />
     <ClCompile Include="src\objects\enemies\AmoebaEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BioTitanEnemy.cpp" />
     <ClCompile Include="src\objects\enemies\ChomperEnemy.cpp" />
     <ClCompile Include="src\objects\enemies\BeholderEnemy.cpp" />
     <ClCompile Include="src\Managers\EnemyFactory.cpp" />
@@ -281,14 +283,21 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   <ItemGroup>
     <ClInclude Include="src\math\MoveTowards.h" />
     <ClInclude Include="src\objects\enemies\states\MoveToTargetState.h" />
+    <ClInclude Include="src\objects\enemies\states\AmoebaSplitState.h" />
+    <ClInclude Include="src\objects\enemies\states\ArcMoveState.h" />
+    <ClInclude Include="src\objects\enemies\states\BeholderWanderState.h" />
     <ClInclude Include="src\objects\enemies\states\BubbleEnterState.h" />
+    <ClInclude Include="src\objects\enemies\states\CircleDriftState.h" />
     <ClInclude Include="src\objects\enemies\states\IdleState.h" />
     <ClInclude Include="src\objects\enemies\states\CircleMoveState.h" />
     <ClInclude Include="src\objects\enemies\states\LinearMoveState.h" />
+    <ClInclude Include="src\objects\enemies\states\VerticalStepState.h" />
+    <ClInclude Include="src\objects\enemies\states\VelocityMoveState.h" />
     <ClInclude Include="src\managers\EnemyStateManager.h" />
     <ClInclude Include="src\objects\enemies\states\EnemyState.h" />
     <ClInclude Include="src\objects\custom\Boss.h" />
     <ClInclude Include="src\objects\enemies\AmoebaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\BioTitanEnemy.h" />
     <ClInclude Include="src\objects\enemies\ChomperEnemy.h" />
     <ClInclude Include="src\math\Random.h" />
     <ClInclude Include="src\objects\enemies\BeholderEnemy.h" />
@@ -330,6 +339,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\Button.h" />
     <ClInclude Include="src\objects\custom\Bullet.h" />
+    <ClInclude Include="src\objects\custom\TrailBullet.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
     <ClInclude Include="src\objects\custom\Enemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />

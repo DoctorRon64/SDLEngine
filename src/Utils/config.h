@@ -28,5 +28,5 @@ constexpr unsigned int LEVEL_COUNT = 2;
 
 constexpr const char* levelPaths[LEVEL_COUNT] = { "res/levels/level_1.xml", "res/levels/level_2.xml" };
 
-constexpr unsigned int ENEMY_ID_COUNT = 6;
-constexpr size_t ENEMY_COUNT = 6;
+constexpr unsigned int ENEMY_ID_COUNT = 7;
+constexpr size_t ENEMY_COUNT = 7;

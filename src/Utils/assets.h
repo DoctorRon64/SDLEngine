@@ -13,6 +13,7 @@ const std::string ENEMY_CIRCLER_SPRITE_PATH = "res/enemies/circler_sprite.png";
 const std::string ENEMY_MEDUSA_SPRITE_PATH = "res/enemies/medusa_sprite.png";
 const std::string ENEMY_VERTICAL_MEDUSA_SPRITE_PATH = "res/enemies/vertical_medusa_sprite.png";
 const std::string ENEMY_WHALE_SPRITE_PATH = "res/enemies/whale_sprite.png";
+const std::string ENEMY_BIO_TITAN_SPRITE_PATH = "res/missing.png";
 
 // Other textures / UI
 const std::string BACKGROUND_SPRITE_LVL1_PATH = "res/bg.png";

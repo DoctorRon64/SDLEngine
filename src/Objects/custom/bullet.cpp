@@ -2,9 +2,10 @@
 #include "Bullet.h"
 
 Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
-	: Image(_name, _pos, _size),
+	: Image(_name, Vector2(0.f, 0.f), _size),
 	Collidable(rbComp),
 	isPlayerBullet(_isPlayer) {
+	transform->position = _pos;
 	rbComp->AddCollider(new AABB(_pos, _size));
 	rbComp->SetVelocity(isPlayerBullet ? Vector2(bulletSpeed, 0.f) : Vector2(-bulletSpeed, 0.f));
 
