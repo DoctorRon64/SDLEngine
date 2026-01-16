@@ -3,7 +3,7 @@
 class Explosion :
 	public AnimatedImage {
 public:
-	Explosion() : AnimatedImage(EXPLOSION_SPRITE_PATH, { 0.f, 0.f }, { 100.f, 100.f }, 49, 13, 100.f, 100.f, 5, true) {
+	Explosion() : AnimatedImage(EXPLOSION_SPRITE_PATH, { 0.f, 0.f }, { 100.f, 100.f }, 49, 13, 100.f, 100.f, 5, false) {
 		transform->scale = Vector2(3.f, 3.f);
 	}
 

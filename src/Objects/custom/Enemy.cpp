@@ -1,10 +1,15 @@
 #include "pch.h"
 #include "Enemy.h"
+#include "Explosion.h"
+#include "Managers/SpawnManager.h"
 
 void Enemy::OnDeath() {
 	WaveManager::GetInstance()->UnregisterEnemy();
 	ScoreManager::GetInstance()->AddScore(scoreValue);
 	AudioManager::GetInstance()->PlaySound(SFX_HURT_ENEMY_PATH);
+	Explosion* explosion = new Explosion();
+	explosion->GetTransform()->position = { transform->position.x - 50, transform->position.y - 130 };
+	SpawnManager::Instance().SpawnObject(explosion);
 	Actor::OnDeath();
 }
 

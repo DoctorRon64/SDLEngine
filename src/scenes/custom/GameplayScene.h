@@ -80,11 +80,6 @@ public:
 		};
 		player->OnSceneEnter();
 
-		Explosion* testAnim = new Explosion();
-		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
-		testAnim->SetLayer(20);
-		SpawnManager::Instance().SpawnObject(testAnim);
-
 		BackgroundDecorator* decorator = new BackgroundDecorator();
 		SpawnManager::Instance().SpawnObject(decorator);
 	}
