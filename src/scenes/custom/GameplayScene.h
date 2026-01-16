@@ -178,12 +178,12 @@ public:
 		// Wait for confirm
 		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
 		   InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START)) {
+			RecordHighScore();
+
 			userInputText->Destroy();
 			userInputText = nullptr;
 			setScoreText->Destroy();
 			setScoreText = nullptr;
-
-			RecordHighScore();
 		}
 	}
 
@@ -282,9 +282,8 @@ private:
 	}
 
 	void RecordHighScore() {
-		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN)) {
-			//TODO: Hook up to file manager
-			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-		}
+		//TODO: Hook up to file manager
+		ScoreManager::GetInstance()->Save(userInputText->GetText());
+		SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
 	}
 };
