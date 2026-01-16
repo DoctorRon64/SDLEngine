@@ -1,10 +1,9 @@
 #pragma once
 #include "../AnimatedImage.h"
 class Explosion :
-    public AnimatedImage
-{
+	public AnimatedImage {
 public:
-	Explosion() : AnimatedImage("res/explosion.png", { 0.f, 0.f }, { 100.f, 100.f }, 49, 13, 100.f, 100.f, 5, true) {
+	Explosion() : AnimatedImage(EXPLOSION_SPRITE_PATH, { 0.f, 0.f }, { 100.f, 100.f }, 49, 13, 100.f, 100.f, 5, true) {
 		transform->scale = Vector2(3.f, 3.f);
 	}
 
@@ -12,4 +11,3 @@ public:
 		Object::Update();
 	}
 };
-

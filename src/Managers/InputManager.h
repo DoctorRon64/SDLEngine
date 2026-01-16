@@ -18,6 +18,9 @@ public:
 	bool GetGamepadButton(int buttonID);
 	float GetGamepadAxisX();
 	float GetGamepadAxisY();
+
+	void LeftClickProcessed() { leftClick = false; }
+	void EventProcessed(Sint32 _input) { keyReference[_input] = EMPTY; }
 private:
 	InputManager() : mouseX(0), mouseY(0), leftClick(false) {}
 	InputManager(InputManager&) = delete;

@@ -1,5 +1,8 @@
-#pragma once
+﻿#pragma once
+#include <objects/PowerUps/PowerUpFactory.h>
 #include <wave/Wave.h>
+
+class Wave;
 
 class WaveManager {
 public:
@@ -13,27 +16,99 @@ public:
 	}
 
 	void Start() {
-		currentWave = 0;
-		waves[currentWave].Start();
+		currentWaveIndex = 0;
+		aliveEnemies = 0;
+
+		if(OnWaveStarted) {
+			OnWaveStarted(currentWaveIndex);
+		}
+
+		waves[currentWaveIndex].Start();
 	}
 
 	void StartNextWave() {
-		currentWave++;
-		assert(currentWave < waves.size());
-		waves[currentWave].Start();
+		if(currentWaveIndex + 1 >= waves.size())
+			return;
+
+		currentWaveIndex++;
+		aliveEnemies = 0;
+
+		if(OnWaveStarted)
+			OnWaveStarted(currentWaveIndex);
+
+		waves[currentWaveIndex].Start();
 	}
 
 	void RestartWave() {
-		if(currentWave >= waves.size()) return;
+		if(currentWaveIndex >= waves.size()) return;
 
-		waves[currentWave].Start();
+		waves[currentWaveIndex].Start();
 	}
 
-	bool IsCurrentWaveFinishedSpawning() { return waves[currentWave].IsFinishedSpawning(); }
-	bool AreAllWavesFinishedSpawning() { return currentWave >= waves.size() - 1 && IsCurrentWaveFinishedSpawning(); }
+	void CheckWaveCleared() {
+		if(currentWaveIndex >= waves.size()) return;
+
+		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
+			SpawnPowerUp();
+
+			if(currentWaveIndex + 1 < waves.size()) {
+				StartNextWave();
+			}
+			else {
+				//if(waves[currentWaveIndex].OnWaveCleared)
+				//	waves[currentWaveIndex].OnWaveCleared();
+
+				// ALL WAVES DONE → Finish Stage
+				if(OnWaveCleared)
+					OnWaveCleared(currentWaveIndex);
+			}
+		}
+	}
+
+	bool AreAllWavesFinished() const {
+		if(waves.empty()) return true;
+
+		bool isLastWave = (currentWaveIndex == waves.size() - 1);
+		bool lastWaveDoneSpawning = waves[currentWaveIndex].IsFinishedSpawning();
+		bool noEnemiesAlive = (aliveEnemies == 0);
+
+		return isLastWave && lastWaveDoneSpawning && noEnemiesAlive;
+	}
+
+	void Clear() {
+		waves.clear();
+		currentWaveIndex = 0;
+		aliveEnemies = 0;
+	}
+
+	bool IsCurrentWaveFinishedSpawning() { return waves[currentWaveIndex].IsFinishedSpawning(); }
+	bool AreAllWavesFinishedSpawning() { return currentWaveIndex >= waves.size() - 1 && IsCurrentWaveFinishedSpawning(); }
+
+	void RegisterEnemy() {
+		aliveEnemies++;
+	}
+
+	void UnregisterEnemy() {
+		aliveEnemies--;
+		CheckWaveCleared();
+	}
+
+	std::function<void(int waveIndex)> OnWaveStarted;
+	std::function<void(int waveIndex)> OnWaveCleared;
 
 private:
+	void SpawnPowerUp() {
+		int minId = 1;
+		int maxId = (int)PowerupId::TWIN_TURRETS;
+		PowerupId id = (PowerupId)Randomness::Range(minId, maxId);
+		PowerUp* pu = PowerUpFactory().Create(id);
+
+		pu->GetTransform()->position = Vector2(RenderManager::GetInstance()->WINDOW_WIDTH / 2.f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f);
+		SpawnManager::Instance().SpawnObject(pu);
+	}
+
 	std::vector<Wave> waves;
-	size_t currentWave = 0;
+	size_t currentWaveIndex = 0;
 	std::vector<bool> currentWaveSpawns = std::vector<bool>();
+	int aliveEnemies = 0;
 };

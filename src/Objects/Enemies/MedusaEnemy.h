@@ -1,22 +1,15 @@
 #pragma once
 #include "../custom/Enemy.h"
+#include "states/VelocityMoveState.h"
 
 class MedusaEnemy : public Enemy {
 public:
 	MedusaEnemy(Vector2 spawn)
-		: Enemy("res/enemies/medusa_sprite.png", spawn, { 32, 32 }) {
-		float dir = (rand() % 2 == 0) ? -1.f : 1.f;
-		speed = RandomRange(10.f, 50.f);
-		velocity = { dir * speed, 0 };
-	}
+		: Enemy(ENEMY_MEDUSA_SPRITE_PATH, spawn, { 32, 32 }) {
+		float dir = (Randomness::Range(0, 1) == 0) ? -1.f : 1.f;
+		float randomSpeed = Randomness::Range(10.f, 50.f);
 
-	float RandomRange(float min, float max) {
-		float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
-		return min + r * (max - min);
-	}
-
-protected:
-	void UpdateState(float dt) override {
-		transform->position += velocity * dt;
+		stateManager.AddState(new VelocityMoveState(&transform->position, { dir * randomSpeed, 0.f }));
+		InitHp(20);
 	}
 };

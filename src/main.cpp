@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Engine.h"
-#include "utils/config.h"
 
 int main(int argc, char* argv[]) {
 	Engine* engine = new Engine();
@@ -13,7 +12,7 @@ int main(int argc, char* argv[]) {
 	catch(std::exception& result) {
 		std::cout << "There is a error: " << result.what() << std::endl;
 		RenderManager::GetInstance()->Terminate();
-		AudioManager::GetInstance()->HaltAudio();
+		AudioManager::GetInstance()->StopAllSoundEffects();
 		return -1;
 	}
 

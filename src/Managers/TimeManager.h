@@ -13,7 +13,6 @@ class TimeManager {
 		friend bool operator> (const TimedEvent l, const TimedEvent& r) {
 			return l.time > r.time;
 		}
-
 	};
 
 	using TimedEventQueue = std::priority_queue<TimedEvent, std::vector<TimedEvent>, std::greater<TimedEvent>>;
@@ -60,7 +59,7 @@ public:
 		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;
 
-		while (timedEvents.size() > 0 && timedEvents.top().time <= elapsedTime) {
+		while(timedEvents.size() > 0 && timedEvents.top().time <= elapsedTime) {
 			TimedEvent timedEvent = timedEvents.top();
 			timedEvent.event();
 			timedEvents.pop();
@@ -71,5 +70,11 @@ public:
 		timedEvents.push(TimedEvent(
 			timeToExecution + (float)elapsedTime, event
 		));
+	}
+
+	void ClearAllEvents() {
+		while(!timedEvents.empty()) {
+			timedEvents.pop();
+		}
 	}
 };

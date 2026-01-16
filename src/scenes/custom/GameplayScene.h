@@ -1,18 +1,22 @@
-#pragma once
+﻿#pragma once
 #include "objects/custom/Bullet.h"
 #include "objects/custom/Enemy.h"
 #include "objects/custom/Player.h"
 #include "objects/custom/ScrollingBackground.h"
 #include "scenes/Scene.h"
+#include <Managers/XMLReader.h>
 #include <Objects/Button.h>
+#include <Objects/custom/BackgroundDecorator.h>
+#include <Objects/custom/Explosion.h>
+#include <Objects/custom/TestAnimation.h>
 #include <objects/Enemies/BubbleEnemy.h>
 #include <objects/Enemies/CirclerEnemy.h>
 #include <objects/Enemies/KillerWhaleEnemy.h>
 #include <objects/Enemies/MedusaEnemy.h>
+#include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <objects/Text.h>
+#include <objects/InputText.h>
 #include <wave/Wave.h>
-#include <Objects/custom/TestAnimation.h>
-#include <Objects/custom/Explosion.h>
 
 enum class GameplayState {
 	GAMEPLAY,
@@ -25,31 +29,31 @@ class GameplayScene : public Scene {
 private:
 	GameplayState state = GameplayState::GAMEPLAY;
 	bool stateJustChanged = false;
+	float finishStageTimer = 0.f;
 
 	//Player
-	Player* player = new Player();
+	Player* player = Player::GetInstance();
 
 	//Score UI
-	Text* scoreText = new Text("Score");
-	Text* scoreNumberText = new Text("000000");
+	Text* scoreText;
+	Text* livesText;
+	Text* scoreNumberText;
 
 	//Score set UI
-	Text* setScoreText = new Text("Enter Name: ");
-	Text* setScoreNameText = new Text(" ");
+	Text* setScoreText;
+	Text* userInputText;
+
+	ScrollingBackground* currentBackground;
+
+	unsigned int level;
 
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		ScrollingBackground* bg = new ScrollingBackground("res/bg.png", 200.0f, -1000);
-		//SpawnManager::Instance().SpawnObject(bg);
+		std::cout << level << std::endl;
 
-		Wave wave1;
-		wave1.AddSpawn(0.0f, []() { SpawnManager::Instance().SpawnObject(new BubbleEnemy({ 1400.f, 200.f })); });
-		wave1.AddSpawn(0.5f, []() { SpawnManager::Instance().SpawnObject(new MedusaEnemy({ 1400.f, 400.f })); });
-		wave1.AddSpawn(0.5f, []() { SpawnManager::Instance().SpawnObject(new KillerWhaleEnemy({ 1400.f, 600.f })); });
-		wave1.AddSpawn(1.0f, []() { SpawnManager::Instance().SpawnObject(new CirclerEnemy({ 1200.f, 300.f })); });
-		WaveManager::GetInstance()->AddWave(std::move(wave1));
-		WaveManager::GetInstance()->Start();
+		SpawnLevelBackground(level);
+		LoadLevel(level);
 
 		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
@@ -61,81 +65,52 @@ public:
 		scoreNumberText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 200 };
 		ui.push_back(scoreNumberText);
 
-		setScoreText = new Text("Enter Name: ");
-		setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
-		setScoreText->GetTransform()->position = { RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f };
-		setScoreNameText = new Text(" ");
-		setScoreNameText->GetTransform()->scale = { 2.0f, 2.0f };
-		setScoreNameText->GetTransform()->position = { RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f + 300.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f };
+		livesText = new Text("Lives: " + std::to_string(player->GetLives()));
+		player->OnLivesChanged = [this](int current, int max) {
+			livesText->SetText("Lives: " + std::to_string(player->GetLives()));
+		};
+		livesText->GetTransform()->scale = { 2.f, 2.f };
+		livesText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 260 };
+		ui.push_back(livesText);
 
 		player->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(player);
+		player->OnDeathEvent = [this]() {
+			SetState(GameplayState::DEATH);
+		};
+		player->OnSceneEnter();
 
 		Explosion* testAnim = new Explosion();
 		testAnim->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2 };
 		testAnim->SetLayer(20);
 		SpawnManager::Instance().SpawnObject(testAnim);
+
+		BackgroundDecorator* decorator = new BackgroundDecorator();
+		SpawnManager::Instance().SpawnObject(decorator);
 	}
 
-	void OnExit() override { Scene::OnExit(); }
+	void OnExit() override {
+		TimeManager::GetInstance()->ClearAllEvents();
+		player->OnLivesChanged = nullptr;
+
+		Scene::OnExit();
+	}
 
 	void OnUpdate() override {
 		bool stateChanged = stateJustChanged;
 
 		switch(state) {
 			case GameplayState::GAMEPLAY:
-			Scene::OnUpdate();
-
-			if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
-				SetPauseMenuVisibility(true);
-				SetState(GameplayState::PAUSED);
-			}
-
-			if(player->IsDead()) {
-				SetState(GameplayState::DEATH);
-			}
-
-			if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
-				!AreEnemiesRemaining()) {
-				SetState(GameplayState::FINISH_STAGE);
-			}
-
+			UpdateGameplay();
 			break;
-
 			case GameplayState::PAUSED:
-			for(int i = ui.size() - 1; i >= 0; i--) {
-				if(ui[i]->IsPendingDestroy()) {
-					delete ui[i];
-					ui.erase(ui.begin() + i);
-				}
-			}
-
-			for(Object* u : ui) {
-				u->Update();
-			}
-
-			if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
-				SetPauseMenuVisibility(false);
-				SetState(GameplayState::GAMEPLAY);
-			}
+			UpdatePaused();
 			break;
-
 			case GameplayState::FINISH_STAGE:
-			if(WaveManager::GetInstance()->AreAllWavesFinishedSpawning()) {
-				RecordHighScore();
-			}
-			else {
-				//TODO: Finish Stage Transition
-				WaveManager::GetInstance()->StartNextWave();
-				SetState(GameplayState::GAMEPLAY);
-			}
+			UpdateFinishStage();
 			break;
-
 			case GameplayState::DEATH:
-			if(stateJustChanged)
-				TimeManager::GetInstance()->SubscribeEvent(
-					1.0f, [this]() { ShowDeathScreen(); }
-				);
+			UpdateDeath();
 			break;
 		}
 
@@ -147,7 +122,73 @@ public:
 		}
 	}
 
-	void Render() override { Scene::Render(); }
+	void UpdateGameplay() {
+		Scene::OnUpdate();
+
+		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
+			SetPauseMenuVisibility(true);
+			SetState(GameplayState::PAUSED);
+		}
+
+		while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
+			objects.push_back(SpawnManager::Instance().GetSpawnedObject());
+		}
+	}
+
+	void UpdatePaused() {
+		UpdateUI();
+
+		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
+			SetPauseMenuVisibility(false);
+			SetState(GameplayState::GAMEPLAY);
+		}
+	}
+
+	void UpdateDeath() {
+		if(stateJustChanged) {
+			TimeManager::GetInstance()->SubscribeEvent(
+				1.0f, [this]() {
+				ShowDeathScreen();
+			}
+			);
+		}
+	}
+
+	void UpdateFinishStage() {
+		if(stateJustChanged) {
+			userInputText = new InputText(" ");
+			userInputText->GetTransform()->scale = { 2.f, 2.f };
+			userInputText->GetTransform()->position = {
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 100,
+				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
+			};
+			setScoreText = new Text("Enter Name to set score: ");
+			setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
+			setScoreText->GetTransform()->position = { 
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200, 
+				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 100
+			};
+			ui.push_back(userInputText);
+			ui.push_back(setScoreText);
+			return;
+		}
+
+		UpdateUI();
+
+		// Wait for confirm
+		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN) ||
+		   InputManager::GetInstance()->GetGamepadButton(SDL_GAMEPAD_BUTTON_START)) {
+			RecordHighScore();
+
+			userInputText->Destroy();
+			userInputText = nullptr;
+			setScoreText->Destroy();
+			setScoreText = nullptr;
+		}
+	}
+
+	unsigned int GetLevel() { return level; }
+	void SetLevel(unsigned int _level) { level = _level; }
 
 private:
 	void SetPauseMenuVisibility(bool visible) {
@@ -158,7 +199,7 @@ private:
 				SetPauseMenuVisibility(false);
 				SetState(GameplayState::GAMEPLAY);
 			}, resumeText);
-			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 344.8f/2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 136.9f / 2 };
+			resumeBtn->GetTransform()->position = { (float)RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 344.8f / 2, (float)RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 136.9f / 2 };
 			ui.push_back(resumeBtn);
 			ui.push_back(resumeText);
 		}
@@ -169,7 +210,7 @@ private:
 	}
 
 	void ShowDeathScreen() {
-		Image* blackScreen = new Image("res/black-screen.png", Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
+		Image* blackScreen = new Image(BLACK_SCREEN_SPRITE_PATH, Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
 		blackScreen->GetTransform()->position = { 0,0 };
 		ui.push_back(blackScreen);
 		TimeManager::GetInstance()->SubscribeEvent(
@@ -192,13 +233,44 @@ private:
 			this->SetState(GameplayState::GAMEPLAY);
 		}
 		else {
-			RecordHighScore();
+			this->SetState(GameplayState::FINISH_STAGE);
 		}
+	}
+
+	void LoadLevel(int level) {
+		WaveManager::GetInstance()->Clear();
+		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
+		for(int i = 0; i < waves.size(); i++) {
+			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; }; //DEBUG
+			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
+		}
+		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				SetState(GameplayState::FINISH_STAGE);
+			}
+		};
+		WaveManager::GetInstance()->Start();
+	}
+
+	void SpawnLevelBackground(int level) {
+		std::string bgTexture;
+		switch(level) {
+			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
+			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+		}
+		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
+		currentBackground->SetLayer(-99);
+		SpawnManager::Instance().SpawnObject(currentBackground);
 	}
 
 	void SetState(GameplayState _state) {
 		state = _state;
 		stateJustChanged = true;
+
+		if(state == GameplayState::FINISH_STAGE) {
+			SpawnManager::Instance().DestroyAllOfType<Bullet>();
+		}
 	}
 
 	bool AreEnemiesRemaining() {
@@ -210,34 +282,8 @@ private:
 	}
 
 	void RecordHighScore() {
-		if(stateJustChanged) {
-			ui.push_back(setScoreText);
-			ui.push_back(setScoreNameText);
-			std::cout << "Set Score";
-		}
-		for(Sint32 key = SDLK_A; key < SDLK_Z; ++key) {
-			if(InputManager::GetInstance()->GetEvent(key, DOWN)) {
-				std::string name = setScoreNameText->GetText();
-				char letter = key - SDLK_A + 'A';
-				name += letter;
-				setScoreNameText->SetText(name);
-				break;
-			}
-		}
-		if(InputManager::GetInstance()->GetEvent(SDLK_RETURN, DOWN)) {
-			//TODO: Hook up to file manager
-			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-		}
-
-		for(int i = ui.size() - 1; i >= 0; i--) {
-			if(ui[i]->IsPendingDestroy()) {
-				delete ui[i];
-				ui.erase(ui.begin() + i);
-			}
-		}
-
-		for(Object* u : ui) {
-			u->Update();
-		}
+		//TODO: Hook up to file manager
+		ScoreManager::GetInstance()->Save(userInputText->GetText());
+		SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
 	}
 };

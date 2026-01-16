@@ -1,7 +1,7 @@
 #pragma once
 
 class FileManager {
-private:
+protected:
 	FileManager() = default;
 	~FileManager() = default;
 	FileManager(const FileManager&) = delete;
@@ -34,7 +34,7 @@ public:
 
 	template<typename T>
 	std::vector<T> ReadBinary(const char* path) {
-		std::vector<T> result;
+		std::vector<T> result = {};
 		SDL_IOStream* file = SDL_IOFromFile(path, "rb");
 		if(!file) {
 			SDL_Log("Failed to open file: %s", SDL_GetError());
@@ -47,6 +47,22 @@ public:
 		}
 
 		SDL_CloseIO(file);
+		return result;
+	}
+
+	std::string ReadRawText(const char* path) {
+		std::string result;
+		char* Content{
+			static_cast<char*>(
+			SDL_LoadFile(path, nullptr)
+		)};
+
+		assert(Content);
+
+		result = Content;
+
+		SDL_free(Content);
+
 		return result;
 	}
 };
