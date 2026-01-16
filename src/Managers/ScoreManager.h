@@ -49,7 +49,7 @@ public:
 		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) : 1;
 		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
 		std::string result = "";
-		for (int i = 0; i < zeroCount; ++i) result += "0";
+		for(int i = 0; i < zeroCount; ++i) result += "0";
 		result += std::to_string(score);
 		return result;
 	}
@@ -60,14 +60,14 @@ public:
 	}
 
 	void Save(const std::string& name) {
-		HighScore entry {name.c_str(), score};
+		HighScore entry{ name.c_str(), score };
 
 		highScores.push_back(entry);
 		std::sort(
-			highScores.begin(), highScores.end(), 
+			highScores.begin(), highScores.end(),
 			[](HighScore l, HighScore r) { return l > r; }
 		);
-		while (highScores.size() > MAX_STORED_SCORES) highScores.pop_back();
+		while(highScores.size() > MAX_STORED_SCORES) highScores.pop_back();
 
 		FileManager::Instance().WriteBinary("ranking.bin", entry);
 	}

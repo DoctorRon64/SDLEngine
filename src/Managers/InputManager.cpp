@@ -20,7 +20,7 @@ bool InputManager::Listen() {
 		}
 		else if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
 			if(event.button.button == SDL_BUTTON_LEFT) {
-				std::cout << "Left Clicked" << std::endl;
+				std::cout << "[InputManager] Left Clicked" << std::endl;
 				leftClick = true;
 			}
 		}
@@ -31,7 +31,7 @@ bool InputManager::Listen() {
 		}
 		else if(event.type == SDL_EVENT_KEY_DOWN) {
 			if(keyReference[event.key.key] != HOLD) {
-				SDL_Log("KeyDown: %d", event.key.key);
+				SDL_Log("[InputManager] KeyDown: %d", event.key.key);
 				keyReference[event.key.key] = DOWN;
 			}
 		}

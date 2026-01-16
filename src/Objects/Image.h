@@ -14,13 +14,4 @@ public:
 			static_cast<float>(_sourceSize.y * transform->scale.y)
 		});
 	}
-
-	//TODO delete this
-	virtual void SetScaleCentered(const Vector2& newScale) {
-		Vector2 oldSize = transform->GetSize();
-		Vector2 newSize = transform->GetSize() * newScale;
-
-		transform->position -= (newSize - oldSize) * 0.5f;
-		transform->scale = newScale;
-	}
 };

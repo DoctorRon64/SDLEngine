@@ -145,7 +145,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dep\SDL_3.2.22\include\;$(SolutionDir)\dep\SDL_image_3.2.4\include\;$(SolutionDir)\dep\SDL_mixer_2.8.1_compatible\include\;$(SolutionDir)\dep\SDL_ttf-3.2.2\include\;$(SolutionDir)\src;$(SolutionDir)\dep\inc\xml\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -191,6 +191,28 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\objects\enemies\states\MoveToTargetState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\AmoebaSplitState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\BubbleEnterState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\IdleState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\CircleMoveState.cpp" />
+    <ClCompile Include="src\objects\enemies\states\LinearMoveState.cpp" />
+    <ClCompile Include="src\managers\EnemyStateManager.cpp" />
+    <ClCompile Include="src\objects\enemies\states\EnemyState.cpp" />
+    <ClCompile Include="src\objects\custom\Boss.cpp" />
+    <ClCompile Include="src\objects\enemies\AmoebaEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BioTitanEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\ChomperEnemy.cpp" />
+    <ClCompile Include="src\objects\enemies\BeholderEnemy.cpp" />
+    <ClCompile Include="src\Managers\EnemyFactory.cpp" />
+    <ClCompile Include="src\components\Collidable.cpp" />
+    <ClCompile Include="src\scenes\custom\LevelSelectScene.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration1.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration2.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration3.cpp" />
+    <ClCompile Include="src\Objects\Decorations\Decoration.cpp" />
+    <ClCompile Include="src\Objects\custom\BackgroundDecorator.cpp" />
+    <ClCompile Include="src\Objects\custom\Explosion.cpp" />
     <ClCompile Include="src\scenes\custom\RankingScene.cpp" />
     <ClCompile Include="src\Renderers\ButtonRenderer.cpp" />
     <ClCompile Include="src\Objects\PowerUps\CannonEnergyPowerUp.cpp" />
@@ -253,8 +275,45 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClCompile Include="src\managers\WaveManager.cpp" />
     <ClCompile Include="src\wave\Wave.cpp" />
     <ClCompile Include="src\Objects\PowerUps\TwinTurretsPowerUp.cpp" />
+    <ClCompile Include="src\Managers\XMLReader.cpp" />
+    <ClCompile Include="src\objects\enemies\VerticleMedusaEnemy.cpp" />
+    <ClCompile Include="src\objects\custom\Turret.cpp" />
+    <ClCompile Include="src\objects\enemies\states\WaveMoveState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\math\MoveTowards.h" />
+    <ClInclude Include="src\objects\enemies\states\MoveToTargetState.h" />
+    <ClInclude Include="src\objects\enemies\states\AmoebaSplitState.h" />
+    <ClInclude Include="src\objects\enemies\states\ArcMoveState.h" />
+    <ClInclude Include="src\objects\enemies\states\BeholderWanderState.h" />
+    <ClInclude Include="src\objects\enemies\states\BubbleEnterState.h" />
+    <ClInclude Include="src\objects\enemies\states\CircleDriftState.h" />
+    <ClInclude Include="src\objects\enemies\states\IdleState.h" />
+    <ClInclude Include="src\objects\enemies\states\CircleMoveState.h" />
+    <ClInclude Include="src\objects\enemies\states\LinearMoveState.h" />
+    <ClInclude Include="src\objects\enemies\states\VerticalStepState.h" />
+    <ClInclude Include="src\objects\enemies\states\VelocityMoveState.h" />
+    <ClInclude Include="src\managers\EnemyStateManager.h" />
+    <ClInclude Include="src\objects\enemies\states\EnemyState.h" />
+    <ClInclude Include="src\objects\custom\Boss.h" />
+    <ClInclude Include="src\objects\enemies\AmoebaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\BioTitanEnemy.h" />
+    <ClInclude Include="src\objects\enemies\ChomperEnemy.h" />
+    <ClInclude Include="src\math\Random.h" />
+    <ClInclude Include="src\objects\enemies\BeholderEnemy.h" />
+    <ClInclude Include="dep\inc\xml\rapidxml.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_iterators.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_print.hpp" />
+    <ClInclude Include="dep\inc\xml\rapidxml_utils.hpp" />
+    <ClInclude Include="src\Managers\EnemyFactory.h" />
+    <ClInclude Include="src\components\Collidable.h" />
+    <ClInclude Include="src\scenes\custom\LevelSelectScene.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration1.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration2.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration3.h" />
+    <ClInclude Include="src\Objects\Decorations\Decoration.h" />
+    <ClInclude Include="src\Objects\custom\BackgroundDecorator.h" />
+    <ClInclude Include="src\Objects\custom\Explosion.h" />
     <ClInclude Include="src\scenes\custom\RankingScene.h" />
     <ClInclude Include="src\Renderers\ButtonRenderer.h" />
     <ClInclude Include="src\Objects\PowerUps\CannonEnergyPowerUp.h" />
@@ -280,6 +339,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\ScoreManager.h" />
     <ClInclude Include="src\objects\Button.h" />
     <ClInclude Include="src\objects\custom\Bullet.h" />
+    <ClInclude Include="src\objects\custom\TrailBullet.h" />
     <ClInclude Include="src\objects\custom\Player.h" />
     <ClInclude Include="src\objects\custom\Enemy.h" />
     <ClInclude Include="src\scenes\custom\MenuScene.h" />
@@ -293,6 +353,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\managers\RenderManager.h" />
     <ClInclude Include="src\components\Transform.h" />
     <ClInclude Include="src\objects\Image.h" />
+    <ClInclude Include="src\Utils\assets.h" />
     <ClInclude Include="src\utils\config.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\renderers\ImageRenderer.h" />
@@ -306,12 +367,21 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\audio\AudioStream.h" />
     <ClInclude Include="src\objects\custom\TestAnimation.h" />
     <ClInclude Include="src\managers\WaveManager.h" />
+    <ClInclude Include="src\Utils\enemyId.h" />
     <ClInclude Include="src\wave\Wave.h" />
     <ClInclude Include="src\Objects\PowerUps\TwinTurretsPowerUp.h" />
+    <ClInclude Include="src\Managers\XMLReader.h" />
+    <ClInclude Include="src\objects\enemies\VerticleMedusaEnemy.h" />
+    <ClInclude Include="src\objects\custom\Turret.h" />
+    <ClInclude Include="src\objects\enemies\states\WaveMoveState.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Fredoka.ttf" />
     <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="res\levels\level_1.xml" />
+    <Xml Include="res\levels\level_2.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

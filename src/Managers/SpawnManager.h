@@ -8,41 +8,33 @@ public:
 		return spawner;
 	}
 
-	void SpawnObject(Object* obj) {
-		spawnedObjs.push(obj);
-	}
+	void SpawnObject(Object* obj);
+	bool AreObjectsPendingSpawn();
+	void ClearSpanwer();
 
-	bool AreObjectsPendingSpawn() {
-		return !spawnedObjs.empty();
-	}
+	template<typename T>
+	void DestroyAllOfType() {
+		size_t count = spawnedObjects.size();
 
-	void ClearSpanwer() {
-		while(AreObjectsPendingSpawn()) {
-			delete spawnedObjs.front();
-			spawnedObjs.pop();
+		for(size_t i = 0; i < count; ++i) {
+			Object* obj = spawnedObjects.front();
+			spawnedObjects.pop();
+
+			if(dynamic_cast<T*>(obj)) {
+				obj->Destroy();
+			}
+
+			spawnedObjects.push(obj);
 		}
 	}
 
-	std::queue<Object*> GetSpawnedObjects() const {
-		return spawnedObjs;
-	}
-
-	Object* GetSpawnedObject() {
-		if(!AreObjectsPendingSpawn()) {
-			return nullptr;
-		}
-
-		Object* temp = spawnedObjs.front();
-		spawnedObjs.pop();
-		return temp;
-	}
-
-	std::queue<Object*> GetSpawnedObjects() { return spawnedObjs; }
+	Object* GetSpawnedObject();
+	std::queue<Object*> GetSpawnedObjects() const { return spawnedObjects; }
 
 private:
 	SpawnManager() = default;
 	SpawnManager(SpawnManager&) = delete;
 	SpawnManager& operator=(const SpawnManager&) = delete;
 
-	std::queue<Object*> spawnedObjs;
+	std::queue<Object*> spawnedObjects;
 };

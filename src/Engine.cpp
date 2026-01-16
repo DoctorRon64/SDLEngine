@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Engine.h"
 #include "scenes/custom/GameplayScene.h"
+#include "scenes/custom/LevelSelectScene.h"
 #include "scenes/custom/MenuScene.h"
-#include "scenes/custom/SplashScreenScene.h"
 #include "scenes/custom/RankingScene.h"
+#include "scenes/custom/SplashScreenScene.h"
 
 Engine::Engine() {
 	isRunning = false;
@@ -34,6 +35,7 @@ void Engine::Init() {
 		SceneManager::GetInstance()->AddScene(SceneState::MENU, new MenuScene());
 		SceneManager::GetInstance()->AddScene(SceneState::GAMEPLAY, new GameplayScene());
 		SceneManager::GetInstance()->AddScene(SceneState::RANKING, new RankingScene());
+		SceneManager::GetInstance()->AddScene(SceneState::LEVEL_SELECT, new LevelSelectScene());
 		SceneManager::GetInstance()->InitFirstScene(SceneState::SPLASH);
 	}
 	catch(const std::exception& e) {
@@ -44,26 +46,38 @@ void Engine::Init() {
 }
 
 void Engine::LoadAssets() {
-	RenderManager::GetInstance()->LoadFont("res/fonts/PixelifySans-VariableFont_wght.ttf");
+	RenderManager::GetInstance()->LoadFont(FONT_PATH);
 
-	RenderManager::GetInstance()->LoadTexture("res/enemies/bubble_sprite.png");
-	RenderManager::GetInstance()->LoadTexture("res/enemies/circler_sprite.png");
-	RenderManager::GetInstance()->LoadTexture("res/enemies/medusa_sprite.png");
-	RenderManager::GetInstance()->LoadTexture("res/enemies/whale_sprite.png");
+	RenderManager::GetInstance()->LoadTexture(ENEMY_AMOEBA_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_BEHOLDER_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_BUBBLE_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_CHOMPER_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_CIRCLER_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_MEDUSA_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_VERTICAL_MEDUSA_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_WHALE_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(ENEMY_BIO_TITAN_SPRITE_PATH);
 
-	RenderManager::GetInstance()->LoadTexture("res/bg.png");
-	RenderManager::GetInstance()->LoadTexture("res/man.png");
-	RenderManager::GetInstance()->LoadTexture("res/bullet.png");
-	RenderManager::GetInstance()->LoadTexture("res/btn.png");
-	RenderManager::GetInstance()->LoadTexture("res/black-screen.png");
-	RenderManager::GetInstance()->LoadTexture("res/splash_screen.png");
+	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL1_PATH);
+	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL2_PATH);
+	RenderManager::GetInstance()->LoadTexture(PLAYER_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(BULLET_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(BUTTON_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(BLACK_SCREEN_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(SPLASH_SCREEN_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(EXPLOSION_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(DECORATION_GRASS_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(DECORATION_BUSH_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(DECORATION_FLOWER_SPRITE_PATH);
 
-	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_subtune_2.wav");
-	AudioManager::GetInstance()->LoadSoundData("res/audio/music/menace_title.wav");
-
-	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/laserShoot.wav");
-	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_select.wav");
-	AudioManager::GetInstance()->LoadSoundData("res/audio/sfx/ui_hover.wav");
+	AudioManager::GetInstance()->LoadSoundData(MUSIC_MENACE_SUBTUNE_2_PATH);
+	AudioManager::GetInstance()->LoadSoundData(MUSIC_MENACE_TITLE_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_LASER_SHOOT_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_UI_SELECT_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_UI_HOVER_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_BULLET_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_ENEMY_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_PLAYER_PATH);
 }
 
 void Engine::HandleEvents() {

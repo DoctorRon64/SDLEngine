@@ -4,6 +4,8 @@ class Scene {
 protected:
 	std::vector<Object* > ui;
 	std::vector<Object* > objects;
+
+	void UpdateUI();
 public:
 	Scene() = default;
 	virtual void OnEnter() = 0;

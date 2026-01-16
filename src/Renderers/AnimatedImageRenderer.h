@@ -39,7 +39,6 @@ private:
 			? (currentFrame + 1) % numberOfFrames 
 			: std::min(currentFrame + 1, numberOfFrames - 1);
 
-		currentFrame++;
 		if (currentFrame == numberOfFrames) {
 			if (looping) {
 				currentFrame = 0;
@@ -55,8 +54,8 @@ private:
 			);
 		}
 
-		int currentRow = currentFrame / numberOfRows;
-		int currentColumn = currentFrame % numberOfRows;
+		int currentRow = currentFrame % numberOfRows;
+		int currentColumn = currentFrame / numberOfRows;
 
 		sourceOffset.x = currentColumn * frameWidth;
 		sourceOffset.y = currentRow * frameHeight;
