@@ -14,8 +14,4 @@ public:
 		stateManager.AddState(new IdleState(&transform->position, 0.8f));
 		InitHp(2);
 	}
-
-	virtual void Update() override {
-		Enemy::Update();
-	}
 };

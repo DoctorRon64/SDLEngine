@@ -53,27 +53,8 @@ public:
 	void OnEnter() override {
 		std::cout << level << std::endl;
 
-		std::string bgTexture;
-		switch(level) {
-			case 1: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
-			case 2: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
-			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
-		}
-		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
-		SpawnManager::Instance().SpawnObject(currentBackground);
-
-		WaveManager::GetInstance()->Clear();
-		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
-		for(int i = 0; i < waves.size(); ++i) {
-			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; };
-			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
-		}
-		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
-			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
-				SetState(GameplayState::FINISH_STAGE);
-			}
-		};
-		WaveManager::GetInstance()->Start();
+		SpawnLevelBackground(level);
+		LoadLevel(level);
 
 		scoreText = new Text("Score");
 		scoreText->GetTransform()->scale = { 2.f, 2.f };
@@ -155,6 +136,10 @@ public:
 		if(InputManager::GetInstance()->GetEvent(SDLK_ESCAPE, DOWN)) {
 			SetPauseMenuVisibility(true);
 			SetState(GameplayState::PAUSED);
+		}
+
+		while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
+			objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 		}
 
 		//if(WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
@@ -256,6 +241,33 @@ private:
 		else {
 			RecordHighScore();
 		}
+	}
+
+	void LoadLevel(int level) {
+		WaveManager::GetInstance()->Clear();
+		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
+		for(int i = 0; i < waves.size(); i++) {
+			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; }; //DEBUG
+			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
+		}
+		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
+			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
+				SetState(GameplayState::FINISH_STAGE);
+			}
+		};
+		WaveManager::GetInstance()->Start();
+	}
+
+	void SpawnLevelBackground(int level) {
+		std::string bgTexture;
+		switch(level) {
+			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
+			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
+		}
+		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
+		currentBackground->SetLayer(-99);
+		SpawnManager::Instance().SpawnObject(currentBackground);
 	}
 
 	void SetState(GameplayState _state) {

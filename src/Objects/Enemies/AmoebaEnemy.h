@@ -13,8 +13,4 @@ public:
 		stateManager.AddState(new CircleMoveState(&transform->position, center, 80.f, 180.f, 2));
 		stateManager.AddState(new LinearMoveState(&transform->position, center, { spawn.x - 50.f, center.y }, 100.f));
 	}
-
-	virtual void Update() override {
-		Enemy::Update();
-	}
 };

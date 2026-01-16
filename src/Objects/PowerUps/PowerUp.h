@@ -6,6 +6,9 @@
 
 class PowerUp : public Image, public Collidable {
 protected:
+	int charge = 0;
+	int maxCharge = 5;
+
 	PowerUp(
 		std::string _name = POWERUP_SPRITE_PATH,
 		Vector2 _pos = Vector2(0.f, 0.f),
@@ -19,6 +22,17 @@ protected:
 
 	void OnCollision(Collidable* other) override {
 		if(auto player = dynamic_cast<Player*>(other)) {
+			OnCollect();
+			Destroy();
+		}
+
+		if(auto* b = dynamic_cast<Bullet*>(other)) {
+			if(b->IsPlayerBullet()) {
+				charge = std::min(charge + 1, maxCharge);
+				b->Destroy();
+			}
+		}
+		if(auto* p = dynamic_cast<Player*>(other)) {
 			OnCollect();
 			Destroy();
 		}

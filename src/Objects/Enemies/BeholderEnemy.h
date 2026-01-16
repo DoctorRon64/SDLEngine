@@ -8,8 +8,4 @@ public:
 		stateManager.AddState(new MoveToTargetState(transform));
 		InitHp(3);
 	}
-
-	virtual void Update() override {
-		Enemy::Update();
-	}
 };

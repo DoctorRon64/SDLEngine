@@ -11,8 +11,4 @@ public:
 		stateManager.AddState(new CircleMoveState(pos, circleCenter, 100.f, 180.f, 1));
 		stateManager.AddState(new LinearMoveState(pos, circleCenter, { circleCenter.x - 200.f, circleCenter.y }, 80.f));
 	}
-
-	virtual void Update() override {
-		Enemy::Update();
-	}
 };

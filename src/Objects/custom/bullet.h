@@ -19,6 +19,8 @@ public:
 	virtual void OnCollision(Collidable* other) override;
 	Object* GetOwner() { return this; }
 
+	const bool IsPlayerBullet() { return isPlayerBullet; }
+
 private:
 	bool isPlayerBullet = true;
 	float bulletSpeed = 350.f;
