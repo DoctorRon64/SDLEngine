@@ -41,7 +41,7 @@ void Bullet::OnCollision(Collidable* other) {
 	}
 	else {
 		if(auto player = dynamic_cast<Player*>(other)) {
-			player->TakeDamage(10);
+			player->TakeDamage(PLAYER_HEALTH + PLAYER_SHIELDS);
 			Destroy();
 		}
 	}

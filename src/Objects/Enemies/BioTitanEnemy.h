@@ -11,7 +11,7 @@ private:
 public:
 	BioTitanEnemy(Vector2 spawn)
 		: Enemy(ENEMY_BIO_TITAN_SPRITE_PATH, spawn, { 64, 64 }) {
-		InitHp(300);
+		InitHp(500);
 		transform->scale = { 4.f, 4.f };
 	}
 
@@ -42,7 +42,7 @@ private:
 			dir.Normalize();
 			dir.x = -fabs(dir.x);
 
-			Bullet* b = new Bullet(false);
+			Bullet* b = new Bullet(false, ENEMY_BULLET_SPRITE_PATH);
 			b->GetTransform()->position = origin;
 			b->GetRigidBody()->SetVelocity(dir * bulletSpeed);
 			SpawnManager::Instance().SpawnObject(b);

@@ -13,10 +13,10 @@ private:
 
 public:
 	SpaceBoss(Vector2 spawn)
-		: Boss(ENEMY_SPACE_BOSS_SPRITE_PATH, spawn, { 64, 64 }, 400) {
+		: Boss(ENEMY_SPACE_BOSS_SPRITE_PATH, spawn, { 64, 64 }, 700) {
 		transform->position = spawn;
 		baseY = spawn.y;
-		InitHp(400);
+		InitHp(700);
 	}
 
 	void UpdatePhase() override {
@@ -48,7 +48,7 @@ private:
 			dir.Normalize();
 			dir.x = -fabs(dir.x);
 
-			Bullet* b = new Bullet(false);
+			Bullet* b = new Bullet(false, ENEMY_BULLET_SPRITE_PATH);
 			b->GetTransform()->position = origin;
 			b->GetRigidBody()->SetVelocity(dir * bulletSpeed);
 			SpawnManager::Instance().SpawnObject(b);

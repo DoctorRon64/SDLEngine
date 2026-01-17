@@ -8,7 +8,7 @@ private:
 
 public:
 	TrailBullet(Vector2 pos, float lifeSeconds)
-		: Bullet(false, BULLET_SPRITE_PATH, pos, Vector2(16.f, 16.f)),
+		: Bullet(false, ENEMY_BULLET_SPRITE_PATH, pos, Vector2(16.f, 16.f)),
 		lifeTime(lifeSeconds) {
 		GetTransform()->position = pos;
 		GetRigidBody()->SetVelocity({ 0.f, 0.f });
