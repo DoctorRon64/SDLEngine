@@ -39,11 +39,11 @@ private:
 	Player* player = Player::GetInstance();
 
 	//Score UI
-	Text* scoreText;
-	Text* livesText;
-	Text* scoreNumberText;
-	Text* bestScoreText;
-	Text* bestScoreNumberText;
+	Text* scoreText = nullptr;
+	Text* livesText = nullptr;
+	Text* scoreNumberText = nullptr;
+	Text* bestScoreText = nullptr;
+	Text* bestScoreNumberText = nullptr;
 
 	//Score set UI
 	Text* setScoreText;
@@ -71,37 +71,27 @@ public:
 		SpawnLevelBackground(level);
 		LoadLevel(level);
 
-		const float hudX = (float)RenderManager::GetInstance()->WINDOW_WIDTH - 260.0f;
-		const float hudY = 40.0f;
-		const float hudLine = 50.0f;
+		const float hudX = 40.0f;
+		const float hudLine = 30.0f;
+		const float hudBottom = (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 70.0f;
 
-		scoreText = new Text("Score");
-		scoreText->GetTransform()->scale = { 2.f, 2.f };
-		scoreText->GetTransform()->position = { hudX, hudY };
+		scoreText = new Text("Score: 000000", { 0xff, 0xe2, 0x6a, 0xff });
+		scoreText->GetTransform()->scale = { 1.6f, 1.6f };
+		scoreText->GetTransform()->position = { hudX, hudBottom - hudLine * 2.0f };
 		ui.push_back(scoreText);
 
-		scoreNumberText = new Text("000000");
-		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
-		scoreNumberText->GetTransform()->position = { hudX, hudY + hudLine };
-		ui.push_back(scoreNumberText);
-
-		livesText = new Text("Lives: " + std::to_string(player->GetLives()));
+		livesText = new Text("Lives: " + std::to_string(player->GetLives()), { 0xff, 0xff, 0xff, 0xff });
 		player->OnLivesChanged = [this](int current, int max) {
 			livesText->SetText("Lives: " + std::to_string(player->GetLives()));
 		};
-		livesText->GetTransform()->scale = { 2.f, 2.f };
-		livesText->GetTransform()->position = { hudX, hudY + hudLine * 4 };
+		livesText->GetTransform()->scale = { 1.4f, 1.4f };
+		livesText->GetTransform()->position = { hudX, hudBottom };
 		ui.push_back(livesText);
 
-		bestScoreText = new Text("Best");
-		bestScoreText->GetTransform()->scale = { 2.f, 2.f };
-		bestScoreText->GetTransform()->position = { hudX, hudY + hudLine * 2 };
+		bestScoreText = new Text("Best: " + ScoreManager::GetInstance()->GetBestScoreAsText(), { 0x7c, 0xd7, 0xff, 0xff });
+		bestScoreText->GetTransform()->scale = { 1.6f, 1.6f };
+		bestScoreText->GetTransform()->position = { hudX, hudBottom - hudLine };
 		ui.push_back(bestScoreText);
-
-		bestScoreNumberText = new Text(ScoreManager::GetInstance()->GetBestScoreAsText());
-		bestScoreNumberText->GetTransform()->scale = { 2.f, 2.f };
-		bestScoreNumberText->GetTransform()->position = { hudX, hudY + hudLine * 3 };
-		ui.push_back(bestScoreNumberText);
 
 		player->SetLayer(20);
 		player->GetTransform()->position = { 0.f, 0.f };
@@ -144,8 +134,8 @@ public:
 
 		if(stateChanged) stateJustChanged = false;
 
-		scoreNumberText->SetText(ScoreManager::GetInstance()->GetScoreAsText());
-		bestScoreNumberText->SetText(ScoreManager::GetInstance()->GetBestScoreAsText());
+		scoreText->SetText("Score: " + ScoreManager::GetInstance()->GetScoreAsText());
+		bestScoreText->SetText("Best: " + ScoreManager::GetInstance()->GetBestScoreAsText());
 		if(ScoreManager::GetInstance()->IsHighScore()) {
 			scoreText->SetColor({ 0xff, 0xd7, 0x00, 0xff });
 		}
