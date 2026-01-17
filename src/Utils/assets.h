@@ -23,12 +23,15 @@ const std::string ENEMY_DANIELS_SPRITE_PATH = "res/enemies/daniels_head_sprite.p
 const std::string ENEMY_UFO_SPRITE_PATH = "res/enemies/ufo_sprite.png";
 const std::string ENEMY_ANNOYER_SPRITE_PATH = "res/enemies/annougher_sprite.png";
 const std::string ENEMY_ANGRYGON_SPRITE_PATH = "res/enemies/angrygons_sprite.png";
-const std::string ENEMY_SPACE_BOSS_SPRITE_PATH = "res/enemies/bio_mech_sprite.png";
+const std::string ENEMY_SPACE_BOSS_SPRITE_PATH = "res/enemies/space_boss_sprite.png";
 
 // Other textures / UI
 const std::string BACKGROUND_SPRITE_LVL1_PATH = "res/bg.png";
 const std::string BACKGROUND_SPRITE_LVL2_PATH = "res/bg2.png";
-const std::string BACKGROUND_SPRITE_LVL3_PATH = "res/bg.png";
+const std::string MENU_SCREEN_PATH = "res/menu-screen.png";
+const std::string LEVEL_SELECT_SCREEN_PATH = "res/lvl-select-screen.png";
+const std::string RANKING_SCREEN_PATH = "res/ranking-screen.png";
+const std::string RANKING_PANEL_PATH = "res/ranking-panel.png";
 const std::string PLAYER_SPRITE_PATH = "res/player_sprite.png";
 const std::string TURRET_SPRITE_PATH = "res/turret_sprite.png";
 const std::string BULLET_SPRITE_PATH = "res/bullet_sprite.png";

@@ -28,6 +28,11 @@ public:
 
 	void Init() {
 		highScores = Load();
+		std::sort(
+			highScores.begin(), highScores.end(),
+			[](HighScore l, HighScore r) { return l > r; }
+		);
+		while(highScores.size() > MAX_STORED_SCORES) highScores.pop_back();
 	}
 
 	void AddScore(int value) { score += value; }
@@ -45,7 +50,7 @@ public:
 		return result;
 	}
 
-	const std::string MakeScoreAsText(int score) {
+	const std::string MakeScoreAsText(int score) const {
 		int scoreDigits = (score > 0) ? std::floor(std::log10(score)) + (score % 10 == 0) : 1;
 		int zeroCount = SCORE_TEXT_DIGITS - scoreDigits;
 		std::string result = "";
@@ -55,13 +60,27 @@ public:
 	}
 
 	bool IsHighScore() const {
-		//TODO: Check High Score
-		return true;
+		int bestScore = GetBestScore();
+		return score > 0 && score > bestScore;
+	}
+
+	int GetBestScore() const {
+		int bestScore = 0;
+		for(const HighScore& entry : highScores) {
+			bestScore = std::max(bestScore, entry.score);
+		}
+		return bestScore;
+	}
+
+	const std::string GetBestScoreAsText() const {
+		return MakeScoreAsText(GetBestScore());
 	}
 
 	void Save(const std::string& name) {
 		HighScore entry{ {}, score };
-		for (int i = 0; i < MAX_USER_LENGTH; ++i) entry.name[i] = name[i];
+		for(int i = 0; i < MAX_USER_LENGTH; ++i) {
+			entry.name[i] = (i < name.size()) ? name[i] : '\0';
+		}
 
 		highScores.push_back(entry);
 		std::sort(
