@@ -28,7 +28,7 @@ void RenderManager::CreateWindowAndRender() {
 		WINDOW_TITLE.c_str(),
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
-		SDL_WINDOW_RESIZABLE,
+		0,
 		&window,
 		&renderer
 	)) {

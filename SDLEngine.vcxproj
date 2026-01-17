@@ -297,8 +297,18 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
     <ClInclude Include="src\objects\enemies\states\EnemyState.h" />
     <ClInclude Include="src\objects\custom\Boss.h" />
     <ClInclude Include="src\objects\enemies\AmoebaEnemy.h" />
+    <ClInclude Include="src\objects\enemies\AngrygonEnemy.h" />
+    <ClInclude Include="src\objects\enemies\AnnoyerEnemy.h" />
     <ClInclude Include="src\objects\enemies\BioTitanEnemy.h" />
     <ClInclude Include="src\objects\enemies\ChomperEnemy.h" />
+    <ClInclude Include="src\objects\enemies\DanielsEnemy.h" />
+    <ClInclude Include="src\objects\enemies\MissileEnemy.h" />
+    <ClInclude Include="src\objects\enemies\NukeEnemy.h" />
+    <ClInclude Include="src\objects\enemies\RoboKrabsEnemy.h" />
+    <ClInclude Include="src\objects\enemies\SpaceBoss.h" />
+    <ClInclude Include="src\objects\enemies\TorpedoEnemy.h" />
+    <ClInclude Include="src\objects\enemies\TurboChainsawEnemy.h" />
+    <ClInclude Include="src\objects\enemies\UfoEnemy.h" />
     <ClInclude Include="src\math\Random.h" />
     <ClInclude Include="src\objects\enemies\BeholderEnemy.h" />
     <ClInclude Include="dep\inc\xml\rapidxml.hpp" />
@@ -382,6 +392,7 @@ xcopy /d /y "$(SolutionDir)\res\*.*" "$(TargetDir)\res\"</Command>
   <ItemGroup>
     <Xml Include="res\levels\level_1.xml" />
     <Xml Include="res\levels\level_2.xml" />
+    <Xml Include="res\levels\level_3.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

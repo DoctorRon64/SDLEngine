@@ -443,10 +443,40 @@
     <ClInclude Include="src\objects\enemies\AmoebaEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\enemies\AngrygonEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\AnnoyerEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\objects\enemies\BioTitanEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\enemies\ChomperEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\DanielsEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\MissileEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\NukeEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\RoboKrabsEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\SpaceBoss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\TorpedoEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\TurboChainsawEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\enemies\UfoEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\math\Random.h">
@@ -541,5 +571,6 @@
   <ItemGroup>
     <Xml Include="res\levels\level_1.xml" />
     <Xml Include="res\levels\level_2.xml" />
+    <Xml Include="res\levels\level_3.xml" />
   </ItemGroup>
 </Project>

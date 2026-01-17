@@ -18,6 +18,8 @@ public:
 	void Start() {
 		currentWaveIndex = 0;
 		aliveEnemies = 0;
+		bossActive = false;
+		if(waves.empty()) return;
 
 		if(OnWaveStarted) {
 			OnWaveStarted(currentWaveIndex);
@@ -42,6 +44,8 @@ public:
 	void RestartWave() {
 		if(currentWaveIndex >= waves.size()) return;
 
+		aliveEnemies = 0;
+		bossActive = false;
 		waves[currentWaveIndex].Start();
 	}
 
@@ -49,7 +53,9 @@ public:
 		if(currentWaveIndex >= waves.size()) return;
 
 		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
-			SpawnPowerUp();
+			if(!bossActive) {
+				SpawnPowerUp();
+			}
 
 			if(currentWaveIndex + 1 < waves.size()) {
 				StartNextWave();
@@ -79,6 +85,7 @@ public:
 		waves.clear();
 		currentWaveIndex = 0;
 		aliveEnemies = 0;
+		bossActive = false;
 	}
 
 	bool IsCurrentWaveFinishedSpawning() { return waves[currentWaveIndex].IsFinishedSpawning(); }
@@ -92,6 +99,9 @@ public:
 		aliveEnemies--;
 		CheckWaveCleared();
 	}
+
+	void SetBossActive(bool active) { bossActive = active; }
+	bool IsBossActive() const { return bossActive; }
 
 	std::function<void(int waveIndex)> OnWaveStarted;
 	std::function<void(int waveIndex)> OnWaveCleared;
@@ -111,4 +121,5 @@ private:
 	size_t currentWaveIndex = 0;
 	std::vector<bool> currentWaveSpawns = std::vector<bool>();
 	int aliveEnemies = 0;
+	bool bossActive = false;
 };

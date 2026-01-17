@@ -13,7 +13,7 @@ Enemy::Enemy(const std::string& texture, Vector2 spawnPos, Vector2 size)
 	transform->position = spawnPos;
 	transform->scale = { 2.f, 2.f };
 
-	rbComp->AddCollider(new AABB(transform->position * 2, transform->GetSize()));
+	rbComp->AddCollider(new AABB(transform->position, transform->GetSize()));
 	rbComp->SetLinearDrag(0.0f);
 	InitHp(1);
 

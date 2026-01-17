@@ -1,28 +1,35 @@
 #pragma once
-#include "../custom/Enemy.h"
+#include "../custom/Boss.h"
 #include "../custom/Bullet.h"
 
-class BioTitanEnemy : public Enemy {
+class SpaceBoss : public Boss {
 private:
 	float burstTimer = 0.f;
-	float burstCooldown = 1.5f;
-	float bulletSpeed = 220.f;
+	float burstCooldown = 1.2f;
+	float bulletSpeed = 240.f;
+	float bobTimer = 0.f;
+	float bobAmplitude = 40.f;
+	float baseY = 0.f;
 
 public:
-	BioTitanEnemy(Vector2 spawn)
-		: Enemy(ENEMY_BIO_TITAN_SPRITE_PATH, spawn, { 64, 64 }) {
-		InitHp(200);
+	SpaceBoss(Vector2 spawn)
+		: Boss(ENEMY_SPACE_BOSS_SPRITE_PATH, spawn, { 64, 64 }, 300) {
+		transform->position = spawn;
+		baseY = spawn.y;
+		InitHp(300);
 	}
 
-	void Update() override {
+	void UpdatePhase() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
+
+		bobTimer += dt;
+		transform->position.y = baseY + sin(bobTimer) * bobAmplitude;
+
 		burstTimer -= dt;
 		if(burstTimer <= 0.f) {
 			ShootBurst();
 			burstTimer = burstCooldown;
 		}
-
-		Enemy::Update();
 	}
 
 private:

@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level>
 	<wave>
-		<spawned_enemy_id>1</spawned_enemy_id>
-		<amount>5</amount>
-		<delay_between_spawns>4</delay_between_spawns>
+		<enemy type="TORPEDO" amount="3" />
+		<enemy type="MISSILE" amount="2" />
+		<delay_between_spawns>1.0</delay_between_spawns>
 	</wave>
+
 	<wave>
-		<spawned_enemy_id>3</spawned_enemy_id>
-		<amount>2</amount>
-		<delay_between_spawns>2</delay_between_spawns>
+		<enemy type="TURBO_CHAINSAW" amount="2" />
+		<enemy type="ROBO_KRABS" amount="2" />
+		<enemy type="NUKE" amount="2" />
+		<delay_between_spawns>1.2</delay_between_spawns>
+	</wave>
+
+	<wave>
+		<enemy type="DANIELS" amount="2" />
+		<enemy type="UFO" amount="2" />
+		<enemy type="ANNOYER" amount="3" />
+		<delay_between_spawns>0.9</delay_between_spawns>
+	</wave>
+
+	<wave>
+		<enemy type="ANGRYGON" amount="3" />
+		<enemy type="TURBO_CHAINSAW" amount="1" />
+		<enemy type="ROBO_KRABS" amount="1" />
+		<delay_between_spawns>0.8</delay_between_spawns>
 	</wave>
 </level>
