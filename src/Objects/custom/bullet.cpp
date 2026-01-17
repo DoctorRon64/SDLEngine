@@ -33,7 +33,8 @@ void Bullet::OnCollision(Collidable* other) {
 	}
 	else {
 		if(auto player = dynamic_cast<Player*>(other)) {
-			player->DecrementLives(1);
+			player->TakeDamage(10);
+			AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
 			Destroy();
 		}
 	}

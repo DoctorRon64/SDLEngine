@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Turret.h"
 
 void Player::Update() {
@@ -68,6 +69,13 @@ void Player::ActivateTurrets() {
 	}
 }
 
+void Player::OnCollision(Collidable* other) {
+	if(dynamic_cast<Enemy*>(other)) {
+		TakeDamage(PLAYER_HEALTH);
+		AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
+	}
+}
+
 void Player::Shoot() {
 	// Main gun
 	Vector2 mainGunPos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
@@ -119,5 +127,11 @@ void Player::ClampToScreen() {
 		if(transform->position.y <= 0 || transform->position.y >= RenderManager::GetInstance()->WINDOW_HEIGHT - transform->GetSize().y) {
 			rbComp->SetVelocity({ rbComp->GetVelocity().x, 0 });
 		}
+	}
+}
+
+void Player::OnDeath() {
+	if(OnDeathEvent) {
+		OnDeathEvent();
 	}
 }

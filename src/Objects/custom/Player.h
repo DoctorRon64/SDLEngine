@@ -41,11 +41,24 @@ public:
 	void HandleMovement();
 	void HandleShooting(float dt);
 	void Shoot();
+	void OnCollision(Collidable* other) override;
+	void ResetForStage() {
+		turretLeft = nullptr;
+		turretRight = nullptr;
+		for(int i = 0; i < (int)Powerup::COUNT; ++i) powerUpFlags[i] = false;
+		speed = BASE_PLAYER_SPEED;
+		shootTimer = 0.0f;
+		cannonEnergy = MAX_CANNON_ENERGY;
+		laserEnergy = MAX_LASER_ENERGY;
+		invulnerable = false;
+		rbComp->SetVelocity({ 0.f, 0.f });
+	}
 	void RefreshShooting() {
 		TimeManager::GetInstance()->SubscribeEvent(1.0f / BULLETS_PER_SECOND, [this]() { RefreshShooting(); });
 	}
 
 	void OnSceneEnter() {
+		ResetForStage();
 		RefreshShooting();
 	}
 	virtual bool IsPersistent() const override { return true; }
@@ -84,6 +97,9 @@ public:
 
 	void RefillCannon() { cannonEnergy = MAX_CANNON_ENERGY; }
 	void RefillLaser() { laserEnergy = MAX_LASER_ENERGY; }
+
+protected:
+	void OnDeath() override;
 
 private:
 	void ClampToScreen();
