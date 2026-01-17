@@ -20,8 +20,6 @@ public:
 		SyncImage(bgB);
 
 		SpawnManager::Instance().SpawnObject(bgA);
-		std::cout << bgA->GetTransform()->position.x << ", " << bgA->GetTransform()->position.y << std::endl;
-
 		SpawnManager::Instance().SpawnObject(bgB);
 	}
 

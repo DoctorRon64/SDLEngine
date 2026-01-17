@@ -33,6 +33,7 @@ public:
 			levelLabel->GetTransform()->scale = { 1.f, 1.f };
 
 			Button* levelBtn = new Button([i]() {
+				Player::GetInstance()->SetLives(PLAYER_LIVES);
 				dynamic_cast<GameplayScene*>(SceneManager::GetInstance()->GetScene(SceneState::GAMEPLAY))->SetLevel(i);
 				SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
 			}, levelLabel, buttonSize);

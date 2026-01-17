@@ -53,8 +53,6 @@ public:
 		deltaTime -= static_cast<float>(std::floor(deltaTime / frameTime)) * frameTime;
 	}
 	void Update() {
-		//std::cout << "Delta Time: " << deltaTime << std::endl;
-
 		elapsedTime = SDL_GetTicks() / 1000.0;
 		deltaTime = deltaTime + static_cast<float>(elapsedTime) - previousElapsedTime;
 		previousElapsedTime = elapsedTime;

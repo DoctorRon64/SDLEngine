@@ -104,7 +104,7 @@ public:
 		ui.push_back(bestScoreText);
 
 		player->SetLayer(20);
-		player->GetTransform()->position = { 0.f, 0.f };
+		player->GetTransform()->position = { 30.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f };
 		SpawnManager::Instance().SpawnObject(player);
 		player->OnDeathEvent = [this]() {
 			SetState(GameplayState::DEATH);
@@ -320,10 +320,10 @@ private:
 	}
 
 	void ExitDeath() {
+		player->DecrementLives(1);
 		if(player->GetLives() > 0) {
-			player->DecrementLives(1);
 			player->HealToMax();
-			player->GetTransform()->position = { 0, 0 };
+			player->GetTransform()->position = { 30.0f, RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f };
 			player->ResetForStage();
 			bossSpawned = false;
 			bossSeen = false;
@@ -353,7 +353,6 @@ private:
 		WaveManager::GetInstance()->Clear();
 		auto waves = XMLReader::Instance().FetchWavesFromFile(level);
 		for(int i = 0; i < waves.size(); i++) {
-			waves[i].OnWaveFinishedSpawning = [this]() { std::cout << "Wave finished spawning\n"; }; //DEBUG
 			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
 		}
 		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
@@ -445,7 +444,6 @@ private:
 	}
 
 	void RecordHighScore() {
-		//TODO: Hook up to file manager
 		ScoreManager::GetInstance()->Save(userInputText->GetText());
 		SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
 	}

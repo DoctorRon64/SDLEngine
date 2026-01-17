@@ -18,7 +18,7 @@ public:
 		ui.push_back(bg);
 
 		const Vector2 panelTextureSize = { 700.f, 480.f };
-		const Vector2 panelSize = { 640.f, 420.f };
+		const Vector2 panelSize = { 640.f, 435.f };
 		Image* panel = new Image(RANKING_PANEL_PATH, { 0, 0 }, panelTextureSize);
 		panel->GetTransform()->scale = { panelSize.x / panelTextureSize.x, panelSize.y / panelTextureSize.y };
 		panel->GetTransform()->position = {

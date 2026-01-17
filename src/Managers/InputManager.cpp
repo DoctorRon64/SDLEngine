@@ -19,21 +19,14 @@ bool InputManager::Listen() {
 			return true;
 		}
 		else if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
-			if(event.button.button == SDL_BUTTON_LEFT) {
-				std::cout << "[InputManager] Left Clicked" << std::endl;
-				leftClick = true;
-			}
+			if(event.button.button == SDL_BUTTON_LEFT) leftClick = true;
 		}
 		else if(event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
-			if(event.button.button == SDL_BUTTON_LEFT) {
-				leftClick = false;
-			}
+			if(event.button.button == SDL_BUTTON_LEFT) leftClick = false;
 		}
 		else if(event.type == SDL_EVENT_KEY_DOWN) {
-			if(keyReference[event.key.key] != HOLD) {
-				SDL_Log("[InputManager] KeyDown: %d", event.key.key);
+			if(keyReference[event.key.key] != HOLD) 
 				keyReference[event.key.key] = DOWN;
-			}
 		}
 		else if(event.type == SDL_EVENT_KEY_UP) {
 			keyReference[event.key.key] = UP;

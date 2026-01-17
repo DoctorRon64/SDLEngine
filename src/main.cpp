@@ -9,8 +9,8 @@ int main(int argc, char* argv[]) {
 		AudioManager::GetInstance()->Init();
 		engine->Init();
 	}
-	catch(std::exception& result) {
-		std::cout << "There is a error: " << result.what() << std::endl;
+	catch(std::exception& e) {
+		std::cout << e.what() << std::endl;
 		RenderManager::GetInstance()->Terminate();
 		AudioManager::GetInstance()->StopAllSoundEffects();
 		return -1;

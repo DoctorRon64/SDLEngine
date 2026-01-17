@@ -19,7 +19,6 @@ void Wave::Start() {
 			e.delay,
 			[this, e, currentRunId]() {
 			if(currentRunId != runId) return;
-			std::cout << "[Wave] spawning enemy at= " << e.delay << "\n";
 			e.create();
 			spawnsSpawned++;
 

@@ -87,11 +87,6 @@ public:
 
 	void OnUpdate() override {
 		Scene::OnUpdate();
-
-		if(InputManager::GetInstance()->GetEvent(SDLK_SPACE, DOWN)) {
-			std::cout << "something happend yeeess" << std::endl;
-			SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
-		}
 	}
 
 	void Render() override {
