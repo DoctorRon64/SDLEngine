@@ -5,6 +5,7 @@ class Boss : public Enemy {
 protected:
 	int phase = 0;
 	bool invulnerable = false;
+	const std::string& GetDeathSfx() const override { return SFX_BOSS_DEATH_PATH; }
 	bool AllowOffscreenDespawn() const override { return false; }
 	void OnDeath() override {
 		WaveManager::GetInstance()->SetBossActive(false);

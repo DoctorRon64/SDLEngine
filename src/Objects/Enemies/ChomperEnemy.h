@@ -11,6 +11,8 @@ public:
 		InitHp(15);
 	}
 
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_CHOMPER_DEATH_PATH; }
+
 	static void SpawnLine(float x) {
 		float h = (float)RenderManager::GetInstance()->WINDOW_HEIGHT;
 		float spacing = 64.f;

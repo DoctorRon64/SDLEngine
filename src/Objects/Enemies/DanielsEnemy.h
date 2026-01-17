@@ -20,4 +20,6 @@ public:
 
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_DANIELS_DEATH_PATH; }
 };

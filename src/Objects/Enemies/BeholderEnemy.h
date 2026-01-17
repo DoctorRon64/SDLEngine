@@ -8,4 +8,6 @@ public:
 		stateManager.AddState(new BeholderWanderState(&transform->position, 60.f, 0.8f, 0.4f));
 		InitHp(35);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_BEHOLDER_DEATH_PATH; }
 };

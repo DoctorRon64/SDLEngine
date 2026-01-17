@@ -19,4 +19,6 @@ public:
 		stateManager.AddState(new WaveMoveState(&transform->position));
 		InitHp(40);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_WHALE_DEATH_PATH; }
 };

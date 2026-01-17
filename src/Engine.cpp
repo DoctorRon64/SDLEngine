@@ -94,6 +94,31 @@ void Engine::LoadAssets() {
 	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_BULLET_PATH);
 	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_ENEMY_PATH);
 	AudioManager::GetInstance()->LoadSoundData(SFX_HURT_PLAYER_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_EXPLOSION_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_POWERUP_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_PLAYER_IMPACT_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_BOSS_SPAWN_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_BOSS_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_GAME_WIN_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_GAME_LOSE_PATH);
+
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_AMOEBA_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_BEHOLDER_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_BUBBLE_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_CHOMPER_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_CIRCLER_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_MEDUSA_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_VERTICAL_MEDUSA_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_WHALE_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_TORPEDO_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_TURBO_CHAINSAW_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_ROBO_KRABS_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_NUKE_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_MISSILE_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_DANIELS_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_UFO_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_ANNOYER_DEATH_PATH);
+	AudioManager::GetInstance()->LoadSoundData(SFX_ENEMY_ANGRYGON_DEATH_PATH);
 }
 
 void Engine::HandleEvents() {

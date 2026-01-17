@@ -113,6 +113,7 @@ private:
 	int maxShields = PLAYER_SHIELDS;
 	int shields = PLAYER_SHIELDS;
 	bool invulnerable = false;
+	bool pendingImpactSfx = false;
 	float lastX = 0.0f;
 
 	float shootCooldown = 0.2f; // 5 shots/sec

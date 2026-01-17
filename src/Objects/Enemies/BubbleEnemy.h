@@ -26,4 +26,6 @@ public:
 		stateManager.AddState(new LinearMoveState(pos, arcEnd, lineEnd, 90.f));
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_BUBBLE_DEATH_PATH; }
 };

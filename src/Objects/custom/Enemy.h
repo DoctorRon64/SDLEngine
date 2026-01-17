@@ -15,8 +15,10 @@ protected:
 	Vector2 velocity = { 0, 0 };
 
 	virtual void OnDeath() override;
+	virtual const std::string& GetDeathSfx() const { return SFX_HURT_ENEMY_PATH; }
 	virtual bool AllowOffscreenDespawn() const { return true; }
 	void KeepOnScreen(float margin);
+	void KeepOnScreenVertical(float margin);
 
 	void UpdateShooting(float dt);
 	virtual void Shoot() {}

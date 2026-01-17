@@ -21,6 +21,8 @@ public:
 		InitHp(35);
 	}
 
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_ROBO_KRABS_DEATH_PATH; }
+
 	void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
 

@@ -12,4 +12,6 @@ public:
 		stateManager.AddState(new VelocityMoveState(&transform->position, { dir * randomSpeed, 0.f }));
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_MEDUSA_DEATH_PATH; }
 };

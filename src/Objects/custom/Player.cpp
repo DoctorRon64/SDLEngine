@@ -82,7 +82,9 @@ void Player::ActivateTurrets() {
 
 void Player::OnCollision(Collidable* other) {
 	if(dynamic_cast<Enemy*>(other)) {
+		pendingImpactSfx = true;
 		TakeDamage(PLAYER_HEALTH + PLAYER_SHIELDS);
+		pendingImpactSfx = false;
 	}
 }
 
@@ -105,7 +107,8 @@ void Player::TakeDamage(int amount) {
 		PLAYER_INVULNERABILITY_SECONDS,
 		[this]() { invulnerable = false; }
 	);
-	AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
+	const std::string& sfx = pendingImpactSfx ? SFX_PLAYER_IMPACT_PATH : SFX_HURT_PLAYER_PATH;
+	AudioManager::GetInstance()->PlaySound(sfx);
 }
 
 void Player::Shoot() {
@@ -147,15 +150,37 @@ void Player::Shoot() {
 }
 
 void Player::ClampToScreen() {
-	{
-		if(transform->position.x <= 0 || transform->position.x >= RenderManager::GetInstance()->WINDOW_WIDTH - transform->GetSize().x) {
-			rbComp->SetVelocity({ 0, rbComp->GetVelocity().y });
-		}
+	auto* rm = RenderManager::GetInstance();
+	Vector2 size = transform->GetSize();
 
-		if(transform->position.y <= 0 || transform->position.y >= RenderManager::GetInstance()->WINDOW_HEIGHT - transform->GetSize().y) {
-			rbComp->SetVelocity({ rbComp->GetVelocity().x, 0 });
-		}
+	float minX = 0.0f;
+	float minY = 0.0f;
+	float maxX = rm->WINDOW_WIDTH - size.x;
+	float maxY = rm->WINDOW_HEIGHT - size.y;
+
+	Vector2 pos = transform->position;
+	Vector2 vel = rbComp->GetVelocity();
+
+	if(pos.x < minX) {
+		pos.x = minX;
+		vel.x = 0.0f;
 	}
+	else if(pos.x > maxX) {
+		pos.x = maxX;
+		vel.x = 0.0f;
+	}
+
+	if(pos.y < minY) {
+		pos.y = minY;
+		vel.y = 0.0f;
+	}
+	else if(pos.y > maxY) {
+		pos.y = maxY;
+		vel.y = 0.0f;
+	}
+
+	transform->position = pos;
+	rbComp->SetVelocity(vel);
 }
 
 void Player::OnDeath() {

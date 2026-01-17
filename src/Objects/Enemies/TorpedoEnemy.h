@@ -10,4 +10,6 @@ public:
 		stateManager.AddState(new VelocityMoveState(&transform->position, { -randomSpeed, 0.f }));
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_TORPEDO_DEATH_PATH; }
 };

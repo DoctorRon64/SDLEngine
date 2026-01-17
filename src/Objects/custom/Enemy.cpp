@@ -6,7 +6,7 @@
 void Enemy::OnDeath() {
 	WaveManager::GetInstance()->UnregisterEnemy();
 	ScoreManager::GetInstance()->AddScore(scoreValue);
-	AudioManager::GetInstance()->PlaySound(SFX_HURT_ENEMY_PATH);
+	AudioManager::GetInstance()->PlaySound(GetDeathSfx());
 	Explosion* explosion = new Explosion();
 	explosion->GetTransform()->position = { transform->position.x - 50, transform->position.y - 130 };
 	SpawnManager::Instance().SpawnObject(explosion);
@@ -33,6 +33,7 @@ void Enemy::Update() {
 	UpdateShooting(dt);
 
 	Image::Update();
+	KeepOnScreenVertical(0.0f);
 	DespawnIfOutOfScreen();
 }
 
@@ -62,6 +63,17 @@ void Enemy::KeepOnScreen(float margin) {
 	if(transform->position.x < minX) transform->position.x = minX;
 	if(transform->position.y < minY) transform->position.y = minY;
 	if(transform->position.x > maxX) transform->position.x = maxX;
+	if(transform->position.y > maxY) transform->position.y = maxY;
+}
+
+void Enemy::KeepOnScreenVertical(float margin) {
+	auto* rm = RenderManager::GetInstance();
+	Vector2 size = transform->GetSize();
+
+	float minY = -margin;
+	float maxY = rm->WINDOW_HEIGHT - size.y + margin;
+
+	if(transform->position.y < minY) transform->position.y = minY;
 	if(transform->position.y > maxY) transform->position.y = maxY;
 }
 

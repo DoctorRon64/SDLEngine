@@ -21,4 +21,6 @@ public:
 
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_UFO_DEATH_PATH; }
 };

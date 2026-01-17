@@ -9,4 +9,6 @@ public:
 		stateManager.AddState(new VerticalStepState(&transform->position, 60.f, 40.f, 0.6f));
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_VERTICAL_MEDUSA_DEATH_PATH; }
 };

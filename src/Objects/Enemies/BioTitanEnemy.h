@@ -16,6 +16,7 @@ public:
 	}
 
 	bool AllowOffscreenDespawn() const override { return false; }
+	const std::string& GetDeathSfx() const override { return SFX_BOSS_DEATH_PATH; }
 
 	void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();

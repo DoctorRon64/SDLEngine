@@ -12,4 +12,6 @@ public:
 		stateManager.AddState(new VelocityMoveState(&transform->position, { 0.f, -90.f }));
 		InitHp(25);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_NUKE_DEATH_PATH; }
 };

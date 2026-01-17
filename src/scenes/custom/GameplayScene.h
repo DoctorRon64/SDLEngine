@@ -58,6 +58,7 @@ private:
 	unsigned int level = 0;
 	bool bossSpawned = false;
 	bool bossSeen = false;
+	bool wonStage = false;
 	bool bonusApplied = false;
 
 public:
@@ -68,9 +69,12 @@ public:
 		finishStageTimer = 0.f;
 		bossSpawned = false;
 		bossSeen = false;
+		wonStage = false;
 		bonusApplied = false;
 		WaveManager::GetInstance()->SetBossActive(false);
 		ScoreManager::GetInstance()->ResetScore();
+
+		AudioManager::GetInstance()->PlaySoundLooping(MUSIC_MENACE_SUBTUNE_2_PATH);
 
 		if(level >= LEVEL_COUNT) level = 0;
 
@@ -162,6 +166,8 @@ public:
 			objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 		}
 
+		WaveManager::GetInstance()->CheckWaveCleared();
+
 		if(state != GameplayState::GAMEPLAY) return;
 
 		bool bossPresent = false;
@@ -183,6 +189,7 @@ public:
 				ScoreManager::GetInstance()->AddScore(LEVEL_CLEAR_BONUS_PER_LIFE * player->GetLives());
 				bonusApplied = true;
 			}
+			wonStage = true;
 			SetState(GameplayState::FINISH_STAGE);
 		}
 	}
@@ -208,6 +215,7 @@ public:
 
 	void UpdateFinishStage() {
 		if(stateJustChanged) {
+			AudioManager::GetInstance()->PlaySound(wonStage ? SFX_GAME_WIN_PATH : SFX_GAME_LOSE_PATH);
 			const Vector2 panelTextureSize = { 700.f, 480.f };
 			const Vector2 panelSize = { 520.f, 220.f };
 			const float panelLeft = RenderManager::GetInstance()->WINDOW_WIDTH * 0.5f - panelSize.x * 0.5f;
@@ -336,6 +344,7 @@ private:
 			this->SetState(GameplayState::GAMEPLAY);
 		}
 		else {
+			wonStage = false;
 			this->SetState(GameplayState::FINISH_STAGE);
 		}
 	}
@@ -358,6 +367,7 @@ private:
 				ScoreManager::GetInstance()->AddScore(LEVEL_CLEAR_BONUS_PER_LIFE * player->GetLives());
 				bonusApplied = true;
 			}
+			wonStage = true;
 			SetState(GameplayState::FINISH_STAGE);
 		};
 		WaveManager::GetInstance()->OnWaveStarted = [this](int waveIndex) {
@@ -406,6 +416,7 @@ private:
 		if(boss) {
 			WaveManager::GetInstance()->SetBossActive(true);
 			SpawnManager::Instance().SpawnObject(boss);
+			AudioManager::GetInstance()->PlaySound(SFX_BOSS_SPAWN_PATH);
 		}
 	}
 

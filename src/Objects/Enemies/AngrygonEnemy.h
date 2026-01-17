@@ -26,4 +26,6 @@ public:
 
 		InitHp(30);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_ANGRYGON_DEATH_PATH; }
 };

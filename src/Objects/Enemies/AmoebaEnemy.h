@@ -35,6 +35,8 @@ public:
 		InitHp(20);
 	}
 
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_AMOEBA_DEATH_PATH; }
+
 	void Update() override {
 		Enemy::Update();
 

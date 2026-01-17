@@ -26,4 +26,6 @@ public:
 
 		InitHp(45);
 	}
+
+	const std::string& GetDeathSfx() const override { return SFX_ENEMY_TURBO_CHAINSAW_DEATH_PATH; }
 };
