@@ -15,8 +15,8 @@ protected:
 		Vector2 _pos = Vector2(0.f, 0.f),
 		Vector2 _size = Vector2(32.f, 32.f)
 	) : Image(_name, _pos, _size), Collidable(rbComp) {
-		rbComp->AddCollider(new AABB(transform->position, transform->GetSize()));
 		transform->scale = { 2.f, 2.f };
+		rbComp->AddCollider(new AABB(transform->position, transform->GetSize()));
 	}
 
 	virtual void OnCollect() = 0;
@@ -39,6 +39,9 @@ protected:
 			return;
 		}
 		if(dynamic_cast<Player*>(other)) {
+			if(charge < maxCharge) {
+				charge = maxCharge;
+			}
 			TryActivate();
 		}
 	}

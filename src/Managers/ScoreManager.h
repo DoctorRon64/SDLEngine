@@ -1,4 +1,5 @@
 #pragma once
+#include <cctype>
 #include <utils/config.h>
 
 struct HighScore {
@@ -77,9 +78,10 @@ public:
 	}
 
 	void Save(const std::string& name) {
+		std::string sanitized = SanitizeName(name);
 		HighScore entry{ {}, score };
 		for(int i = 0; i < MAX_USER_LENGTH; ++i) {
-			entry.name[i] = (i < name.size()) ? name[i] : '\0';
+			entry.name[i] = (i < sanitized.size()) ? sanitized[i] : '\0';
 		}
 
 		highScores.push_back(entry);
@@ -95,5 +97,25 @@ public:
 
 	std::vector<HighScore> Load() {
 		return FileManager::Instance().ReadBinary<HighScore>("ranking.bin");
+	}
+
+private:
+	std::string SanitizeName(const std::string& name) const {
+		size_t start = 0;
+		while(start < name.size() && std::isspace((unsigned char)name[start])) {
+			++start;
+		}
+		size_t end = name.size();
+		while(end > start && std::isspace((unsigned char)name[end - 1])) {
+			--end;
+		}
+		std::string trimmed = name.substr(start, end - start);
+		if(trimmed.empty()) {
+			return "ANON";
+		}
+		if(trimmed.size() > MAX_USER_LENGTH) {
+			return trimmed.substr(0, MAX_USER_LENGTH);
+		}
+		return trimmed;
 	}
 };

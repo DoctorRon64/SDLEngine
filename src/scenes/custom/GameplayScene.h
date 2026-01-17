@@ -46,8 +46,11 @@ private:
 	Text* bestScoreNumberText = nullptr;
 
 	//Score set UI
-	Text* setScoreText;
-	Text* userInputText;
+	Text* setScoreText = nullptr;
+	Text* userInputText = nullptr;
+	Text* confirmHintText = nullptr;
+	Image* scoreInputPanel = nullptr;
+	Image* scoreInputBox = nullptr;
 	Image* deathOverlay = nullptr;
 
 	ScrollingBackground* currentBackground;
@@ -110,6 +113,9 @@ public:
 		player->OnLivesChanged = nullptr;
 		WaveManager::GetInstance()->SetBossActive(false);
 		deathOverlay = nullptr;
+		scoreInputPanel = nullptr;
+		scoreInputBox = nullptr;
+		confirmHintText = nullptr;
 
 		Scene::OnExit();
 	}
@@ -175,20 +181,37 @@ public:
 
 	void UpdateFinishStage() {
 		if(stateJustChanged) {
-			userInputText = new InputText(" ");
-			userInputText->GetTransform()->scale = { 2.f, 2.f };
-			userInputText->GetTransform()->position = {
-				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 100,
-				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f
-			};
-			setScoreText = new Text("Enter Name to set score: ");
-			setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
-			setScoreText->GetTransform()->position = {
-				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
-				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 100
-			};
-			ui.push_back(userInputText);
+			const Vector2 panelTextureSize = { 700.f, 480.f };
+			const Vector2 panelSize = { 520.f, 220.f };
+			const float panelLeft = RenderManager::GetInstance()->WINDOW_WIDTH * 0.5f - panelSize.x * 0.5f;
+			const float panelTop = RenderManager::GetInstance()->WINDOW_HEIGHT * 0.5f - panelSize.y * 0.5f;
+
+			scoreInputPanel = new Image(RANKING_PANEL_PATH, { 0, 0 }, panelTextureSize);
+			scoreInputPanel->GetTransform()->scale = { panelSize.x / panelTextureSize.x, panelSize.y / panelTextureSize.y };
+			scoreInputPanel->GetTransform()->position = { panelLeft, panelTop };
+			ui.push_back(scoreInputPanel);
+
+			const Vector2 boxSize = { 320.f, 60.f };
+			scoreInputBox = new Image(BUTTON_SPRITE_PATH, { 0, 0 }, { 3448.f, 1369.f });
+			scoreInputBox->GetTransform()->scale = { boxSize.x / 3448.f, boxSize.y / 1369.f };
+			scoreInputBox->GetTransform()->position = { panelLeft + 40.0f, panelTop + 90.0f };
+			ui.push_back(scoreInputBox);
+
+			setScoreText = new Text("ENTER YOUR NAME", { 0x00, 0x00, 0x00, 0xff });
+			setScoreText->GetTransform()->scale = { 1.4f, 1.4f };
+			setScoreText->GetTransform()->position = { panelLeft + 40.0f, panelTop + 30.0f };
 			ui.push_back(setScoreText);
+
+			userInputText = new InputText(" ");
+			userInputText->SetColor({ 0x00, 0x00, 0x00, 0xff });
+			userInputText->GetTransform()->scale = { 1.6f, 1.6f };
+			userInputText->GetTransform()->position = { panelLeft + 55.0f, panelTop + 100.0f };
+			ui.push_back(userInputText);
+
+			confirmHintText = new Text("PRESS ENTER TO CONFIRM", { 0x00, 0x00, 0x00, 0xff });
+			confirmHintText->GetTransform()->scale = { 1.0f, 1.0f };
+			confirmHintText->GetTransform()->position = { panelLeft + 40.0f, panelTop + 160.0f };
+			ui.push_back(confirmHintText);
 			return;
 		}
 
@@ -203,6 +226,18 @@ public:
 			userInputText = nullptr;
 			setScoreText->Destroy();
 			setScoreText = nullptr;
+			if(confirmHintText) {
+				confirmHintText->Destroy();
+				confirmHintText = nullptr;
+			}
+			if(scoreInputBox) {
+				scoreInputBox->Destroy();
+				scoreInputBox = nullptr;
+			}
+			if(scoreInputPanel) {
+				scoreInputPanel->Destroy();
+				scoreInputPanel = nullptr;
+			}
 		}
 	}
 

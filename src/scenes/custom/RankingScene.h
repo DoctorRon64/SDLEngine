@@ -7,6 +7,7 @@ class RankingScene :
 public:
 	RankingScene() = default;
 	void OnEnter() override {
+		ScoreManager::GetInstance()->Init();
 		std::vector<HighScore> highScores = ScoreManager::GetInstance()->GetScores();
 
 		SDL_Color uiColor = { 0x00, 0x00, 0x00, 0xff };

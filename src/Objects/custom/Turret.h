@@ -4,7 +4,8 @@
 
 class Turret : public Actor {
 public:
-	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, spawnPos, Vector2(32, 32)) {
+	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, Vector2(0.f, 0.f), Vector2(32, 32)) {
+		transform->position = spawnPos;
 		transform->scale = { 2.f, 2.f };
 		SetLayer(20);
 	}

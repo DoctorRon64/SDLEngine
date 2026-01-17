@@ -8,6 +8,8 @@ private:
 	int currentFrame;
 	bool looping;
 	float frameTime;
+	float frameTimer = 0.0f;
+	float frameInterval = 0.0f;
 public:
 	AnimatedImage(std::string _texturePath, Vector2 _sourceOffset, Vector2 _sourceSize,
 		int _numberOfFrames, int _numberOfRows, float _frameWidth, float _frameHeight, int _frameTime, bool _looping)
@@ -20,9 +22,25 @@ public:
 			static_cast<float>(_sourceSize.x * transform->scale.x),
 			static_cast<float>(_sourceSize.y * transform->scale.y)
 		});
-		TimeManager::GetInstance()->SubscribeEvent(
-			TimeManager::GetInstance()->GetTimeFrame() * frameTime, [this]() { NextFrame(); }
-		);
+		frameInterval = TimeManager::GetInstance()->GetTimeFrame() * frameTime;
+	}
+
+	void Update() override {
+		Object::Update();
+
+		if(IsPendingDestroy()) return;
+		if(frameInterval <= 0.0f) return;
+
+		frameTimer += TimeManager::GetInstance()->GetDeltaTime();
+		if(frameTimer < frameInterval) return;
+
+		int steps = static_cast<int>(frameTimer / frameInterval);
+		frameTimer -= frameInterval * steps;
+
+		for(int i = 0; i < steps; ++i) {
+			NextFrame();
+			if(IsPendingDestroy()) return;
+		}
 	}
 
 	void NextFrame() {
@@ -33,8 +51,5 @@ public:
 		}
 		currentFrame %= numberOfFrames;
 		dynamic_cast<AnimatedImageRenderer*>(renderer)->NextFrame();
-		TimeManager::GetInstance()->SubscribeEvent(
-			TimeManager::GetInstance()->GetTimeFrame() * frameTime, [this]() { NextFrame(); }
-		);
 	}
 };
