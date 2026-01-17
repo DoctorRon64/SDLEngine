@@ -57,6 +57,7 @@ private:
 
 	unsigned int level = 0;
 	bool bossSpawned = false;
+	bool bossSeen = false;
 	bool bonusApplied = false;
 
 public:
@@ -66,6 +67,7 @@ public:
 		stateJustChanged = false;
 		finishStageTimer = 0.f;
 		bossSpawned = false;
+		bossSeen = false;
 		bonusApplied = false;
 		WaveManager::GetInstance()->SetBossActive(false);
 
@@ -157,6 +159,30 @@ public:
 
 		while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
 			objects.push_back(SpawnManager::Instance().GetSpawnedObject());
+		}
+
+		if(state != GameplayState::GAMEPLAY) return;
+
+		bool bossPresent = false;
+		for(Object* obj : objects) {
+			if(dynamic_cast<SpaceBoss*>(obj) || dynamic_cast<BioTitanEnemy*>(obj)) {
+				bossPresent = true;
+				break;
+			}
+		}
+		if(bossPresent) {
+			bossSeen = true;
+		}
+
+		if(bossSpawned && bossSeen && !bossPresent &&
+		   WaveManager::GetInstance()->IsCurrentWaveFinishedSpawning() &&
+		   !AreEnemiesRemaining()) {
+			WaveManager::GetInstance()->SetBossActive(false);
+			if(!bonusApplied) {
+				ScoreManager::GetInstance()->AddScore(LEVEL_CLEAR_BONUS_PER_LIFE * player->GetLives());
+				bonusApplied = true;
+			}
+			SetState(GameplayState::FINISH_STAGE);
 		}
 	}
 
@@ -291,6 +317,7 @@ private:
 			player->GetTransform()->position = { 0, 0 };
 			player->ResetForStage();
 			bossSpawned = false;
+			bossSeen = false;
 			WaveManager::GetInstance()->SetBossActive(false);
 			SpawnManager::Instance().ClearSpanwer();
 			for(int i = 0; i < objects.size(); ++i) {

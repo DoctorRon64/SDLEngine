@@ -55,6 +55,9 @@ public:
 		if(currentWaveIndex >= waves.size()) return;
 
 		if(waves[currentWaveIndex].IsFinishedSpawning() && aliveEnemies == 0) {
+			if(bossActive) {
+				bossActive = false;
+			}
 			if(!bossActive) {
 				SpawnPowerUp();
 			}
@@ -99,6 +102,9 @@ public:
 
 	void UnregisterEnemy() {
 		aliveEnemies--;
+		if(aliveEnemies <= 0) {
+			aliveEnemies = 0;
+		}
 		CheckWaveCleared();
 	}
 

@@ -5,6 +5,10 @@ class Boss : public Enemy {
 protected:
 	int phase = 0;
 	bool invulnerable = false;
+	void OnDeath() override {
+		WaveManager::GetInstance()->SetBossActive(false);
+		Enemy::OnDeath();
+	}
 
 public:
 	Boss(
