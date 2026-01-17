@@ -9,10 +9,14 @@
 #include <Objects/custom/BackgroundDecorator.h>
 #include <Objects/custom/Explosion.h>
 #include <Objects/custom/TestAnimation.h>
+#include <Objects/custom/Turret.h>
+#include <Objects/PowerUps/PowerUp.h>
 #include <objects/Enemies/BubbleEnemy.h>
+#include <objects/Enemies/BioTitanEnemy.h>
 #include <objects/Enemies/CirclerEnemy.h>
 #include <objects/Enemies/KillerWhaleEnemy.h>
 #include <objects/Enemies/MedusaEnemy.h>
+#include <objects/Enemies/SpaceBoss.h>
 #include <Objects/PowerUps/CannonEnergyPowerUp.h>
 #include <objects/Text.h>
 #include <objects/InputText.h>
@@ -45,12 +49,19 @@ private:
 
 	ScrollingBackground* currentBackground;
 
-	unsigned int level;
+	unsigned int level = 0;
+	bool bossSpawned = false;
 
 public:
 	GameplayScene() = default;
 	void OnEnter() override {
-		std::cout << level << std::endl;
+		state = GameplayState::GAMEPLAY;
+		stateJustChanged = false;
+		finishStageTimer = 0.f;
+		bossSpawned = false;
+		WaveManager::GetInstance()->SetBossActive(false);
+
+		if(level >= LEVEL_COUNT) level = 0;
 
 		SpawnLevelBackground(level);
 		LoadLevel(level);
@@ -74,6 +85,7 @@ public:
 		ui.push_back(livesText);
 
 		player->SetLayer(20);
+		player->GetTransform()->position = { 0.f, 0.f };
 		SpawnManager::Instance().SpawnObject(player);
 		player->OnDeathEvent = [this]() {
 			SetState(GameplayState::DEATH);
@@ -87,6 +99,7 @@ public:
 	void OnExit() override {
 		TimeManager::GetInstance()->ClearAllEvents();
 		player->OnLivesChanged = nullptr;
+		WaveManager::GetInstance()->SetBossActive(false);
 
 		Scene::OnExit();
 	}
@@ -183,7 +196,9 @@ public:
 	}
 
 	unsigned int GetLevel() { return level; }
-	void SetLevel(unsigned int _level) { level = _level; }
+	void SetLevel(unsigned int _level) {
+		level = (_level < LEVEL_COUNT) ? _level : 0;
+	}
 
 private:
 	void SetPauseMenuVisibility(bool visible) {
@@ -218,10 +233,19 @@ private:
 			player->DecrementLives(1);
 			player->HealToMax();
 			player->GetTransform()->position = { 0, 0 };
+			player->ResetForStage();
+			bossSpawned = false;
+			WaveManager::GetInstance()->SetBossActive(false);
+			SpawnManager::Instance().ClearSpanwer();
 			for(int i = 0; i < objects.size(); ++i) {
-				Enemy* enemy;
-				if(enemy = dynamic_cast<Enemy*>(objects[i])) {
-					objects[i]->Destroy();
+				Object* obj = objects[i];
+				if(obj == player) continue;
+				if(dynamic_cast<Enemy*>(obj) ||
+				   dynamic_cast<Bullet*>(obj) ||
+				   dynamic_cast<PowerUp*>(obj) ||
+				   dynamic_cast<Explosion*>(obj) ||
+				   dynamic_cast<Turret*>(obj)) {
+					obj->Destroy();
 				}
 			}
 			WaveManager::GetInstance()->RestartWave();
@@ -240,9 +264,13 @@ private:
 			WaveManager::GetInstance()->AddWave(std::move(waves[i]));
 		}
 		WaveManager::GetInstance()->OnWaveCleared = [this](int waveIndex) {
-			if(WaveManager::GetInstance()->AreAllWavesFinished()) {
-				SetState(GameplayState::FINISH_STAGE);
+			if(!WaveManager::GetInstance()->AreAllWavesFinished()) return;
+			if(!bossSpawned) {
+				bossSpawned = true;
+				SpawnBossForLevel();
+				return;
 			}
+			SetState(GameplayState::FINISH_STAGE);
 		};
 		WaveManager::GetInstance()->Start();
 	}
@@ -252,11 +280,32 @@ private:
 		switch(level) {
 			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
 			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
+			case 2: bgTexture = BACKGROUND_SPRITE_LVL3_PATH; break;
 			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
 		}
 		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
 		currentBackground->SetLayer(-99);
 		SpawnManager::Instance().SpawnObject(currentBackground);
+	}
+
+	void SpawnBossForLevel() {
+		Enemy* boss = nullptr;
+		Vector2 spawnPos = {
+			RenderManager::GetInstance()->WINDOW_WIDTH - 200.f,
+			RenderManager::GetInstance()->WINDOW_HEIGHT / 2.f
+		};
+
+		if(level == 0) {
+			boss = new BioTitanEnemy(spawnPos);
+		}
+		else {
+			boss = new SpaceBoss(spawnPos);
+		}
+
+		if(boss) {
+			WaveManager::GetInstance()->SetBossActive(true);
+			SpawnManager::Instance().SpawnObject(boss);
+		}
 	}
 
 	void SetState(GameplayState _state) {

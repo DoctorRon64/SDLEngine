@@ -13,7 +13,7 @@ public:
 		float h = (float)RenderManager::GetInstance()->WINDOW_HEIGHT;
 		float w = (float)RenderManager::GetInstance()->WINDOW_WIDTH;
 
-		Vector2 start = { -transform->GetSize().x, Randomness::Range(0.f, h) };
+		Vector2 start = { w + transform->GetSize().x, Randomness::Range(0.f, h) };
 		splitCenter = { w * 0.6f, h / 2.f };
 		transform->position = start;
 

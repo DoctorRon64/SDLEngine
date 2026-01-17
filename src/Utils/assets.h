@@ -13,11 +13,22 @@ const std::string ENEMY_CIRCLER_SPRITE_PATH = "res/enemies/circler_sprite.png";
 const std::string ENEMY_MEDUSA_SPRITE_PATH = "res/enemies/medusa_sprite.png";
 const std::string ENEMY_VERTICAL_MEDUSA_SPRITE_PATH = "res/enemies/vertical_medusa_sprite.png";
 const std::string ENEMY_WHALE_SPRITE_PATH = "res/enemies/whale_sprite.png";
-const std::string ENEMY_BIO_TITAN_SPRITE_PATH = "res/missing.png";
+const std::string ENEMY_BIO_TITAN_SPRITE_PATH = "res/enemies/bio_mech_sprite.png";
+const std::string ENEMY_TORPEDO_SPRITE_PATH = "res/enemies/missile_sprite.png";
+const std::string ENEMY_TURBO_CHAINSAW_SPRITE_PATH = "res/enemies/chainsaw_sprite.png";
+const std::string ENEMY_ROBO_KRABS_SPRITE_PATH = "res/enemies/robo_crabs.png";
+const std::string ENEMY_NUKE_SPRITE_PATH = "res/enemies/nuke_sprite.png";
+const std::string ENEMY_MISSILE_SPRITE_PATH = "res/enemies/missile_sprite.png";
+const std::string ENEMY_DANIELS_SPRITE_PATH = "res/enemies/daniels_head_sprite.png";
+const std::string ENEMY_UFO_SPRITE_PATH = "res/enemies/ufo_sprite.png";
+const std::string ENEMY_ANNOYER_SPRITE_PATH = "res/enemies/annougher_sprite.png";
+const std::string ENEMY_ANGRYGON_SPRITE_PATH = "res/enemies/angrygons_sprite.png";
+const std::string ENEMY_SPACE_BOSS_SPRITE_PATH = "res/enemies/bio_mech_sprite.png";
 
 // Other textures / UI
 const std::string BACKGROUND_SPRITE_LVL1_PATH = "res/bg.png";
 const std::string BACKGROUND_SPRITE_LVL2_PATH = "res/bg2.png";
+const std::string BACKGROUND_SPRITE_LVL3_PATH = "res/bg.png";
 const std::string PLAYER_SPRITE_PATH = "res/player_sprite.png";
 const std::string TURRET_SPRITE_PATH = "res/turret_sprite.png";
 const std::string BULLET_SPRITE_PATH = "res/bullet_sprite.png";

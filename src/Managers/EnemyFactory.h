@@ -6,6 +6,15 @@
 #include "../Objects/Enemies/CirclerEnemy.h"
 #include "../Objects/Enemies/KillerWhaleEnemy.h"
 #include "../Objects/Enemies/BioTitanEnemy.h"
+#include "../Objects/Enemies/TorpedoEnemy.h"
+#include "../Objects/Enemies/TurboChainsawEnemy.h"
+#include "../Objects/Enemies/RoboKrabsEnemy.h"
+#include "../Objects/Enemies/NukeEnemy.h"
+#include "../Objects/Enemies/MissileEnemy.h"
+#include "../Objects/Enemies/DanielsEnemy.h"
+#include "../Objects/Enemies/UfoEnemy.h"
+#include "../Objects/Enemies/AnnoyerEnemy.h"
+#include "../Objects/Enemies/AngrygonEnemy.h"
 
 class EnemyFactory {
 public:
@@ -23,7 +32,16 @@ private:
 				ChomperEnemy::SpawnLine(pos.x);
 			},
 			[this]() { SpawnManager::Instance().SpawnObject(new CirclerEnemy(GetRandomSpawnPos())); },
-			[this]() { SpawnManager::Instance().SpawnObject(new BioTitanEnemy(GetRandomSpawnPos())); }
+			[this]() { SpawnManager::Instance().SpawnObject(new BioTitanEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new TorpedoEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new TurboChainsawEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new RoboKrabsEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new NukeEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new MissileEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new DanielsEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new UfoEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new AnnoyerEnemy(GetRandomSpawnPos())); },
+			[this]() { SpawnManager::Instance().SpawnObject(new AngrygonEnemy(GetRandomSpawnPos())); }
 		} };
 	}
 
