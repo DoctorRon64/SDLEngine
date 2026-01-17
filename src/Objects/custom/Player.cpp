@@ -14,8 +14,8 @@ void Player::Update() {
 	float deltaX = transform->position.x - previousX;
 	lastX = transform->position.x;
 
-	if(turretLeft) turretLeft->GetTransform()->position = transform->position + Vector2(-20, 0);
-	if(turretRight) turretRight->GetTransform()->position = transform->position + Vector2(20, 0);
+	if(turretLeft) turretLeft->GetTransform()->position = transform->position + Vector2(-TURRET_OFFSET_X, 0);
+	if(turretRight) turretRight->GetTransform()->position = transform->position + Vector2(TURRET_OFFSET_X, 0);
 
 	if(turretLeft) turretLeft->ApplyPlayerMovement(deltaX);
 	if(turretRight) turretRight->ApplyPlayerMovement(deltaX);
@@ -68,8 +68,8 @@ void Player::HandleShooting(float dt) {
 
 void Player::ActivateTurrets() {
 	if(!turretLeft && !turretRight) {
-		turretLeft = new Turret(transform->position + Vector2(-20, 0));
-		turretRight = new Turret(transform->position + Vector2(20, 0));
+		turretLeft = new Turret(transform->position + Vector2(-TURRET_OFFSET_X, 0));
+		turretRight = new Turret(transform->position + Vector2(TURRET_OFFSET_X, 0));
 		SpawnManager::Instance().SpawnObject(turretLeft);
 		SpawnManager::Instance().SpawnObject(turretRight);
 	}
@@ -77,7 +77,7 @@ void Player::ActivateTurrets() {
 
 void Player::OnCollision(Collidable* other) {
 	if(dynamic_cast<Enemy*>(other)) {
-		TakeDamage(PLAYER_HEALTH);
+		TakeDamage(PLAYER_HEALTH + PLAYER_SHIELDS);
 	}
 }
 
