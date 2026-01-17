@@ -24,4 +24,5 @@ public:
 private:
 	std::vector<EnemySpawn> spawns;
 	size_t spawnsSpawned = 0;
+	size_t runId = 0;
 };

@@ -7,6 +7,8 @@ void Wave::AddSpawn(float delay, std::function<void()> factory) {
 
 void Wave::Start() {
 	spawnsSpawned = 0;
+	++runId;
+	size_t currentRunId = runId;
 
 	if(OnWaveStarted) {
 		OnWaveStarted();
@@ -15,7 +17,8 @@ void Wave::Start() {
 	for(const EnemySpawn& e : spawns) {
 		TimeManager::GetInstance()->SubscribeEvent(
 			e.delay,
-			[this, e]() {
+			[this, e, currentRunId]() {
+			if(currentRunId != runId) return;
 			std::cout << "[Wave] spawning enemy at= " << e.delay << "\n";
 			e.create();
 			spawnsSpawned++;

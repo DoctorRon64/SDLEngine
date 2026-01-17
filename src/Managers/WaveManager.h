@@ -18,6 +18,7 @@ public:
 	void Start() {
 		currentWaveIndex = 0;
 		aliveEnemies = 0;
+		if(waves.empty()) return;
 
 		if(OnWaveStarted) {
 			OnWaveStarted(currentWaveIndex);
@@ -42,6 +43,7 @@ public:
 	void RestartWave() {
 		if(currentWaveIndex >= waves.size()) return;
 
+		aliveEnemies = 0;
 		waves[currentWaveIndex].Start();
 	}
 
