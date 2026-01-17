@@ -13,7 +13,7 @@ public:
 	CirclerEnemy(Vector2 spawn)
 		: Enemy(ENEMY_CIRCLER_SPRITE_PATH, spawn, { 32, 32 }) {
 		stateManager.AddState(new CircleMoveState(&transform->position, spawn, 100.f, 90.f, 3));
-		InitHp(25);
+		InitHp(35);
 	}
 
 	void Update() override {

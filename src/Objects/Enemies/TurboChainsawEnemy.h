@@ -24,6 +24,6 @@ public:
 		stateManager.AddState(new CircleMoveState(&transform->position, center, radius, 180.f, 1));
 		stateManager.AddState(new LinearMoveState(&transform->position, entry, exit, speed));
 
-		InitHp(30);
+		InitHp(45);
 	}
 };

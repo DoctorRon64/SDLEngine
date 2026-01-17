@@ -10,6 +10,6 @@ public:
 		float randomSpeed = Randomness::Range(10.f, 50.f);
 
 		stateManager.AddState(new VelocityMoveState(&transform->position, { dir * randomSpeed, 0.f }));
-		InitHp(20);
+		InitHp(30);
 	}
 };

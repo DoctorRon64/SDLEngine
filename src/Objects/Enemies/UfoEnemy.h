@@ -19,6 +19,6 @@ public:
 		stateManager.AddState(new IdleState(&transform->position, 0.75f));
 		stateManager.AddState(new LinearMoveState(&transform->position, mid, exit, 220.f));
 
-		InitHp(20);
+		InitHp(30);
 	}
 };

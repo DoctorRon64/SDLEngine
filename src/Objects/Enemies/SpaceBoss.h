@@ -13,10 +13,10 @@ private:
 
 public:
 	SpaceBoss(Vector2 spawn)
-		: Boss(ENEMY_SPACE_BOSS_SPRITE_PATH, spawn, { 64, 64 }, 300) {
+		: Boss(ENEMY_SPACE_BOSS_SPRITE_PATH, spawn, { 64, 64 }, 400) {
 		transform->position = spawn;
 		baseY = spawn.y;
-		InitHp(300);
+		InitHp(400);
 	}
 
 	void UpdatePhase() override {

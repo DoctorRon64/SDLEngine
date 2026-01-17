@@ -11,7 +11,7 @@ private:
 public:
 	BioTitanEnemy(Vector2 spawn)
 		: Enemy(ENEMY_BIO_TITAN_SPRITE_PATH, spawn, { 64, 64 }) {
-		InitHp(200);
+		InitHp(300);
 		transform->scale = { 4.f, 4.f };
 	}
 

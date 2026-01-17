@@ -10,6 +10,6 @@ public:
 		float y = RenderManager::GetInstance()->WINDOW_HEIGHT + transform->GetSize().y;
 		transform->position = { x, y };
 		stateManager.AddState(new VelocityMoveState(&transform->position, { 0.f, -90.f }));
-		InitHp(15);
+		InitHp(25);
 	}
 };

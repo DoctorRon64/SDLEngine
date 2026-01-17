@@ -26,7 +26,7 @@ public:
 		transform->position = { startX, startY };
 
 		entryPoint = { RenderManager::GetInstance()->WINDOW_WIDTH * 0.7f, startY };
-		InitHp(15);
+		InitHp(25);
 	}
 
 	void Update() override {

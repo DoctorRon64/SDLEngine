@@ -18,7 +18,7 @@ public:
 		float y = fromTop ? 0.f : (RenderManager::GetInstance()->WINDOW_HEIGHT - transform->GetSize().y);
 		transform->position = { x, y };
 		jumpCooldown = Randomness::Range(3.f, 5.f);
-		InitHp(25);
+		InitHp(35);
 	}
 
 	void Update() override {

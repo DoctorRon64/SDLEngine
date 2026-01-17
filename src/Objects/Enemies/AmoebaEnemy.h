@@ -20,7 +20,7 @@ public:
 		stateManager.AddState(new LinearMoveState(&transform->position, start, splitCenter, 90.f));
 		stateManager.AddState(new AmoebaSplitState(&transform->position, this));
 		stateManager.AddState(new LinearMoveState(&transform->position, splitCenter, { -transform->GetSize().x, splitCenter.y }, 90.f));
-		InitHp(25);
+		InitHp(35);
 	}
 
 	AmoebaEnemy(Vector2 center, std::shared_ptr<int> remaining, float startAngle)
@@ -32,7 +32,7 @@ public:
 		transform->position = { center.x + cos(rad) * splitRadius, center.y + sin(rad) * splitRadius };
 
 		stateManager.AddState(new CircleMoveState(&transform->position, center, splitRadius, 180.f, 2, startAngle));
-		InitHp(15);
+		InitHp(20);
 	}
 
 	void Update() override {

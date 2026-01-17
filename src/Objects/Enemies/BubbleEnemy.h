@@ -24,6 +24,6 @@ public:
 		};
 		Vector2 lineEnd = arcEnd + Vector2(-400.f, 0.f);
 		stateManager.AddState(new LinearMoveState(pos, arcEnd, lineEnd, 90.f));
-		InitHp(20);
+		InitHp(30);
 	}
 };

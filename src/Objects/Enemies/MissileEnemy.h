@@ -10,6 +10,6 @@ public:
 		float y = Randomness::Range(0.f, RenderManager::GetInstance()->WINDOW_HEIGHT);
 		transform->position = { x, y };
 		stateManager.AddState(new VelocityMoveState(&transform->position, { -140.f, 0.f }));
-		InitHp(15);
+		InitHp(25);
 	}
 };

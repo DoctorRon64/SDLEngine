@@ -18,6 +18,6 @@ public:
 		stateManager.AddState(new LinearMoveState(&transform->position, { midX, startY }, { midX, midY }, 120.f));
 		stateManager.AddState(new LinearMoveState(&transform->position, { midX, midY }, { -transform->GetSize().x, midY }, 120.f));
 
-		InitHp(20);
+		InitHp(30);
 	}
 };

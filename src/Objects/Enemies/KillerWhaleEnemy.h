@@ -17,6 +17,6 @@ public:
 
 		stateManager.AddState(new LinearMoveState(&transform->position, start, detachTarget, 80.f));
 		stateManager.AddState(new WaveMoveState(&transform->position));
-		InitHp(30);
+		InitHp(40);
 	}
 };

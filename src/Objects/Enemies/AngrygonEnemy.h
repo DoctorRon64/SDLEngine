@@ -24,6 +24,6 @@ public:
 		stateManager.AddState(new LinearMoveState(&transform->position, p2, p3, speed));
 		stateManager.AddState(new LinearMoveState(&transform->position, p3, p4, speed));
 
-		InitHp(20);
+		InitHp(30);
 	}
 };

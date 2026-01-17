@@ -8,7 +8,7 @@ public:
 		float radius = 60.f;
 		Vector2 center = spawn + Vector2(-radius, 0.f);
 		stateManager.AddState(new CircleDriftState(&transform->position, center, radius, 120.f, 20.f));
-		InitHp(30);
+		InitHp(15);
 	}
 
 	static void SpawnLine(float x) {
