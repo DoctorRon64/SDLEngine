@@ -26,6 +26,12 @@ public:
 	~ScrollingBackground() = default;
 	void Render() override {}
 
+	void Reset() {
+		if(!bgA || !bgB) return;
+		bgA->GetTransform()->position = { 0, 0 };
+		bgB->GetTransform()->position = { width, 0 };
+	}
+
 	virtual void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
 

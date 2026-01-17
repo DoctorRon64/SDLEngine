@@ -9,10 +9,16 @@ void Player::Update() {
 	HandleMovement();
 	HandleShooting(dt);
 
+	float previousX = lastX;
 	Image::Update();
+	float deltaX = transform->position.x - previousX;
+	lastX = transform->position.x;
 
 	if(turretLeft) turretLeft->GetTransform()->position = transform->position + Vector2(-20, 0);
 	if(turretRight) turretRight->GetTransform()->position = transform->position + Vector2(20, 0);
+
+	if(turretLeft) turretLeft->ApplyPlayerMovement(deltaX);
+	if(turretRight) turretRight->ApplyPlayerMovement(deltaX);
 
 	ClampToScreen();
 }
@@ -72,8 +78,29 @@ void Player::ActivateTurrets() {
 void Player::OnCollision(Collidable* other) {
 	if(dynamic_cast<Enemy*>(other)) {
 		TakeDamage(PLAYER_HEALTH);
-		AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
 	}
+}
+
+void Player::TakeDamage(int amount) {
+	if(amount <= 0 || invulnerable) return;
+
+	int remainingDamage = amount;
+	if(shields > 0) {
+		int absorbed = std::min(shields, remainingDamage);
+		shields -= absorbed;
+		remainingDamage -= absorbed;
+	}
+
+	if(remainingDamage > 0) {
+		Actor::TakeDamage(remainingDamage);
+	}
+
+	invulnerable = true;
+	TimeManager::GetInstance()->SubscribeEvent(
+		PLAYER_INVULNERABILITY_SECONDS,
+		[this]() { invulnerable = false; }
+	);
+	AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
 }
 
 void Player::Shoot() {

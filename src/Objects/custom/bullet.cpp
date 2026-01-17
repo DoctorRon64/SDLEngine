@@ -13,6 +13,14 @@ Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
 }
 
 void Bullet::Update() {
+	float dt = TimeManager::GetInstance()->GetDeltaTime();
+	lifeTimer += dt;
+
+	if(lifeTimer >= BULLET_LIFETIME_SECONDS) {
+		Destroy();
+		return;
+	}
+
 	Image::Update();
 
 	float x = transform->position.x;
@@ -34,7 +42,6 @@ void Bullet::OnCollision(Collidable* other) {
 	else {
 		if(auto player = dynamic_cast<Player*>(other)) {
 			player->TakeDamage(10);
-			AudioManager::GetInstance()->PlaySound(SFX_HURT_PLAYER_PATH);
 			Destroy();
 		}
 	}

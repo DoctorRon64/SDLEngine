@@ -46,6 +46,8 @@ public:
 
 		aliveEnemies = 0;
 		bossActive = false;
+		if(OnWaveStarted)
+			OnWaveStarted(currentWaveIndex);
 		waves[currentWaveIndex].Start();
 	}
 

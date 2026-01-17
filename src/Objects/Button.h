@@ -7,11 +7,12 @@ class Button : public Image {
 public:
 	using OnClick = std::function<void()>;
 
-	Button(OnClick _onClick, Text* _label = new Text(" "))
+	Button(OnClick _onClick, Text* _label = new Text(" "), Vector2 targetSize = Vector2(344.8f, 136.9f))
 		: Image(BUTTON_SPRITE_PATH, { 0, 0 }, { 3448.f, 1369.f }), onClick(_onClick), label(_label) {
 		renderer = new ButtonRenderer(transform, BUTTON_SPRITE_PATH, { 0, 0 }, { 3448.f, 1369.f });
 
-		transform->scale = Vector2(.1f, .1f);
+		const Vector2 sourceSize = { 3448.f, 1369.f };
+		transform->scale = { targetSize.x / sourceSize.x, targetSize.y / sourceSize.y };
 
 		collider = new AABB({ 0.f, 0.f }, transform->GetSize());
 

@@ -6,7 +6,9 @@ const std::string TITLE = "SDL_Engine";
 
 constexpr unsigned int PLAYER_HEALTH = 100;
 constexpr unsigned int PLAYER_LIVES = 3;
+constexpr unsigned int PLAYER_SHIELDS = 100;
 constexpr float BASE_PLAYER_SPEED = 1.0f;
+constexpr float PLAYER_INVULNERABILITY_SECONDS = 0.5f;
 
 constexpr unsigned int MAX_CANNON_ENERGY = 20;
 constexpr unsigned int MAX_LASER_ENERGY = 20;
@@ -16,8 +18,12 @@ constexpr unsigned int MAX_STORED_SCORES = 10;
 
 constexpr unsigned int SCORE_POWERUP_VALUE = 1000u;
 constexpr float ENGINE_POWERUP_SCALE_VALUE = 1.3f;
+constexpr unsigned int LEVEL_CLEAR_BONUS_PER_LIFE = 10000u;
 
 constexpr unsigned int BULLETS_PER_SECOND = 5;
+constexpr float BULLET_LIFETIME_SECONDS = 3.0f;
+
+constexpr float TURRET_ROTATION_DEG_PER_X = 0.45f;
 
 constexpr float BACKGROUND_SPEED = 200.0f;
 

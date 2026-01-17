@@ -4,6 +4,7 @@
 class CannonEnergyPowerUp :
 	public PowerUp {
 public:
+	CannonEnergyPowerUp();
 	void OnCollect() override {
 		Player::GetInstance()->SetPowerupFlag(Powerup::CANNONS, true);
 		Player::GetInstance()->RefillCannon();

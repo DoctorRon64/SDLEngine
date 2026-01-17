@@ -24,4 +24,5 @@ public:
 private:
 	bool isPlayerBullet = true;
 	float bulletSpeed = 350.f;
+	float lifeTimer = 0.0f;
 };

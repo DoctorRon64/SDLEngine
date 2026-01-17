@@ -9,33 +9,33 @@ class LevelSelectScene :
 public:
 	LevelSelectScene() = default;
 	void OnEnter() override {
-		Image* bg = new Image(BLACK_SCREEN_SPRITE_PATH, { 0, 0 }, { 320, 200 });
+		SDL_Color uiColor = { 0x00, 0x00, 0x00, 0xff };
+
+		Image* bg = new Image(LEVEL_SELECT_SCREEN_PATH, { 0, 0 }, { (float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT });
 		bg->GetTransform()->position = { 0,0 };
-		bg->GetTransform()->scale = { 
-			(float)RenderManager::GetInstance()->WINDOW_WIDTH / 320.0f, 
-			(float)RenderManager::GetInstance()->WINDOW_HEIGHT / 200.0f };
 		bg->SetLayer(20);
 		ui.push_back(bg);
 
 		AudioManager::GetInstance()->PlaySoundLooping(MUSIC_MENACE_SUBTUNE_2_PATH);
 
-		Text* title = new Text("[LEVEL SELECT]");
+		Text* title = new Text("[LEVEL SELECT]", { 0xff, 0xff, 0xff, 0xff });
 		title->GetTransform()->scale = { 2.f, 2.f };
-		title->GetTransform()->position = { ((float)RenderManager::GetInstance()->WINDOW_WIDTH / 2) - 300, 0 };
+		title->GetTransform()->position = { ((float)RenderManager::GetInstance()->WINDOW_WIDTH / 2) - 200, 30 };
 		ui.push_back(title);
 
-		float startX = 500.f;
-		float startY = 180.0f;
-		float spacing = 130.0f;
+		const Vector2 buttonSize = { 220.f, 60.f };
+		float startX = (float)RenderManager::GetInstance()->WINDOW_WIDTH * 0.5f - buttonSize.x * 0.5f;
+		float startY = 220.0f;
+		float spacing = 80.0f;
 
 		for(int i = 0; i < LEVEL_COUNT; ++i) {
-			Text* levelLabel = new Text("Level " + std::to_string(i + 1));
-			levelLabel->GetTransform()->scale = { 2.f, 2.f };
+			Text* levelLabel = new Text("Level " + std::to_string(i + 1), uiColor);
+			levelLabel->GetTransform()->scale = { 1.f, 1.f };
 
 			Button* levelBtn = new Button([i]() {
 				dynamic_cast<GameplayScene*>(SceneManager::GetInstance()->GetScene(SceneState::GAMEPLAY))->SetLevel(i);
 				SceneManager::GetInstance()->SetNextScene(SceneState::GAMEPLAY);
-			}, levelLabel);
+			}, levelLabel, buttonSize);
 			levelBtn->GetTransform()->position = { startX, startY + i * spacing };
 			ui.push_back(levelBtn);
 			ui.push_back(levelLabel);
@@ -43,13 +43,13 @@ public:
 
 		//======================================================
 
-		Text* menuLabel = new Text("Main Menu");
-		menuLabel->GetTransform()->scale = { 2.f, 2.f };
+		Text* menuLabel = new Text("Main Menu", uiColor);
+		menuLabel->GetTransform()->scale = { 1.f, 1.f };
 
 		Button* menuBtn = new Button([]() {
 			SceneManager::GetInstance()->SetNextScene(SceneState::MENU);
-		}, menuLabel);
-		menuBtn->GetTransform()->position = { startX, startY + spacing * 3 };
+		}, menuLabel, buttonSize);
+		menuBtn->GetTransform()->position = { startX, startY + spacing * LEVEL_COUNT };
 		ui.push_back(menuBtn);
 		ui.push_back(menuLabel);
 	}

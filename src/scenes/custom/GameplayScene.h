@@ -39,18 +39,22 @@ private:
 	Player* player = Player::GetInstance();
 
 	//Score UI
-	Text* scoreText;
-	Text* livesText;
-	Text* scoreNumberText;
+	Text* scoreText = nullptr;
+	Text* livesText = nullptr;
+	Text* scoreNumberText = nullptr;
+	Text* bestScoreText = nullptr;
+	Text* bestScoreNumberText = nullptr;
 
 	//Score set UI
 	Text* setScoreText;
 	Text* userInputText;
+	Image* deathOverlay = nullptr;
 
 	ScrollingBackground* currentBackground;
 
 	unsigned int level = 0;
 	bool bossSpawned = false;
+	bool bonusApplied = false;
 
 public:
 	GameplayScene() = default;
@@ -59,6 +63,7 @@ public:
 		stateJustChanged = false;
 		finishStageTimer = 0.f;
 		bossSpawned = false;
+		bonusApplied = false;
 		WaveManager::GetInstance()->SetBossActive(false);
 
 		if(level >= LEVEL_COUNT) level = 0;
@@ -66,23 +71,27 @@ public:
 		SpawnLevelBackground(level);
 		LoadLevel(level);
 
-		scoreText = new Text("Score");
-		scoreText->GetTransform()->scale = { 2.f, 2.f };
-		scoreText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 150 };
+		const float hudX = 40.0f;
+		const float hudLine = 30.0f;
+		const float hudBottom = (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 70.0f;
+
+		scoreText = new Text("Score: 000000", { 0xff, 0xe2, 0x6a, 0xff });
+		scoreText->GetTransform()->scale = { 1.6f, 1.6f };
+		scoreText->GetTransform()->position = { hudX, hudBottom - hudLine * 2.0f };
 		ui.push_back(scoreText);
 
-		scoreNumberText = new Text("000000");
-		scoreNumberText->GetTransform()->scale = { 2.f, 2.f };
-		scoreNumberText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 200 };
-		ui.push_back(scoreNumberText);
-
-		livesText = new Text("Lives: " + std::to_string(player->GetLives()));
+		livesText = new Text("Lives: " + std::to_string(player->GetLives()), { 0xff, 0xff, 0xff, 0xff });
 		player->OnLivesChanged = [this](int current, int max) {
 			livesText->SetText("Lives: " + std::to_string(player->GetLives()));
 		};
-		livesText->GetTransform()->scale = { 2.f, 2.f };
-		livesText->GetTransform()->position = { 250, (float)RenderManager::GetInstance()->WINDOW_HEIGHT - 260 };
+		livesText->GetTransform()->scale = { 1.4f, 1.4f };
+		livesText->GetTransform()->position = { hudX, hudBottom };
 		ui.push_back(livesText);
+
+		bestScoreText = new Text("Best: " + ScoreManager::GetInstance()->GetBestScoreAsText(), { 0x7c, 0xd7, 0xff, 0xff });
+		bestScoreText->GetTransform()->scale = { 1.6f, 1.6f };
+		bestScoreText->GetTransform()->position = { hudX, hudBottom - hudLine };
+		ui.push_back(bestScoreText);
 
 		player->SetLayer(20);
 		player->GetTransform()->position = { 0.f, 0.f };
@@ -100,6 +109,7 @@ public:
 		TimeManager::GetInstance()->ClearAllEvents();
 		player->OnLivesChanged = nullptr;
 		WaveManager::GetInstance()->SetBossActive(false);
+		deathOverlay = nullptr;
 
 		Scene::OnExit();
 	}
@@ -124,7 +134,8 @@ public:
 
 		if(stateChanged) stateJustChanged = false;
 
-		scoreNumberText->SetText(ScoreManager::GetInstance()->GetScoreAsText());
+		scoreText->SetText("Score: " + ScoreManager::GetInstance()->GetScoreAsText());
+		bestScoreText->SetText("Best: " + ScoreManager::GetInstance()->GetBestScoreAsText());
 		if(ScoreManager::GetInstance()->IsHighScore()) {
 			scoreText->SetColor({ 0xff, 0xd7, 0x00, 0xff });
 		}
@@ -172,8 +183,8 @@ public:
 			};
 			setScoreText = new Text("Enter Name to set score: ");
 			setScoreText->GetTransform()->scale = { 2.0f, 2.0f };
-			setScoreText->GetTransform()->position = { 
-				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200, 
+			setScoreText->GetTransform()->position = {
+				RenderManager::GetInstance()->WINDOW_WIDTH / 2.0f - 200,
 				RenderManager::GetInstance()->WINDOW_HEIGHT / 2.0f - 100
 			};
 			ui.push_back(userInputText);
@@ -220,11 +231,21 @@ private:
 	}
 
 	void ShowDeathScreen() {
-		Image* blackScreen = new Image(BLACK_SCREEN_SPRITE_PATH, Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
-		blackScreen->GetTransform()->position = { 0,0 };
-		ui.push_back(blackScreen);
+		if(deathOverlay) {
+			deathOverlay->Destroy();
+			deathOverlay = nullptr;
+		}
+		deathOverlay = new Image(BLACK_SCREEN_SPRITE_PATH, Vector2(0, 0), Vector2((float)RenderManager::GetInstance()->WINDOW_WIDTH, (float)RenderManager::GetInstance()->WINDOW_HEIGHT));
+		deathOverlay->GetTransform()->position = { 0,0 };
+		ui.push_back(deathOverlay);
 		TimeManager::GetInstance()->SubscribeEvent(
-			2.0f, [this]() { ui.pop_back(); ExitDeath(); }
+			2.0f, [this]() {
+			if(deathOverlay) {
+				deathOverlay->Destroy();
+				deathOverlay = nullptr;
+			}
+			ExitDeath();
+		}
 		);
 	}
 
@@ -270,7 +291,25 @@ private:
 				SpawnBossForLevel();
 				return;
 			}
+			if(!bonusApplied) {
+				ScoreManager::GetInstance()->AddScore(LEVEL_CLEAR_BONUS_PER_LIFE * player->GetLives());
+				bonusApplied = true;
+			}
 			SetState(GameplayState::FINISH_STAGE);
+		};
+		WaveManager::GetInstance()->OnWaveStarted = [this](int waveIndex) {
+			ScrollingBackground* bg = nullptr;
+			for(Object* obj : objects) {
+				if(obj == currentBackground) {
+					bg = currentBackground;
+					break;
+				}
+			}
+			if(!bg) bg = FindBackground();
+			if(bg) {
+				currentBackground = bg;
+				currentBackground->Reset();
+			}
 		};
 		WaveManager::GetInstance()->Start();
 	}
@@ -280,7 +319,6 @@ private:
 		switch(level) {
 			case 0: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
 			case 1: bgTexture = BACKGROUND_SPRITE_LVL2_PATH; break;
-			case 2: bgTexture = BACKGROUND_SPRITE_LVL3_PATH; break;
 			default: bgTexture = BACKGROUND_SPRITE_LVL1_PATH; break;
 		}
 		currentBackground = new ScrollingBackground(bgTexture, BACKGROUND_SPEED, -1000);
@@ -315,6 +353,13 @@ private:
 		if(state == GameplayState::FINISH_STAGE) {
 			SpawnManager::Instance().DestroyAllOfType<Bullet>();
 		}
+	}
+
+	ScrollingBackground* FindBackground() {
+		for(Object* obj : objects) {
+			if(auto* bg = dynamic_cast<ScrollingBackground*>(obj)) return bg;
+		}
+		return nullptr;
 	}
 
 	bool AreEnemiesRemaining() {

@@ -565,10 +565,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="res\fonts\Fredoka.ttf" />
-    <Font Include="res\fonts\PixelifySans-VariableFont_wght.ttf" />
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="res\levels\level_1.xml" />
     <Xml Include="res\levels\level_2.xml" />
     <Xml Include="res\levels\level_3.xml" />

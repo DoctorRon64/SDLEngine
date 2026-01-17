@@ -4,13 +4,20 @@
 
 class Turret : public Actor {
 public:
-	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, spawnPos, Vector2(32, 32)) {}
+	Turret(Vector2 spawnPos) : Actor(TURRET_SPRITE_PATH, spawnPos, Vector2(32, 32)) {
+		transform->scale = { 2.f, 2.f };
+		SetLayer(20);
+	}
 
 	void Shoot() {
 		Bullet* b = new Bullet(true);
 		b->SetLayer(20);
 		b->GetTransform()->position = transform->position;
 		SpawnManager::Instance().SpawnObject(b);
+	}
+
+	void ApplyPlayerMovement(float deltaX) {
+		transform->rotation += deltaX * TURRET_ROTATION_DEG_PER_X;
 	}
 
 	virtual void OnCollision(Collidable* other) override {}

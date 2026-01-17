@@ -68,9 +68,15 @@ void Engine::LoadAssets() {
 
 	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL1_PATH);
 	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL2_PATH);
-	RenderManager::GetInstance()->LoadTexture(BACKGROUND_SPRITE_LVL3_PATH);
+	RenderManager::GetInstance()->LoadTexture(MENU_SCREEN_PATH);
+	RenderManager::GetInstance()->LoadTexture(LEVEL_SELECT_SCREEN_PATH);
+	RenderManager::GetInstance()->LoadTexture(RANKING_SCREEN_PATH);
+	RenderManager::GetInstance()->LoadTexture(RANKING_PANEL_PATH);
+
 	RenderManager::GetInstance()->LoadTexture(PLAYER_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(TURRET_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(BULLET_SPRITE_PATH);
+	RenderManager::GetInstance()->LoadTexture(POWERUP_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(BUTTON_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(BLACK_SCREEN_SPRITE_PATH);
 	RenderManager::GetInstance()->LoadTexture(SPLASH_SCREEN_SPRITE_PATH);
