@@ -13,6 +13,9 @@ public:
 	void CheckCollisions();
 	void Register(RigidBody* rb, Collidable* c);
 	void Unregister(Collidable* c);
+	void RenderDebug();
+	void ToggleDebug();
+	bool IsDebugEnabled() const { return debugDraw; }
 
 private:
 	CollisionManager() = default;
@@ -25,4 +28,5 @@ private:
 	};
 
 	std::vector<CollidableEntry> collidables;
+	bool debugDraw = false;
 };

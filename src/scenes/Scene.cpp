@@ -31,6 +31,10 @@ void Scene::UpdateUI() {
 }
 
 void Scene::OnUpdate() {
+	if(InputManager::GetInstance()->GetEvent(SDLK_F1, DOWN)) {
+		CollisionManager::Instance().ToggleDebug();
+	}
+
 	while(SpawnManager::Instance().AreObjectsPendingSpawn()) {
 		objects.push_back(SpawnManager::Instance().GetSpawnedObject());
 	}
@@ -67,4 +71,5 @@ void Scene::Render() {
 	for(Object* u : ui) {
 		u->Render();
 	}
+	CollisionManager::Instance().RenderDebug();
 }
