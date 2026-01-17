@@ -24,18 +24,20 @@ constexpr unsigned int BULLETS_PER_SECOND = 5;
 constexpr float BULLET_LIFETIME_SECONDS = 3.0f;
 
 constexpr float TURRET_ROTATION_DEG_PER_X = 0.45f;
+constexpr float TURRET_OFFSET_X = 40.0f;
+
+constexpr float EXPLOSION_PUSH_FORCE = 800.0f;
 
 constexpr float BACKGROUND_SPEED = 200.0f;
 
 constexpr unsigned int DECORATION_MIN_TIME = 1;
 constexpr unsigned int DECORATION_MAX_TIME = 3;
 
-constexpr unsigned int LEVEL_COUNT = 3;
+constexpr unsigned int LEVEL_COUNT = 2;
 
 constexpr const char* levelPaths[LEVEL_COUNT] = {
 	"res/levels/level_1.xml",
-	"res/levels/level_2.xml",
-	"res/levels/level_3.xml"
+	"res/levels/level_2.xml"
 };
 
 constexpr unsigned int ENEMY_ID_COUNT = 16;
