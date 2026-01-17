@@ -22,7 +22,12 @@ public:
 	}
 
 	void Update() override {
-		label->GetTransform()->position = transform->position + transform->GetSize() / 4;
+		const SDL_FRect labelRect = label->GetRenderer()->GetSourceRect();
+		const Vector2 labelSize = {
+			labelRect.w * label->GetTransform()->scale.x,
+			labelRect.h * label->GetTransform()->scale.y
+		};
+		label->GetTransform()->position = transform->position + (transform->GetSize() - labelSize) * 0.5f;
 
 		Vector2 mousePos = {
 			(float)InputManager::GetInstance()->GetMouseX(),
