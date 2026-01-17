@@ -272,6 +272,9 @@ private:
 			}
 			SetState(GameplayState::FINISH_STAGE);
 		};
+		WaveManager::GetInstance()->OnWaveStarted = [this](int waveIndex) {
+			if(currentBackground) currentBackground->Reset();
+		};
 		WaveManager::GetInstance()->Start();
 	}
 

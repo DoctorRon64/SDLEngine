@@ -13,5 +13,9 @@ public:
 		SpawnManager::Instance().SpawnObject(b);
 	}
 
+	void ApplyPlayerMovement(float deltaX) {
+		transform->rotation += deltaX * TURRET_ROTATION_DEG_PER_X;
+	}
+
 	virtual void OnCollision(Collidable* other) override {}
 };

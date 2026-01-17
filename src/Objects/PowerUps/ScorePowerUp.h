@@ -3,6 +3,8 @@
 class ScorePowerUp :
     public PowerUp
 {
+public:
+    ScorePowerUp();
     void OnCollect() override {
         ScoreManager::GetInstance()->AddScore(SCORE_POWERUP_VALUE);
     }

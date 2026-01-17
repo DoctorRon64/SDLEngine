@@ -4,6 +4,8 @@
 class LaserEnergyPowerUp :
     public PowerUp
 {
+public:
+    LaserEnergyPowerUp();
     void OnCollect() override {
         Player::GetInstance()->SetPowerupFlag(Powerup::LASER, true);
     }

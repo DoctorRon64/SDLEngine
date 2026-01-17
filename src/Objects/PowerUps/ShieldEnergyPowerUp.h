@@ -4,8 +4,10 @@
 class ShieldEnergyPowerUp :
     public PowerUp
 {
+public:
+    ShieldEnergyPowerUp();
     void OnCollect() override {
-        Player::GetInstance()->HealToMax();
+        Player::GetInstance()->RefillShields();
     }
 };
 

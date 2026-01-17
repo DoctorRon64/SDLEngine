@@ -42,6 +42,7 @@ public:
 	void HandleShooting(float dt);
 	void Shoot();
 	void OnCollision(Collidable* other) override;
+	void TakeDamage(int amount) override;
 	void ResetForStage() {
 		turretLeft = nullptr;
 		turretRight = nullptr;
@@ -50,7 +51,9 @@ public:
 		shootTimer = 0.0f;
 		cannonEnergy = MAX_CANNON_ENERGY;
 		laserEnergy = MAX_LASER_ENERGY;
+		shields = maxShields;
 		invulnerable = false;
+		lastX = transform->position.x;
 		rbComp->SetVelocity({ 0.f, 0.f });
 	}
 	void RefreshShooting() {
@@ -97,6 +100,8 @@ public:
 
 	void RefillCannon() { cannonEnergy = MAX_CANNON_ENERGY; }
 	void RefillLaser() { laserEnergy = MAX_LASER_ENERGY; }
+	void RefillShields() { shields = maxShields; }
+	int GetShields() const { return shields; }
 
 protected:
 	void OnDeath() override;
@@ -105,8 +110,10 @@ private:
 	void ClampToScreen();
 
 	bool powerUpFlags[(int)Powerup::COUNT] = {};
-	int shields = 100;
+	int maxShields = PLAYER_SHIELDS;
+	int shields = PLAYER_SHIELDS;
 	bool invulnerable = false;
+	float lastX = 0.0f;
 
 	float shootCooldown = 0.2f; // 5 shots/sec
 	float shootTimer = 0.0f;

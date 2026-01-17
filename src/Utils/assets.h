@@ -2,7 +2,7 @@
 #include <string>
 
 // Fonts
-const std::string FONT_PATH = "res/fonts/PixelifySans-VariableFont_wght.ttf";
+const std::string FONT_PATH = "res/fonts/ari-w9500-display.ttf";
 
 // Sprites
 const std::string ENEMY_AMOEBA_SPRITE_PATH = "res/enemies/amoeba_sprite.png";
