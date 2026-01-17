@@ -11,9 +11,8 @@ public:
 	}
 
 	void Shoot() {
-		Bullet* b = new Bullet(true);
+		Bullet* b = new Bullet(true, BULLET_SPRITE_PATH, transform->position);
 		b->SetLayer(20);
-		b->GetTransform()->position = transform->position;
 		SpawnManager::Instance().SpawnObject(b);
 	}
 

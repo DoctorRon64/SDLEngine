@@ -16,6 +16,8 @@ public:
 
 		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
+		SyncImage(bgA);
+		SyncImage(bgB);
 
 		SpawnManager::Instance().SpawnObject(bgA);
 		std::cout << bgA->GetTransform()->position.x << ", " << bgA->GetTransform()->position.y << std::endl;
@@ -30,6 +32,8 @@ public:
 		if(!bgA || !bgB) return;
 		bgA->GetTransform()->position = { 0, 0 };
 		bgB->GetTransform()->position = { width, 0 };
+		SyncImage(bgA);
+		SyncImage(bgB);
 	}
 
 	virtual void Update() override {
@@ -40,6 +44,9 @@ public:
 
 		Wrap(bgA, bgB);
 		Wrap(bgB, bgA);
+
+		SyncImage(bgA);
+		SyncImage(bgB);
 	}
 
 private:
@@ -47,6 +54,19 @@ private:
 		if(current->GetTransform()->position.x <= -width) {
 			current->GetTransform()->position.x = other->GetTransform()->position.x + width;
 		}
+	}
+
+	void SyncImage(Image* image) {
+		if(!image) return;
+		Renderer* renderer = image->GetRenderer();
+		if(!renderer) return;
+		Vector2 size = image->GetTransform()->GetSize();
+		renderer->SetDestinationRect({
+			static_cast<float>(image->GetTransform()->position.x),
+			static_cast<float>(image->GetTransform()->position.y),
+			static_cast<float>(size.x),
+			static_cast<float>(size.y)
+		});
 	}
 
 private:

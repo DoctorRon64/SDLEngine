@@ -106,17 +106,15 @@ void Player::TakeDamage(int amount) {
 void Player::Shoot() {
 	// Main gun
 	Vector2 mainGunPos = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y / 2);
-	Bullet* mainBullet = new Bullet(true);
+	Bullet* mainBullet = new Bullet(true, BULLET_SPRITE_PATH, mainGunPos);
 	mainBullet->SetLayer(20);
-	mainBullet->GetTransform()->position = mainGunPos;
 	SpawnManager::Instance().SpawnObject(mainBullet);
 
 	// LASER power-up bullets
 	if(powerUpFlags[(int)Powerup::LASER]) {
 		Vector2 laserPos = Vector2(transform->position.x + transform->GetSize().x / 2, transform->position.y + transform->GetSize().y);
-		Bullet* laserBullet = new Bullet();
+		Bullet* laserBullet = new Bullet(true, BULLET_SPRITE_PATH, laserPos);
 		laserBullet->SetLayer(20);
-		laserBullet->GetTransform()->position = laserPos;
 		SpawnManager::Instance().SpawnObject(laserBullet);
 	}
 
@@ -124,14 +122,12 @@ void Player::Shoot() {
 	if(powerUpFlags[(int)Powerup::CANNONS]) {
 		Vector2 cannonPos1 = Vector2(transform->position.x + transform->GetSize().x, transform->position.y + transform->GetSize().y);
 		Vector2 cannonPos2 = Vector2(transform->position.x, transform->position.y + transform->GetSize().y);
-		Bullet* cannonBullet1 = new Bullet();
+		Bullet* cannonBullet1 = new Bullet(true, BULLET_SPRITE_PATH, cannonPos1);
 		cannonBullet1->SetLayer(20);
-		cannonBullet1->GetTransform()->position = cannonPos1;
 		SpawnManager::Instance().SpawnObject(cannonBullet1);
 
-		Bullet* cannonBullet2 = new Bullet();
+		Bullet* cannonBullet2 = new Bullet(true, BULLET_SPRITE_PATH, cannonPos2);
 		cannonBullet2->SetLayer(20);
-		cannonBullet2->GetTransform()->position = cannonPos2;
 		SpawnManager::Instance().SpawnObject(cannonBullet2);
 	}
 

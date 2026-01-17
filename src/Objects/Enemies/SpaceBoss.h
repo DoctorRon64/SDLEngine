@@ -48,8 +48,7 @@ private:
 			dir.Normalize();
 			dir.x = -fabs(dir.x);
 
-			Bullet* b = new Bullet(false, ENEMY_BULLET_SPRITE_PATH);
-			b->GetTransform()->position = origin;
+			Bullet* b = new Bullet(false, ENEMY_BULLET_SPRITE_PATH, origin);
 			b->GetRigidBody()->SetVelocity(dir * bulletSpeed);
 			SpawnManager::Instance().SpawnObject(b);
 		}

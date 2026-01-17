@@ -10,6 +10,15 @@ Bullet::Bullet(bool _isPlayer, std::string _name, Vector2 _pos, Vector2 _size)
 	rbComp->SetVelocity(isPlayerBullet ? Vector2(bulletSpeed, 0.f) : Vector2(-bulletSpeed, 0.f));
 
 	transform->scale = { 1.f, 1.f };
+	if(renderer) {
+		Vector2 size = transform->GetSize();
+		renderer->SetDestinationRect({
+			static_cast<float>(transform->position.x),
+			static_cast<float>(transform->position.y),
+			static_cast<float>(size.x),
+			static_cast<float>(size.y)
+		});
+	}
 }
 
 void Bullet::Update() {
