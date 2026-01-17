@@ -5,6 +5,7 @@ class Boss : public Enemy {
 protected:
 	int phase = 0;
 	bool invulnerable = false;
+	bool AllowOffscreenDespawn() const override { return false; }
 	void OnDeath() override {
 		WaveManager::GetInstance()->SetBossActive(false);
 		Enemy::OnDeath();
@@ -22,6 +23,7 @@ public:
 	virtual void Update() override {
 		UpdatePhase();
 		Enemy::Update();
+		KeepOnScreen(0.0f);
 	}
 
 	virtual void UpdatePhase() = 0;

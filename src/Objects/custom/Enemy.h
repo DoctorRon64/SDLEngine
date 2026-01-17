@@ -15,6 +15,8 @@ protected:
 	Vector2 velocity = { 0, 0 };
 
 	virtual void OnDeath() override;
+	virtual bool AllowOffscreenDespawn() const { return true; }
+	void KeepOnScreen(float margin);
 
 	void UpdateShooting(float dt);
 	virtual void Shoot() {}

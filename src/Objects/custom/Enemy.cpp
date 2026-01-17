@@ -37,6 +37,8 @@ void Enemy::Update() {
 }
 
 void Enemy::DespawnIfOutOfScreen() {
+	if(!AllowOffscreenDespawn()) return;
+
 	auto* rm = RenderManager::GetInstance();
 	Vector2 p = transform->position;
 	Vector2 s = transform->GetSize();
@@ -46,6 +48,21 @@ void Enemy::DespawnIfOutOfScreen() {
 		Destroy();
 		WaveManager::GetInstance()->UnregisterEnemy();
 	}
+}
+
+void Enemy::KeepOnScreen(float margin) {
+	auto* rm = RenderManager::GetInstance();
+	Vector2 size = transform->GetSize();
+
+	float minX = -margin;
+	float minY = -margin;
+	float maxX = rm->WINDOW_WIDTH - size.x + margin;
+	float maxY = rm->WINDOW_HEIGHT - size.y + margin;
+
+	if(transform->position.x < minX) transform->position.x = minX;
+	if(transform->position.y < minY) transform->position.y = minY;
+	if(transform->position.x > maxX) transform->position.x = maxX;
+	if(transform->position.y > maxY) transform->position.y = maxY;
 }
 
 void Enemy::UpdateShooting(float dt) {

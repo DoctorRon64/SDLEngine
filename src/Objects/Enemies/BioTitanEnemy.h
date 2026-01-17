@@ -15,6 +15,8 @@ public:
 		transform->scale = { 4.f, 4.f };
 	}
 
+	bool AllowOffscreenDespawn() const override { return false; }
+
 	void Update() override {
 		float dt = TimeManager::GetInstance()->GetDeltaTime();
 		burstTimer -= dt;
@@ -24,6 +26,7 @@ public:
 		}
 
 		Enemy::Update();
+		KeepOnScreen(0.0f);
 	}
 
 private:
