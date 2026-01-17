@@ -70,6 +70,7 @@ public:
 		bossSeen = false;
 		bonusApplied = false;
 		WaveManager::GetInstance()->SetBossActive(false);
+		ScoreManager::GetInstance()->ResetScore();
 
 		if(level >= LEVEL_COUNT) level = 0;
 

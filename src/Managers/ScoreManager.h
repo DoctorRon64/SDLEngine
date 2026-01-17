@@ -37,6 +37,7 @@ public:
 	}
 
 	void AddScore(int value) { score += value; }
+	void ResetScore() { score = 0; }
 
 	int GetScore() const { return score; }
 
