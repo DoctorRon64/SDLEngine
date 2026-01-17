@@ -26,4 +26,22 @@
 		<enemy type="ROBO_KRABS" amount="1" />
 		<delay_between_spawns>0.8</delay_between_spawns>
 	</wave>
+
+	<wave>
+		<enemy type="KILLER_WHALE" amount="2" />
+		<enemy type="AMOEBA" amount="2" />
+		<enemy type="BEHOLDER" amount="2" />
+		<enemy type="BUBBLE" amount="2" />
+		<enemy type="CHOMPER" amount="2" />
+		<enemy type="CIRCLER" amount="2" />
+		<delay_between_spawns>0.9</delay_between_spawns>
+	</wave>
+
+	<wave>
+		<enemy type="BIO_TITAN" amount="1" />
+		<enemy type="DANIELS" amount="2" />
+		<enemy type="UFO" amount="2" />
+		<enemy type="ANNOYER" amount="2" />
+		<delay_between_spawns>1.1</delay_between_spawns>
+	</wave>
 </level>

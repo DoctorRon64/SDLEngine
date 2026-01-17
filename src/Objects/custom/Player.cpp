@@ -27,22 +27,27 @@ void Player::HandleMovement() {
 	Vector2 move(0.f, 0.f);
 
 	// Keyboard WASD
-	if(InputManager::GetInstance()->GetEvent(SDLK_W, HOLD)) move.y -= speed;
-	if(InputManager::GetInstance()->GetEvent(SDLK_S, HOLD)) move.y += speed;
-	if(InputManager::GetInstance()->GetEvent(SDLK_A, HOLD)) move.x -= speed;
-	if(InputManager::GetInstance()->GetEvent(SDLK_D, HOLD)) move.x += speed;
+	if(InputManager::GetInstance()->GetEvent(SDLK_W, HOLD)) move.y -= 1.0f;
+	if(InputManager::GetInstance()->GetEvent(SDLK_S, HOLD)) move.y += 1.0f;
+	if(InputManager::GetInstance()->GetEvent(SDLK_A, HOLD)) move.x -= 1.0f;
+	if(InputManager::GetInstance()->GetEvent(SDLK_D, HOLD)) move.x += 1.0f;
 
 	// Arrow keys
-	if(InputManager::GetInstance()->GetArrowInput(SDLK_UP)) move.y -= speed;
-	if(InputManager::GetInstance()->GetArrowInput(SDLK_DOWN)) move.y += speed;
-	if(InputManager::GetInstance()->GetArrowInput(SDLK_LEFT)) move.x -= speed;
-	if(InputManager::GetInstance()->GetArrowInput(SDLK_RIGHT)) move.x += speed;
+	if(InputManager::GetInstance()->GetArrowInput(SDLK_UP)) move.y -= 1.0f;
+	if(InputManager::GetInstance()->GetArrowInput(SDLK_DOWN)) move.y += 1.0f;
+	if(InputManager::GetInstance()->GetArrowInput(SDLK_LEFT)) move.x -= 1.0f;
+	if(InputManager::GetInstance()->GetArrowInput(SDLK_RIGHT)) move.x += 1.0f;
 
 	// Gamepad
 	move.x += InputManager::GetInstance()->GetGamepadAxisX();
 	move.y += InputManager::GetInstance()->GetGamepadAxisY();
 
-	rbComp->AddForce(move * 300.f);
+	if(move.LengthSquared() > 1.0f) {
+		move.Normalize();
+	}
+
+	const float baseSpeed = 260.0f;
+	rbComp->SetVelocity(move * (baseSpeed * speed));
 }
 
 void Player::HandleShooting(float dt) {
